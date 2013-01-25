@@ -49,7 +49,10 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-		ctx.fillRect(x-5, y-5, 10, 10);
+		//var svgElement = 'img/8bit-02.svg';
+		//ctx.fillRect(x-5, y-5, 10, 10);
+		//canvg('gameCanvas', 'http://localhost:8000//img/8bit-02.svg');
+		ctx.drawSvg('http://localhost:8000/img/8bit-02.svg', x-5, y-5, 80, 80);
 	};
 
 	// Define which variables and methods can be accessed
