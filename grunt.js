@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     grunticon: {
       src: "public/img/8bits/",
       dest: "public/style/8bits/",
-      cssprefix: "bit-"
+      cssprefix: "-"
     },
     watch: {
      files: '<config:grunticon.files>',

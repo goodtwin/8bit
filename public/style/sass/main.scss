@@ -1,241 +1,213 @@
 @import 'bourbon/bourbon';
 @import 'reset';
 @import 'typo';
+@import 'base';
 
 * {
 	@include box-sizing(border-box);
 }
 body {
-	font-family: Helvetica;
-}
-
-.header {
-    width: 100%;
-}
-
-.scape {
-    position: relative;
-    height: 400px;
-    width: 100%;
-    background: url(/img/omaha-bkgd.png) no-repeat;
-}
-
-#gameCanvas {
-    position:relative;
-	display: block;
-	z-index: 999;
-    margin-top: -150px;
-    background: none;
-}
-
-.bit {
-	height:80px;
-	width: 80px;
-	background-size: contain;
-}
-
-#sgordon {
 	
 }
 
-////////
-
-
-
-
-
-#nav {
-    float: right;
-}
-
-.nav_btn {
-    float: right;
-    text-align: center;
-    margin: 20px 20px 0 0;
-    font-size: 1.125em;
-    font-weight: 400;    
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #C9C9C9;
-    text-shadow: 0 1px 0 #FFF;
-    
-    /*  Button styling  */
-
-    width: 150px;
-    padding: 10px 8px 10px 8px;
-    background-color: #EFEFEF;
-    border-radius: 5px;
-    box-shadow: 0 1px 0 #DDD, 0 -1px #FFF;
-    -webkit-transition: all .15s linear;
-}
-
-.nav_btn:hover {
-    background-color: #EAEAEA;
-}
-
-.new-banner {
-    position: absolute;
+.header {
     overflow: hidden;
-    text-align: center;
-    top: 13px;
-    right: -32px;
-    font-size: .9375em;
-    font-family: 'Press Start 2P', cursive;
-    color: #FFF;
-    text-transform: uppercase;
-    text-shadow: 0 -1px 0 #0096B6;
-    
-    /*  Button styling  */
-
-    padding: 4px 0 2px 0;    
-    width: 115px;
-    background-color: #00BCE4;
-    -webkit-transform: rotate(45deg);
+    width: 100%;
+    margin:0 0 2em;
 }
 
-.eight-bits {
+.omaha {
+    @include inline-block;
+    padding: .5em 1em;
+    font-size: 2em;
+
+}
+
+.nav {
+    overflow: hidden;
+    float: right;
+    padding: 0 0 .5em;
+
+    .nav_btn {
+        float: right;
+        margin: 20px 20px 0 0;      
+        @include btn-gray;
+    }
+        
+}
+
+.scape {
+    display: block;
     position: relative;
-    overflow: hidden;    
-    float: left;
-    display: -moz-inline-stack;
-    zoom: 1;
-    *display: inline;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    margin: 1% 0 0 1%;
-    width: 15.5%;
-    height: 246px;
-    background-color: #F7F7F7;
-    box-shadow: 0 1px 0 #DDD;
+    height: 650px;
+    width: 100%;
+    padding: 250px 0 0;
+    background: url(/img/omaha-bkgd.png) no-repeat;
+
+    #street {
+        position:relative;
+    	display: block;
+    	z-index: 999;
+        height: 400px;
+        background: none;
+    }
 }
 
-.ebits-container {
+.bits-container {
+    display: block;
     overflow: hidden;
-    display: -moz-inline-stack;
-    zoom: 1;
-    *display: inline;
-    display: inline-block;
-    padding-top: 60px;
+    clear: both;
+
+    .eight-bit {
+        position: relative;
+        overflow: hidden; 
+        @include inline-block; 
+        vertical-align: middle;
+        padding: 1%;    
+        float: left;
+        width: 20%;
+        height: auto;
+        text-align: center;
+        cursor: pointer;
+
+        .visual { display: block; }
+        .details { display: none; }
+        &.new {
+            .visual {
+                &:before {
+                    content: "New";
+                    position: absolute;
+                    z-index: 999;
+                    overflow: hidden;
+                    text-align: center;
+                    top: 13px;
+                    right: -34px;
+                    font-size: .9375em;
+                    @include start;
+                    color: #FFF;
+                    text-transform: uppercase;
+                    text-shadow: 0 -1px 0 #0096B6;
+                    padding: 4px 0 2px 0;    
+                    width: 115px;
+                    background-color: #00BCE4;
+                    -webkit-transform: rotate(45deg);
+                }
+            }
+        }
+        &.flipped {
+            .visual { display: none; }
+            .details { display: block; }
+        }
+        
+        .visual {
+            position: relative;
+            overflow: hidden; 
+            height: 240px;
+            width: 100%;
+            padding: 60px 0 0;
+            background-color: #F7F7F7;
+            box-shadow: 0 1px 0 #DDD;
+
+            .bit {
+                @include inline-block;
+                height:120px;
+                width: 80px;
+                background-size: contain;
+            }
+
+            .arrow_btn {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                width: 32px;
+                height: 28px;
+                @include btn-gray;
+                padding: 0px;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    right: 8px;
+                    bottom: 5px;
+                    z-index: 300;
+                    height: 11px;
+                    width: 12px;  
+                    border-radius: 3px;
+                    border-right: 4px solid #fff;
+                    border-bottom:4px solid #fff;
+                    background-color: none;    
+                }
+                &:after {
+                    content: "";
+                    position: absolute;
+                    right: 8px;
+                    bottom: 6px;
+                    z-index: 300;
+                    height: 11px;
+                    width: 12px; 
+                    border-radius: 3px;
+                    border-right: 4px solid #D8D8D8;
+                    border-bottom:4px solid #D8D8D8;
+                    background-color: none;     
+                }
+
+                .arrow {
+                    content: "";
+                    position: absolute;
+                    right: 8px;
+                    bottom: 12px;
+                    z-index: 200;
+                    height: 4px;
+                    border-radius: 10px;
+                    background-color: #D8D8D8;  
+                    width: 17px;    
+                    @include transform(rotate(40deg));
+                }
+            }
+        }
+        .details {
+            overflow: hidden;
+            height: 240px;
+            width: 100%;
+            background-color: #00BCE4;
+            box-shadow: 0 1px 0 #0096B6;
+            text-align: center;
+
+            .name {
+                display: block;
+                padding: 25px 0 15px;
+                font-size: 1.5em;
+                line-height: 2em;
+                font-weight: 400;    
+                @include neue;
+                color: #FFF;
+                text-transform: uppercase;
+            }
+
+            .handle {
+                @include inline-block;
+                width: auto;
+                clear:both;
+                margin-bottom: 25px;
+                font-size: 1.25em;
+                line-height: 1.75em;
+                font-weight: 600;    
+                @include exo;
+                color: #FFF;
+                line-height: 0px;
+                @include transition(all .15s linear);
+                &:hover {
+                    color: #8CD6EE;
+                }
+            }
+
+            .detail_btn {
+                display: block;
+                margin: 10px auto;
+                width: 90%;
+                padding: 10px 0 10px 0;
+                @include btn-blue;
+            }
+        }
+    }
 }
 
-.eight-bits img {
-    height: auto;
-    width: 75px;
-}
-
-.arrow-front {
-    margin: 12px 0 0 7px;
-}
-
-.arrow-back {
-    margin: 12px 0 0 6px;
-}
-
-.arrow-part-1, .arrow-part-2, .arrow-part-3 {
-    position: absolute;
-    z-index: 300;
-    height: 4px;
-    border-radius: 10px;
-    background-color: #D8D8D8;
-}
-
-.arrow-part-1 {
-    width: 17px;    
-    -webkit-transform: rotate(40deg);
-}
-
-.arrow-part-2 {
-    margin: 5px 0 0 1px;
-    width: 15px;
-}
-
-.arrow-part-3 {
-    margin-left: 7px;
-    width: 14px;
-    -webkit-transform: rotate(90deg);
-}
-
-.arrow-part-4, .arrow-part-5 {
-    position: absolute;
-    height: 4px;
-    border-radius: 10px;
-    background-color: #FFF;
-}
-
-.arrow-part-4 {
-    margin: 1px 0 0 1px;
-    width: 17px;    
-    -webkit-transform: rotate(40deg);
-}
-
-.arrow-part-5 {
-    margin: 6px 0 0 2px;
-    width: 15px;
-}
-
-.arrow_btn {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    width: 32px;
-    height: 28px;
-    background-color: #EFEFEF;
-    border-radius: 5px;
-    box-shadow: 0 1px 0 #DDD, 0 -1px #FFF;
-    -webkit-transition: all .15s linear;
-}
-
-.arrow_btn:hover {
-    background-color: #EAEAEA;
-}
-
-.first-lastname {
-    padding-top: 35px;
-    font-size: 1.5em;
-    font-weight: 400;    
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #FFF;
-    text-transform: uppercase;
-}
-
-.twitter-handle {
-    padding-bottom: 28px;
-    font-size: 1.25em;
-    font-weight: 600;    
-    font-family: 'Exo', sans-serif;
-    color: #FFF;
-    line-height: 0px;
-}
-
-
-.bits-detail {
-    text-align: center;
-    width: 15.5%;
-    height: 246px;
-    background-color: #00BCE4;
-    box-shadow: 0 1px 0 #0096B6;
-}
-
-.detail_btn {
-    margin: 10px auto;
-    text-align: center;
-    font-size: 1.125em;
-    font-weight: 400;    
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #8CD6EE;
-    text-decoration: none;
-    text-shadow: 0 -1px 0 #0096B6;
-
-    /*  Button styling  */
-
-    width: 90%;
-    padding: 10px 0 10px 0;
-    background-color: #00ACD0;
-    border-radius: 5px;
-    box-shadow: 0 1px 0 #0096B6, 0 -1px #4CC7E8;
-    -webkit-transition: all .15s linear;
-}
-
-.detail_btn:hover {
-    background-color: #00A8CB;
-}

@@ -4,6 +4,7 @@
 var canvas,			// Canvas DOM element
 	ctx,			// Canvas rendering context
 	keys,			// Keyboard input
+	omahaPlayers,   // 'Static' players
 	localPlayer,	// Local player
 	remotePlayers,	// Remote players
 	socket;			// Socket connection
@@ -14,12 +15,12 @@ var canvas,			// Canvas DOM element
 **************************************************/
 function init() {
 	// Declare the canvas and rendering context
-	canvas = document.getElementById("gameCanvas");
+	canvas = document.getElementById("street");
 	ctx = canvas.getContext("2d");
 
 	// Maximise the canvas
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight / 2;
+	canvas.height = window.innerHeight / 3;
 
 	// Initialise keyboard controls
 	keys = new Keys();
@@ -27,8 +28,25 @@ function init() {
 	// Calculate a random start position for the local player
 	// The minus 5 (half a player size) stops the player being
 	// placed right on the egde of the screen
-	var startX = Math.round(Math.random()*(canvas.width-5)),
-		startY = Math.round(Math.random()*(canvas.height-5));
+	var startX = Math.round(Math.random()*(canvas.width-40)),
+		startY = Math.round(Math.random()*(canvas.height-80));
+
+	// Initialise Omaha
+	omahaPlayers = [];
+	$( '.eight-bit' ).each(function( i ){
+		var startX = Math.round(Math.random()*(canvas.width-40)),
+			startY = Math.round(Math.random()*(canvas.height-80)),
+			id = $( this ).attr('id'),
+			imgUri = $( this ).find('[class*=-bit_]').css('background-image').replace('url(','').replace(')','');
+		
+		var newPlayer = new Player(startX, startY);
+		newPlayer.id = id;
+		newPlayer.img = new Image();
+		newPlayer.img.src = imgUri;
+
+		// Add new player to the Omaha players array
+		omahaPlayers.push(newPlayer);
+	});
 
 	// Initialise the local player
 	localPlayer = new Player(startX, startY);
@@ -178,14 +196,20 @@ function draw() {
 	// Wipe the canvas clean
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	// Draw the local player
-	localPlayer.draw(ctx);
+	// Draw the Omaha players
+	var i;
+	for (i = 0; i < omahaPlayers.length; i++) {
+		omahaPlayers[i].draw(ctx);
+	};
 
 	// Draw the remote players
 	var i;
 	for (i = 0; i < remotePlayers.length; i++) {
 		remotePlayers[i].draw(ctx);
 	};
+
+	// Draw the local player
+	localPlayer.draw(ctx);
 };
 
 

@@ -5,11 +5,8 @@ var Player = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		id,
-		moveAmount = 2;
-
-	var srcSvg = $('.bit-sgordon').css('background-image').replace('url(','').replace(')','');
-	var img = new Image();
-	img.src = srcSvg;
+		dy= 2 , 
+		dx = 2;
 	
 	// Getters and setters
 	var getX = function() {
@@ -27,6 +24,10 @@ var Player = function(startX, startY) {
 	var setY = function(newY) {
 		y = newY;
 	};
+	
+	var setImgSrc = function() {
+		
+	};
 
 	// Update player position
 	var update = function(keys) {
@@ -36,16 +37,16 @@ var Player = function(startX, startY) {
 
 		// Up key takes priority over down
 		if (keys.up) {
-			y -= moveAmount;
+			y = y - dy > 0 ? y - dy : prevY;
 		} else if (keys.down) {
-			y += moveAmount;
+			y = y + dy < canvas.height-80 ? y + dy : prevY;
 		};
 
 		// Left key takes priority over right
 		if (keys.left) {
-			x -= moveAmount;
+			x = x - dx > 0 ? x - dx : prevX;
 		} else if (keys.right) {
-			x += moveAmount;
+			x = x + dx < canvas.width-50 ? x + dx : prevX;
 		};
 
 		return (prevX != x || prevY != y) ? true : false;
@@ -53,7 +54,11 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-	    ctx.drawImage(img, x-40, y-80, img.width*2, img.height*2);
+		if (typeof this.img == "undefined") {
+			this.img = new Image();
+			this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
+		}
+	    ctx.drawImage(this.img, x, y, this.img.width*2, this.img.height*2);
 	};
 
 	// Define which variables and methods can be accessed

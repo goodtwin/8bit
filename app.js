@@ -15,24 +15,9 @@ var express = require('express'),
 	server.listen(8000);
 
 	// Connect to the db
-	var databaseUrl = "8bits"; // "username:password@example.com/mydb"
+	var databaseUrl = "8bit"; // "username:password@example.com/mydb"
 	var collections = ["users"]
 	var db = mongojs.connect(databaseUrl, collections);
-	// db.users.save({email: "srirangan@gmail.com", password: "iLoveMongo", sex: "male"}, function(err, saved) {
-	//   if( err || !saved ) console.log("User not saved");
-	//   else console.log("User saved");
-	// });
-	// db.users.update({email: "srirangan@gmail.com"}, {$set: {password: "iReallyLoveMongo"}}, function(err, updated) {
-	//   if( err || !updated ) console.log("User not updated");
-	//   else console.log("User updated");
-	// });
-	// db.users.find(function(err, users) {
-	// 	if( err || !users ) console.log("User not saved");
-	//     else users.forEach( function(user) {
- //       		console.log(user);
- //       	});
-	// });
-	
 	
 	swig.init({
 		cache: false,
@@ -50,11 +35,10 @@ var express = require('express'),
 		.set('views', __dirname + '/views')
 		
 		.get('/', function(req, res) {
-		  //var fields = { subject: 1, body: 1, tags: 1, created: 1, author: 1 };
 		  db.users.find(function(err, users) {
 			if( err || !users ) console.log("User not saved");
 			else users.forEach( function(user) {
-				console.log(users);
+				//console.log(users);
 				res.render('index.html', { users: users });
 			});
 		  });    
@@ -190,4 +174,4 @@ function playerById(id) {
 /**************************************************
 ** RUN THE GAME
 **************************************************/
-init();
+	init();

@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
-		<title>8 Bit Omaha</title>
+		<title>8-Bit Omaha</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
 		
@@ -12,9 +12,7 @@
 
 		<script src="js/modernizr-2.6.2.min.js"></script>
 		<script type="text/javascript">
-		WebFontConfig = {
-		google: { families: [ 'Exo:200,600:latin', 'Press+Start+2P::latin' ] }
-		};
+		WebFontConfig = { google: { families: [ 'Exo:200,600:latin', 'Press+Start+2P::latin' ] } };
 		(function() {
 		var wf = document.createElement('script');
 		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
@@ -33,55 +31,48 @@
 	
 	<body>
 		<header class="header">
-            <h1>8-Bit <span class="thick">Omaha</span></h1>
-            <div id="nav">
-                <a href="#"><div class="nav_btn">Request An 8-Bit</div></a>
-                <a href="#"><div class="nav_btn">Login Via Twitter</div></a>
-            </div>
+            <h1 class="omaha" title="8-Bit Omaha">8-Bit <span class="thick">Omaha</span></h1>
+            <nav class="nav">
+                <a href="#" class="nav_btn">Request An 8-Bit</a>
+                <a href="#" class="nav_btn">Login Via Twitter</a>
+            </nav>
         </header>
-        <div class="scape"></div>
-        <canvas id="gameCanvas"></canvas>
-        <div style="overflow:hidden;clear:both;">
+        
+        <section class="scape">
+        	<canvas id="street"></canvas>
+        </section>
+        
+        <section class="bits-container">
         	{% for user in users %}
-            <div class="eight-bits">
-                <div class="new-banner">New</div>
-                <a href="#">
-                    <div class="arrow_btn">
-                        <div class="arrow">
-                            <div class="arrow-front">
-                                <div class="arrow-part-1"></div>                      
-                                <div class="arrow-part-2"></div>
-                                <div class="arrow-part-3"></div>
-                            </div> 
-                            <div class="arrow-back">
-                                <div class="arrow-part-4"></div>
-                                <div class="arrow-part-5"></div>
-                                <div class="arrow-part-6"></div>
-                            </div>                     
-                        </div>
-                    </div>
-                </a>
-                <div class="ebits-container bit bit-{{ user.name }}"></div>
+            <div id="{{ user.first_name|replace(' ', '') }}-{{ user.last_name }}" class="eight-bit new">
+            	<div class="visual">
+	                <div class="bit -bit_{{ user.first_name|replace(' ', '') }}-{{ user.last_name }}"></div>
+	                <a href="#" class="arrow_btn"><span class="arrow"></span></a>
+	            </div>
+	            <div class="details">
+	            	<h2 class="name">{{ user.first_name|title }} {{ user.last_name|title }}</h2>
+		            <a href="http://twitter.com/{{ user.handle }}" target="blank" class="handle">@{{ user.handle }}</a>
+		            <a href="#" class="detail_btn">Set As Twitter Profile</a>
+		            <a href="#" class="detail_btn">Download 8-Bit</a>
+	            </div>
             </div>
             {% endfor %}
-        </div>       
-        <div class="bits-detail">
-            <h2 class="first-lastname">First Lastname</h2>
-            <h3 class="twitter-handle">@twitterhandle</h3>
-            <a href="#"><div class="detail_btn">Set As Twitter Profile</div></a>
-            <a href="#"><div class="detail_btn">Download 8-Bit</div></a>
-        </div>
+        </section>       
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script src="http://localhost:8000/socket.io/socket.io.js"></script>
 		<script src="js/requestAnimationFrame.js"></script>
 		<script src="js/Keys.js"></script>
 		<script src="js/Player.js"></script>
+		<script src="js/Omaha.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/main.js"></script>
 		<script>
+		$(window).load(function() {
 			// Initialise the game
 			init();
 			animate();
+		});
 		</script>
 	</body>
 </html>
