@@ -3,29 +3,21 @@
 **************************************************/
 var express = require('express'),
 	app = express(),
+	cons = require('consolidate'),
+    swig = require('swig'),
     server = require('http').createServer(app),
     MongoClient = require('mongodb').MongoClient,
-    template  = require('swig'),
-    tmpl = template.compileFile('/views'),
+    mongojs = require("mongojs"),
   	util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
 
 	server.listen(8000);
 
-	app.use(express.static(__dirname + '/public'));
-
-	//app.set('views', __dirname + '/views');
-	// app.set('view engine', 'jade');
-
-	// app.get('/', function (req, res) {
-	//   res.sendfile(__dirname);
-	// });
-
 	// Connect to the db
 	var databaseUrl = "8bits"; // "username:password@example.com/mydb"
 	var collections = ["users"]
-	var db = require("mongojs").connect(databaseUrl, collections);
+	var db = mongojs.connect(databaseUrl, collections);
 	// db.users.save({email: "srirangan@gmail.com", password: "iLoveMongo", sex: "male"}, function(err, saved) {
 	//   if( err || !saved ) console.log("User not saved");
 	//   else console.log("User saved");
@@ -37,23 +29,35 @@ var express = require('express'),
 	// db.users.find(function(err, users) {
 	// 	if( err || !users ) console.log("User not saved");
 	//     else users.forEach( function(user) {
- //    		console.log(user);
- //    	});
+ //       		console.log(user);
+ //       	});
 	// });
-	app.get('/', function(req, res) {
-	  //var fields = { subject: 1, body: 1, tags: 1, created: 1, author: 1 };
-	  db.users.find(function(err, users) {
-		  if( err || !users ) console.log("User not saved");
-	      //res.sendfile(__dirname + '/views');
-	      users.forEach( function(user) {
-    		console.log(user);
-			});
-	      tmpl.render({
-		    pagename: 'awesome people',
-		    authors: ['Paul', 'Jim', 'Jane']
-		  });
-	  });
+	
+	
+	swig.init({
+	    root: __dirname + '/views',
+	    allowErrors: true // allows errors to be thrown and caught by express instead of suppressed by Swig
 	});
+
+	app
+		.use(express.static(__dirname + '/public'))
+		
+		.engine('.html', cons.swig)
+		
+		.set('view engine', 'html')
+		
+		.set('views', __dirname + '/views')
+		
+		.get('/', function(req, res) {
+		  //var fields = { subject: 1, body: 1, tags: 1, created: 1, author: 1 };
+		  db.users.find(function(err, users) {
+			if( err || !users ) console.log("User not saved");
+			else users.forEach( function(user) {
+				console.log(users);
+				res.render('index.html', { users: users });
+			});
+		  });    
+		});
 
 /**************************************************
 ** GAME VARIABLES

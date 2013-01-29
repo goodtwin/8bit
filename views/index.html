@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
-		<title>NOT 8 Bit Omaha</title>
+		<title>8 Bit Omaha</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
 		
@@ -42,6 +42,13 @@
         <div class="scape"></div>
         <canvas id="gameCanvas"></canvas>
         <div style="overflow:hidden;clear:both;">
+        	{% for user in users %}
+			  <li{% if loop.first%} class="first"{% endif %}>
+			    {{ user.name] }}
+			  </li>
+			{% else %}
+			  <li>There are no authors.</li>
+			{% endfor %}
             <!-- <div class="eight-bits">
                 <div class="new-banner">New</div>
                 <a href="#">
