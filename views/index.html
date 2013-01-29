@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<title>NOT 8 Bit Omaha</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		
+		<link rel="stylesheet" href="style/css/main.css">
+
+		<script src="js/modernizr-2.6.2.min.js"></script>
+		<script type="text/javascript">
+		WebFontConfig = {
+		google: { families: [ 'Exo:200,600:latin', 'Press+Start+2P::latin' ] }
+		};
+		(function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		  '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+		})();
+
+		/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+		window.grunticon=function(e,t){if(!e||e.length!==3)return;var n=window,r=!!n.document.createElementNS&&!!n.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,i=function(t){var i=n.document.createElement("link"),s=n.document.getElementsByTagName("script")[0];i.rel="stylesheet",i.href=e[t&&r?0:t?1:2],s.parentNode.insertBefore(i,s)},s=new n.Image;s.onerror=function(){i(!1)},s.onload=function(){i(s.width===1&&s.height===1)},s.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="};
+		grunticon( [ "/style/8bits/icons.data.svg.css", "/style/8bits/icons.data.png.css", "/style/8bits/icons.fallback.css" ] );</script>
+		<noscript><link href="/public/style/8bits/icons.fallback.css" rel="stylesheet"></noscript>
+	</head>
+	
+	<body>
+		<div id="header">
+            <h1>8-Bit <span class="omaha">Omaha</span></h1>
+            <div id="nav">
+                <a href="#"><div class="nav_btn">Request An 8-Bit</div></a>
+                <a href="#"><div class="nav_btn">Login Via Twitter</div></a>
+            </div>
+        </div>
+        <div class="scape"></div>
+        <canvas id="gameCanvas"></canvas>
+        <div style="overflow:hidden;clear:both;">
+            <!-- <div class="eight-bits">
+                <div class="new-banner">New</div>
+                <a href="#">
+                    <div class="arrow_btn">
+                        <div class="arrow">
+                            <div class="arrow-front">
+                                <div class="arrow-part-1"></div>                      
+                                <div class="arrow-part-2"></div>
+                                <div class="arrow-part-3"></div>
+                            </div> 
+                            <div class="arrow-back">
+                                <div class="arrow-part-4"></div>
+                                <div class="arrow-part-5"></div>
+                                <div class="arrow-part-6"></div>
+                            </div>                     
+                        </div>
+                    </div>
+                </a>
+                <div class="ebits-container"><img src="img/8bit-01.svg"></div>
+            </div> -->
+        </div>       
+        <div class="bits-detail">
+            <h2 class="first-lastname">First Lastname</h2>
+            <h3 class="twitter-handle">@twitterhandle</h3>
+            <a href="#"><div class="detail_btn">Set As Twitter Profile</div></a>
+            <a href="#"><div class="detail_btn">Download 8-Bit</div></a>
+        </div>
+		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="http://localhost:8000/socket.io/socket.io.js"></script>
+		<script src="js/requestAnimationFrame.js"></script>
+		<script src="js/Keys.js"></script>
+		<script src="js/Player.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			// Initialise the game
+			init();
+			animate();
+		</script>
+	</body>
+</html>

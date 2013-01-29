@@ -4,6 +4,9 @@
 var express = require('express'),
 	app = express(),
     server = require('http').createServer(app),
+    MongoClient = require('mongodb').MongoClient,
+    template  = require('swig'),
+    tmpl = template.compileFile('/views'),
   	util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
@@ -11,9 +14,45 @@ var express = require('express'),
 	server.listen(8000);
 
 	app.use(express.static(__dirname + '/public'));
-	
-	app.get('/', function (req, res) {
-	  res.sendfile(__dirname + 'index.html');
+
+	//app.set('views', __dirname + '/views');
+	// app.set('view engine', 'jade');
+
+	// app.get('/', function (req, res) {
+	//   res.sendfile(__dirname);
+	// });
+
+	// Connect to the db
+	var databaseUrl = "8bits"; // "username:password@example.com/mydb"
+	var collections = ["users"]
+	var db = require("mongojs").connect(databaseUrl, collections);
+	// db.users.save({email: "srirangan@gmail.com", password: "iLoveMongo", sex: "male"}, function(err, saved) {
+	//   if( err || !saved ) console.log("User not saved");
+	//   else console.log("User saved");
+	// });
+	// db.users.update({email: "srirangan@gmail.com"}, {$set: {password: "iReallyLoveMongo"}}, function(err, updated) {
+	//   if( err || !updated ) console.log("User not updated");
+	//   else console.log("User updated");
+	// });
+	// db.users.find(function(err, users) {
+	// 	if( err || !users ) console.log("User not saved");
+	//     else users.forEach( function(user) {
+ //    		console.log(user);
+ //    	});
+	// });
+	app.get('/', function(req, res) {
+	  //var fields = { subject: 1, body: 1, tags: 1, created: 1, author: 1 };
+	  db.users.find(function(err, users) {
+		  if( err || !users ) console.log("User not saved");
+	      //res.sendfile(__dirname + '/views');
+	      users.forEach( function(user) {
+    		console.log(user);
+			});
+	      tmpl.render({
+		    pagename: 'awesome people',
+		    authors: ['Paul', 'Jim', 'Jane']
+		  });
+	  });
 	});
 
 /**************************************************

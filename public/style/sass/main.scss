@@ -1,0 +1,243 @@
+@import 'bourbon/bourbon';
+@import 'reset';
+@import 'typo';
+
+* {
+	@include box-sizing(border-box);
+}
+body {
+	font-family: Helvetica;
+}
+
+canvas {
+	display: block;
+	height: 400px;
+	width: 100%
+}
+
+.bit {
+	height:80px;
+	width: 80px;
+	background-size: contain;
+}
+
+#sgordon {
+	
+}
+
+////////
+
+
+
+#header {
+    width: 100%;
+    height: 100px;
+}
+
+.scape {
+    height: 400px;
+    width: 100%;
+    background: url(/img/omaha-bkgd.png) no-repeat;
+}
+
+
+
+.omaha {
+    font-weight: 600;
+}
+
+#nav {
+    float: right;
+}
+
+.nav_btn {
+    float: right;
+    text-align: center;
+    margin: 20px 20px 0 0;
+    font-size: 1.125em;
+    font-weight: 400;    
+    font-family: 'Helvetica Neue', sans-serif;
+    color: #C9C9C9;
+    text-shadow: 0 1px 0 #FFF;
+    
+    /*  Button styling  */
+
+    width: 150px;
+    padding: 10px 8px 10px 8px;
+    background-color: #EFEFEF;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 #DDD, 0 -1px #FFF;
+    -webkit-transition: all .15s linear;
+}
+
+.nav_btn:hover {
+    background-color: #EAEAEA;
+}
+
+.new-banner {
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+    top: 13px;
+    right: -32px;
+    font-size: .9375em;
+    font-family: 'Press Start 2P', cursive;
+    color: #FFF;
+    text-transform: uppercase;
+    text-shadow: 0 -1px 0 #0096B6;
+    
+    /*  Button styling  */
+
+    padding: 4px 0 2px 0;    
+    width: 115px;
+    background-color: #00BCE4;
+    -webkit-transform: rotate(45deg);
+}
+
+.eight-bits {
+    position: relative;
+    overflow: hidden;    
+    float: left;
+    display: -moz-inline-stack;
+    zoom: 1;
+    *display: inline;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 1% 0 0 1%;
+    width: 15.5%;
+    height: 246px;
+    background-color: #F7F7F7;
+    box-shadow: 0 1px 0 #DDD;
+}
+
+.ebits-container {
+    overflow: hidden;
+    display: -moz-inline-stack;
+    zoom: 1;
+    *display: inline;
+    display: inline-block;
+    padding-top: 60px;
+}
+
+.eight-bits img {
+    height: auto;
+    width: 75px;
+}
+
+.arrow-front {
+    margin: 12px 0 0 7px;
+}
+
+.arrow-back {
+    margin: 12px 0 0 6px;
+}
+
+.arrow-part-1, .arrow-part-2, .arrow-part-3 {
+    position: absolute;
+    z-index: 300;
+    height: 4px;
+    border-radius: 10px;
+    background-color: #D8D8D8;
+}
+
+.arrow-part-1 {
+    width: 17px;    
+    -webkit-transform: rotate(40deg);
+}
+
+.arrow-part-2 {
+    margin: 5px 0 0 1px;
+    width: 15px;
+}
+
+.arrow-part-3 {
+    margin-left: 7px;
+    width: 14px;
+    -webkit-transform: rotate(90deg);
+}
+
+.arrow-part-4, .arrow-part-5 {
+    position: absolute;
+    height: 4px;
+    border-radius: 10px;
+    background-color: #FFF;
+}
+
+.arrow-part-4 {
+    margin: 1px 0 0 1px;
+    width: 17px;    
+    -webkit-transform: rotate(40deg);
+}
+
+.arrow-part-5 {
+    margin: 6px 0 0 2px;
+    width: 15px;
+}
+
+.arrow_btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 32px;
+    height: 28px;
+    background-color: #EFEFEF;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 #DDD, 0 -1px #FFF;
+    -webkit-transition: all .15s linear;
+}
+
+.arrow_btn:hover {
+    background-color: #EAEAEA;
+}
+
+.first-lastname {
+    padding-top: 35px;
+    font-size: 1.5em;
+    font-weight: 400;    
+    font-family: 'Helvetica Neue', sans-serif;
+    color: #FFF;
+    text-transform: uppercase;
+}
+
+.twitter-handle {
+    padding-bottom: 28px;
+    font-size: 1.25em;
+    font-weight: 600;    
+    font-family: 'Exo', sans-serif;
+    color: #FFF;
+    line-height: 0px;
+}
+
+
+.bits-detail {
+    text-align: center;
+    width: 15.5%;
+    height: 246px;
+    background-color: #00BCE4;
+    box-shadow: 0 1px 0 #0096B6;
+}
+
+.detail_btn {
+    margin: 10px auto;
+    text-align: center;
+    font-size: 1.125em;
+    font-weight: 400;    
+    font-family: 'Helvetica Neue', sans-serif;
+    color: #8CD6EE;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 #0096B6;
+
+    /*  Button styling  */
+
+    width: 90%;
+    padding: 10px 0 10px 0;
+    background-color: #00ACD0;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 #0096B6, 0 -1px #4CC7E8;
+    -webkit-transition: all .15s linear;
+}
+
+.detail_btn:hover {
+    background-color: #00A8CB;
+}

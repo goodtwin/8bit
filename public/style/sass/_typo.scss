@@ -1,0 +1,30 @@
+@mixin neue {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+@mixin exo {
+  font-family: 'Exo', sans-serif;
+}
+@mixin start {
+  font-family: 'Press Start 2P', cursive, serif;
+}
+
+p, body {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+  float: left;
+  font-weight: 200;
+  color: #00BCE4;
+}
+  .wf-loading h1 {
+    font-size: 0px;
+    font-family: serif;
+  }
+  .wf-inactive h1 {
+    font-size: 0px;
+    font-family: serif;
+  }
+  .wf-active h1 {
+    font-family: 'Exo', sans-serif;
+  }

@@ -6,6 +6,10 @@ var Player = function(startX, startY) {
 		y = startY,
 		id,
 		moveAmount = 2;
+
+	var srcSvg = $('#sgordon').css('background-image').replace('url(','').replace(')','');
+	var img = new Image();
+	img.src = srcSvg;
 	
 	// Getters and setters
 	var getX = function() {
@@ -49,10 +53,9 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-		//var svgElement = 'img/8bit-02.svg';
-		//ctx.fillRect(x-5, y-5, 10, 10);
-		//canvg('gameCanvas', 'http://localhost:8000//img/8bit-02.svg');
-		ctx.drawSvg('http://localhost:8000/img/8bit-02.svg', x-5, y-5, 80, 80);
+		//ctx.drawImage(srcSvg, x-5, y-5, 80, 80);
+		//ctx.scale(-1,1);
+	    ctx.drawImage(img, x-5, y-5, 80, 80 * img.height / img.width);
 	};
 
 	// Define which variables and methods can be accessed
