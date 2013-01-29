@@ -35,6 +35,7 @@ var express = require('express'),
 	
 	
 	swig.init({
+		cache: false,
 	    root: __dirname + '/views',
 	    allowErrors: true // allows errors to be thrown and caught by express instead of suppressed by Swig
 	});

@@ -7,7 +7,7 @@ var Player = function(startX, startY) {
 		id,
 		moveAmount = 2;
 
-	var srcSvg = $('#sgordon').css('background-image').replace('url(','').replace(')','');
+	var srcSvg = $('.bit-sgordon').css('background-image').replace('url(','').replace(')','');
 	var img = new Image();
 	img.src = srcSvg;
 	
@@ -53,9 +53,7 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-		//ctx.drawImage(srcSvg, x-5, y-5, 80, 80);
-		//ctx.scale(-1,1);
-	    ctx.drawImage(img, x-5, y-5, 80, 80 * img.height / img.width);
+	    ctx.drawImage(img, x-40, y-80, img.width*2, img.height*2);
 	};
 
 	// Define which variables and methods can be accessed

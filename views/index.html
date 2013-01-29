@@ -32,24 +32,18 @@
 	</head>
 	
 	<body>
-		<div id="header">
-            <h1>8-Bit <span class="omaha">Omaha</span></h1>
+		<header class="header">
+            <h1>8-Bit <span class="thick">Omaha</span></h1>
             <div id="nav">
                 <a href="#"><div class="nav_btn">Request An 8-Bit</div></a>
                 <a href="#"><div class="nav_btn">Login Via Twitter</div></a>
             </div>
-        </div>
+        </header>
         <div class="scape"></div>
         <canvas id="gameCanvas"></canvas>
         <div style="overflow:hidden;clear:both;">
         	{% for user in users %}
-			  <li{% if loop.first%} class="first"{% endif %}>
-			    {{ user.name] }}
-			  </li>
-			{% else %}
-			  <li>There are no authors.</li>
-			{% endfor %}
-            <!-- <div class="eight-bits">
+            <div class="eight-bits">
                 <div class="new-banner">New</div>
                 <a href="#">
                     <div class="arrow_btn">
@@ -67,8 +61,9 @@
                         </div>
                     </div>
                 </a>
-                <div class="ebits-container"><img src="img/8bit-01.svg"></div>
-            </div> -->
+                <div class="ebits-container bit bit-{{ user.name }}"></div>
+            </div>
+            {% endfor %}
         </div>       
         <div class="bits-detail">
             <h2 class="first-lastname">First Lastname</h2>
