@@ -32,7 +32,7 @@ var Omaha = function(startX, startY) {
 		// Previous position
 		var prevX = x,
 			prevY = y,
-			dx = Math.round(Math.random()*1),
+			dx = Math.round(Math.random()*2),
 			dy = Math.round(Math.random()*1),
 			dir = (Math.round(Math.random()*1) * 2 - 1) == 1 ? true /*positive*/ : false /*negative*/;
 
@@ -52,6 +52,8 @@ var Omaha = function(startX, startY) {
 
 		//x = x - dx > 0 ? x + dx : prevX;
 		//y = y - dy > 0 ? y + dy : prevY;
+		this.currX = x;
+		this.currY = y;
 
 		return (prevX != x || prevY != y) ? true : false;
 	};

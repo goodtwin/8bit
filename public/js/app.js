@@ -41,6 +41,8 @@ function init() {
 		
 		var newPlayer = new Omaha(startX, startY);
 		newPlayer.id = id;
+		newPlayer.currX = startX;
+		newPlayer.currY = startY;
 		newPlayer.img = new Image();
 		newPlayer.img.src = imgUri;
 
