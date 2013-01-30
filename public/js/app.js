@@ -39,7 +39,7 @@ function init() {
 			id = $( this ).attr('id'),
 			imgUri = $( this ).find('[class*=-bit_]').css('background-image').replace('url(','').replace(')','');
 		
-		var newPlayer = new Player(startX, startY);
+		var newPlayer = new Omaha(startX, startY);
 		newPlayer.id = id;
 		newPlayer.img = new Image();
 		newPlayer.img.src = imgUri;
@@ -186,6 +186,13 @@ function update() {
 		// Send local player data to the game server
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
 	};
+
+	// Update the Omaha players position
+	var i;
+	for (i = 0; i < omahaPlayers.length; i++) {
+		omahaPlayers[i].update();
+	};
+
 };
 
 
