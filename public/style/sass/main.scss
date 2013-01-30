@@ -3,11 +3,11 @@
 @import 'typo';
 @import 'base';
 
-* {
-	@include box-sizing(border-box);
-}
-body {
-	
+* { @include box-sizing(border-box); }
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0px;
 }
 
 .header {
@@ -41,7 +41,8 @@ body {
     position: relative;
     height: 650px;
     width: 100%;
-    padding: 250px 0 0;
+    padding: 265px 0 0;
+    margin: 0px;
     background: url(/img/omaha-bkgd.png) no-repeat;
 
     #street {
@@ -50,6 +51,8 @@ body {
     	z-index: 999;
         height: 400px;
         background: none;
+        margin: 0px;
+        padding:0px;
     }
 }
 
@@ -57,18 +60,34 @@ body {
     display: block;
     overflow: hidden;
     clear: both;
+    padding: .5% .5% 0;
 
     .eight-bit {
         position: relative;
         overflow: hidden; 
         @include inline-block; 
         vertical-align: middle;
-        padding: 1%;    
+        padding: .5%;    
         float: left;
-        width: 20%;
+        width: 100%;
         height: auto;
         text-align: center;
         cursor: pointer;
+        @media screen and (min-width: 420px){
+            width: 50%;
+        }
+        @media screen and (min-width: 610px){
+            width: 33.33%;
+        }
+        @media screen and (min-width: 825px){
+            width: 25%;
+        }
+        @media screen and (min-width: 1050px){
+            width: 20%;
+        }
+        @media screen and (min-width: 1500px){
+            width: 16.66%;
+        }
 
         .visual { display: block; }
         .details { display: none; }
@@ -174,9 +193,9 @@ body {
 
             .name {
                 display: block;
-                padding: 25px 0 15px;
+                padding: 25px 0;
                 font-size: 1.5em;
-                line-height: 2em;
+                line-height: 1em;
                 font-weight: 400;    
                 @include neue;
                 color: #FFF;

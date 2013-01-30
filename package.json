@@ -10,6 +10,7 @@
     "grunt-grunticon" : "*",
     "mongodb" : "1.2.10",
     "mongojs" : "0.5.1",
-    "swig" : "*"
+    "swig" : "*",
+    "oauth" : "0.9.8"
   }
 }

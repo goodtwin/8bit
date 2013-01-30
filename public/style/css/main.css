@@ -97,6 +97,11 @@ h1 {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0px; }
+
 .header {
   overflow: hidden;
   width: 100%;
@@ -141,19 +146,23 @@ h1 {
   position: relative;
   height: 650px;
   width: 100%;
-  padding: 250px 0 0;
+  padding: 265px 0 0;
+  margin: 0px;
   background: url(/img/omaha-bkgd.png) no-repeat; }
   .scape #street {
     position: relative;
     display: block;
     z-index: 999;
     height: 400px;
-    background: none; }
+    background: none;
+    margin: 0px;
+    padding: 0px; }
 
 .bits-container {
   display: block;
   overflow: hidden;
-  clear: both; }
+  clear: both;
+  padding: 0.5% 0.5% 0; }
   .bits-container .eight-bit {
     position: relative;
     overflow: hidden;
@@ -163,12 +172,27 @@ h1 {
     *display: inline;
     *vertical-align: auto;
     vertical-align: middle;
-    padding: 1%;
+    padding: .5%;
     float: left;
-    width: 20%;
+    width: 100%;
     height: auto;
     text-align: center;
     cursor: pointer; }
+    @media screen and (min-width: 420px) {
+      .bits-container .eight-bit {
+        width: 50%; } }
+    @media screen and (min-width: 610px) {
+      .bits-container .eight-bit {
+        width: 33.33%; } }
+    @media screen and (min-width: 825px) {
+      .bits-container .eight-bit {
+        width: 25%; } }
+    @media screen and (min-width: 1050px) {
+      .bits-container .eight-bit {
+        width: 20%; } }
+    @media screen and (min-width: 1500px) {
+      .bits-container .eight-bit {
+        width: 16.66%; } }
     .bits-container .eight-bit .visual {
       display: block; }
     .bits-container .eight-bit .details {
@@ -283,9 +307,9 @@ h1 {
       text-align: center; }
       .bits-container .eight-bit .details .name {
         display: block;
-        padding: 25px 0 15px;
+        padding: 25px 0;
         font-size: 1.5em;
-        line-height: 2em;
+        line-height: 1em;
         font-weight: 400;
         font-family: "Helvetica Neue", sans-serif;
         color: #FFF;

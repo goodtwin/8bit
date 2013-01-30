@@ -8,7 +8,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
 		
-		<link rel="stylesheet" href="style/css/main.css">
+		<link rel="stylesheet" href="../../style/css/main.css">
 
 		<script src="js/modernizr-2.6.2.min.js"></script>
 		<script type="text/javascript">
@@ -31,10 +31,10 @@
 	
 	<body>
 		<header class="header">
-            <h1 class="omaha" title="8-Bit Omaha">8-Bit <span class="thick">Omaha</span></h1>
+            <h1 class="omaha" title="8-Bit Omaha">8-Bit <span class="thick">Omaha {{ oauth.screen_name }}</span></h1>
             <nav class="nav">
                 <a href="#" class="nav_btn">Request An 8-Bit</a>
-                <a href="#" class="nav_btn">Login Via Twitter</a>
+                <a href="/auth/twitter" class="nav_btn">Login Via Twitter</a>
             </nav>
         </header>
         
@@ -68,11 +68,7 @@
 		<script src="js/app.js"></script>
 		<script src="js/main.js"></script>
 		<script>
-		$(window).load(function() {
-			// Initialise the game
-			init();
-			animate();
-		});
+		
 		</script>
 	</body>
 </html>

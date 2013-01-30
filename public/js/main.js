@@ -1,4 +1,9 @@
 $( function(){
+	$(window).load(function() {
+		// Initialise the game
+		init();
+		animate();
+	});
 	$( document )
 		.ready(function(){
 			

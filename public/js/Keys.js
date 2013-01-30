@@ -22,7 +22,7 @@ var Keys = function(up, left, right, down) {
 				that.right = true; // Will take priority over the left key
 				break;
 			case 40: // Down
-				that.down = true;
+				that.down = true;				
 				break;
 		};
 	};

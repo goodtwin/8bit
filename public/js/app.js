@@ -109,7 +109,7 @@ function onKeyup(e) {
 function onResize(e) {
 	// Maximise the canvas
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	//canvas.height = window.innerHeight;
 };
 
 // Socket connected
@@ -192,8 +192,9 @@ function update() {
 	// Update the Omaha players position
 	var i;
 	for (i = 0; i < omahaPlayers.length; i++) {
-		omahaPlayers[i].update();
+		omahaPlayers[i].update(ctx);
 	};
+	//console.log(omahaPlayers[1].getX())
 
 };
 
