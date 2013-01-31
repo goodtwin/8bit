@@ -31,10 +31,10 @@ var express = require('express'),
 	var oa = new OAuth(
 		"https://api.twitter.com/oauth/request_token",
 		"https://api.twitter.com/oauth/access_token",
-		"lJSr56S1ABWY26oJxzGQVg",
-		"idlnbtZm0uCPCnV1GVk734tEcmEGfoAxes5oMsurw",
+		"253hJFYT0ycsQdy1NEjp7Q",
+		"KRnLaoNlmKaTTFSXJJ7zI6VXKnf0yEr8kr6klRtyiM0",
 		"1.0",
-		"http://localhost:8000/",
+		"http://localhost:8000/i/",
 		"HMAC-SHA1"
 	);
 
@@ -57,17 +57,30 @@ var express = require('express'),
 		
 		.set('views', __dirname + '/views')
 		
-		// .get('/', function(req, res) {
-		// 	console.log(req.session),
-		//  //  db.users.find(function(err, users) {
-		// 	// if( err || !users ) console.log("User not saved");
-		// 	// else users.forEach( function(user) {
-		// 	// 	//console.log(users);
-		// 	// 	res.render('index.html', { users: allUsers });
-		// 	// });
-		// 	res.render('index.html', { users: allUsers });
-		//   //});    
-		// })
+		.get('/', function(req, res) {
+			if (req.session.oauth) {
+				req.session.oauth.verifier = req.query.oauth_verifier;
+				console.log(req.session.oauth);
+				var oauth = req.session.oauth;
+
+				oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
+				function(error, oauth_access_token, oauth_access_token_secret, results){			
+					if (error){
+						console.log(error);
+						res.send("yeah something broke.");
+					} else {
+						req.session.oauth.access_token = oauth_access_token;
+						req.session.oauth,access_token_secret = oauth_access_token_secret;
+						console.log(results);
+						res.send({redirect: '/i'});
+					}
+				}
+				);
+			} else
+				//next(new Error("you're not supposed to be here."))
+				//console.log("index");
+				res.render('index.html', { users: allUsers });
+		})
 		.get('/auth/twitter', function(req, res){
 			console.log(req.session),
 			oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
@@ -85,7 +98,7 @@ var express = require('express'),
 			}
 			});
 		})
-		.get('/', function(req, res, next){
+		.get('/i', function(req, res, next){
 			if (req.session.oauth) {
 				req.session.oauth.verifier = req.query.oauth_verifier;
 				console.log(req.session.oauth);
@@ -100,15 +113,14 @@ var express = require('express'),
 						req.session.oauth.access_token = oauth_access_token;
 						req.session.oauth,access_token_secret = oauth_access_token_secret;
 						console.log(results);
-						console.log("callback");
 						res.render('index.html', { users: allUsers, oauth: results });
 					}
 				}
 				);
 			} else
-				//next(new Error("you're not supposed to be here."))
-				console.log("index");
-				res.render('index.html', { users: allUsers });
+				next(new Error("you're not supposed to be here."))
+				//console.log("index");
+				//res.render('index.html', { users: allUsers });
 		});
 
 /**************************************************
