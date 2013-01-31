@@ -32,6 +32,11 @@ html, body {
         float: right;
         margin: 20px 20px 0 0;      
         @include btn-gray;
+        &.log-out {
+            &:hover {
+                content: 'Log Out';
+            }
+        }
     }
         
 }

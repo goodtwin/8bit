@@ -140,6 +140,8 @@ html, body {
     transition: all 0.15s linear; }
     .nav .nav_btn:hover {
       background-color: #EAEAEA; }
+    .nav .nav_btn.log-out:hover {
+      content: 'Log Out'; }
 
 .scape {
   display: block;

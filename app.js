@@ -67,12 +67,13 @@ var express = require('express'),
 				function(error, oauth_access_token, oauth_access_token_secret, results){			
 					if (error){
 						console.log(error);
-						res.send("yeah something broke.");
+						//res.send("yeah something broke.");
+						res.render('index.html', { users: allUsers });
 					} else {
 						req.session.oauth.access_token = oauth_access_token;
-						req.session.oauth,access_token_secret = oauth_access_token_secret;
+						req.session.oauth.access_token_secret = oauth_access_token_secret;
 						console.log(results);
-						res.send({redirect: '/i'});
+						res.redirect('/i');
 					}
 				}
 				);
@@ -82,7 +83,7 @@ var express = require('express'),
 				res.render('index.html', { users: allUsers });
 		})
 		.get('/auth/twitter', function(req, res){
-			console.log(req.session),
+			console.log(req.session.oauth),
 			oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
 				if (error) {
 					console.log(error);
@@ -105,22 +106,24 @@ var express = require('express'),
 				var oauth = req.session.oauth;
 
 				oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
-				function(error, oauth_access_token, oauth_access_token_secret, results){			
+				function(error, oauth_access_token, oauth_access_token_secret, results){		
 					if (error){
 						console.log(error);
-						res.send("yeah something broke.");
+						//res.send("yeah something broke.");
+						res.redirect('/');
 					} else {
 						req.session.oauth.access_token = oauth_access_token;
-						req.session.oauth,access_token_secret = oauth_access_token_secret;
+						req.session.oauth.access_token_secret = oauth_access_token_secret;
+						//console.log(req.session.oauth);
 						console.log(results);
 						res.render('index.html', { users: allUsers, oauth: results });
 					}
 				}
 				);
 			} else
-				next(new Error("you're not supposed to be here."))
+				//next(new Error("you're not supposed to be here."))
 				//console.log("index");
-				//res.render('index.html', { users: allUsers });
+				res.redirect('/');
 		});
 
 /**************************************************
