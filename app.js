@@ -26,7 +26,7 @@ var express = require('express'),
 			//res.render('index.html', { users: users });
 			allUsers = users;
 		//});
-	  });    
+	});
 	
 	var oa = new OAuth(
 		"https://api.twitter.com/oauth/request_token",
@@ -49,7 +49,7 @@ var express = require('express'),
 
 		.use( express.session( { secret: 'goodtwin' } ) )
 
-		.use(express.static(__dirname + '/public'))
+		.use(express.static( __dirname ))
 		
 		.engine('.html', cons.swig)
 		
