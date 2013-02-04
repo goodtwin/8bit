@@ -17,10 +17,16 @@ define(
 
     function streetInfo() {
 
-      this.renderThemStreets = function(){
+      this.getTheStreets = function(){
+        this.trigger( 'theStreetsServed', { markup: this.renderTheStreets({ oauth: false }) } );
+      }
+
+      this.renderTheStreets = function(){
         return streetsTemplate({});
       }
+
       this.after("initialize", function() {
+        this.on( document, 'userInfoServed', this.getTheStreets );
       });
     }
 

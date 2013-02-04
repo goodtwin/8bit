@@ -8,14 +8,19 @@ define(
 
   function(defineComponent) {
 
-    return defineComponent(cards);
+    return defineComponent(theStreets);
 
-    function cards() {
+    function theStreets() {
 
       this.defaultAttrs({
       });
 
+      this.showCanvas = function( e, data ){
+        this.$node.html( data.markup );
+      }
+
       this.after('initialize', function() {
+        this.on( document, 'theStreetsServed', this.showCanvas );
       });
     }
   }

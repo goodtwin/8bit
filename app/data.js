@@ -3,105 +3,48 @@
 define(
   function() {
     return {
-      folders: ["inbox", "later", "sent", "trash"],
-      contacts: [
-        {
-          "id": "contact_342",
-          "firstName": "Michael",
-          "lastName": "Smith",
-          "email": "ms@proxyweb.com"
-        },
-        {
-          "id": "contact_377",
-          "firstName": "Mary",
-          "lastName": "Jones",
-          "email": "mary@jones.net"
-        },
-        {
-          "id": "contact_398",
-          "firstName": "Billy",
-          "lastName": "Idiot",
-          "email": "william_idiot@gmail.com"
-        }
-      ],
-      mail: [
-        {
-          "id": "mail_2139",
-          "contact_id": "contact_342",
-          "folders": ["inbox"],
-          "time": 1334891976104,
-          "subject": "Consectetur adipiscing elit",
-          "message": "Vestibulum vestibulum varius diam in iaculis. Praesent ultrices dui vitae nibh malesuada non iaculis ante vulputate. Suspendisse feugiat ultricies egestas. Aenean a odio libero. Quisque mollis leo et est euismod sit amet dignissim sapien venenatis. Morbi interdum adipiscing massa"
-        },
-        {
-          "id": "mail_2143",
-          "contact_id": "contact_377",
-          "folders": ["inbox", "later"],
-          "important": "true",
-          "time": 1334884976104,
-          "subject": "Neque porro quisquam velit!!",
-          "message": "Curabitur sollicitudin mi eget sapien posuere semper. Fusce at neque et lacus luctus vulputate vehicula ac enim"
-        },
-        {
-          "id": "mail_2154",
-          "contact_id": "contact_398",
-          "folders": ["inbox"],
-          "important": "true",
-          "unread": "true",
-          "time": 1334874976199,
-          "subject": "Proin egestas aliquam :)",
-          "message": "Aenean nec erat id ipsum faucibus tristique. Nam blandit est lacinia turpis consectetur elementum. Nulla in risus ut sapien dignissim feugiat. Proin ultrices sodales imperdiet. Vestibulum vehicula blandit tincidunt. Vivamus posuere rhoncus orci, porta commodo mauris aliquam nec"
-        },
-        {
-          "id": "mail_2176",
-          "contact_id": "contact_377",
-          "folders": ["inbox"],
-          "time": 1334884976104,
-          "subject": "Sed ut perspiciatis unde omnis?",
-          "message": "laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
-        },
-        {
-          "id": "mail_2191",
-          "contact_id": "contact_398",
-          "folders": ["inbox"],
-          "unread": "true",
-          "time": 1334874976199,
-          "subject": "At vero eos et accusamus!",
-          "message": "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat"
-        },
-        {
-          "id": "mail_2203",
-          "contact_id": "contact_377",
-          "folders": ["later"],
-          "important": "true",
-          "time": 1334874576199,
-          "subject": "Mi netus convallis",
-          "message": "Egestas morbi at. Curabitur aliquet et commodo nonummy, aliquam quis arcu, sed pellentesque vitae molestie mattis magna, in eget, risus nulla vivamus vulputate"
-        },
-        {
-          "id": "mail_2212",
-          "contact_id": "contact_398",
-          "folders": ["sent"],
-          "time": 1334874579867,
-          "subject": "Fusce tristique pretium eros a gravida",
-          "message": "Proin malesuada"
-        },
-        {
-          "id": "mail_2021",
-          "contact_id": "contact_342",
-          "folders": ["trash"],
-          "time": 1134874579824,
-          "subject": "Phasellus vitae interdum nulla.",
-          "message": "Pellentesque quam eros, mollis quis vulputate eget, pellentesque nec ipsum. Cras dignissim fringilla ligula, ac ullamcorper dui convallis blandit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam id nunc ac orci hendrerit faucibus vel in ante. Mauris nec est turpis, ut fringilla mi. Suspendisse vel tortor at nulla facilisis venenatis in sit amet ligula."
-        },
-        {
-          "id": "mail_1976",
-          "contact_id": "contact_377",
-          "folders": ["trash"],
-          "time": 1034874579813,
-          "subject": "Fusce tristique pretium :(",
-          "message": "aliquam quis arcu."
-        }
+      users: [
+        { first_name: "adam", last_name: "nielsen", handle: "adamnielsen", date_added: "" },
+        { first_name: "andrew", last_name: "marinkovich", handle: "amarinkovich", date_added: "" },
+        { first_name: "andrew", last_name: "wirick", handle: "amWirick", date_added: "" },
+        { first_name: "andy", last_name: "peters", handle: "andypeters", date_added: "" },
+        { first_name: "ben", last_name: "peterson", handle: "philipdesignlab", date_added: "" },
+        { first_name: "beth", last_name: "katz", handle: "bethkatz", date_added: "" },
+        { first_name: "bill", last_name: "sitzmann", handle: "billsitzmann", date_added: "" },
+        { first_name: "brian", last_name: "wetjen", handle: "wetchman", date_added: "" },
+        { first_name: "chris", last_name: "vankat", handle: "chrisvankat", date_added: "" },
+        { first_name: "clay", last_name: "wiese", handle: "claywiese", date_added: "" },
+        { first_name: "cody", last_name: "peterson", handle: "codypeterson", date_added: "" },
+        { first_name: "craig", last_name: "moody", handle: "craigmoody", date_added: "" },
+        { first_name: "daniel", last_name: "muller", handle: "dpmuller", date_added: "" },
+        { first_name: "dave", last_name: "nelson", handle: "secretpenguin", date_added: "" },
+        { first_name: "david", last_name: "homan", handle: "mrlasertron", date_added: "" },
+        { first_name: "django", last_name: "khan", handle: "lovedrunkstudio", date_added: "" },
+        { first_name: "drew", last_name: "davies", handle: "drewoxide", date_added: "" },
+        { first_name: "dusty", last_name: "davidson", handle: "dustyd", date_added: "" },
+        { first_name: "emily", last_name: "nielsen", handle: "emilynielsen", date_added: "" },
+        { first_name: "eric", last_name: "downs", handle: "downsdesign", date_added: "" },
+        { first_name: "jason", last_name: "bejot", handle: "jasonbejot", date_added: "" },
+        { first_name: "jeff", last_name: "slobotski", handle: "slobotski", date_added: "" },
+        { first_name: "jim", last_name: "suttle", handle: "jimsuttle", date_added: "" },
+        { first_name: "jimm", last_name: "wagner", handle: "jimmwagner", date_added: "" },
+        { first_name: "joe", last_name: "gerstandt", handle: "joegerstandt", date_added: "" },
+        { first_name: "joe", last_name: "olsen", handle: "joeolsen", date_added: "" },
+        { first_name: "john henry", last_name: "muller", handle: "johnhenrymuller", date_added: "" },
+        { first_name: "jonathan", last_name: "tvrdik", handle: "jtvrdik", date_added: "" },
+        { first_name: "justin", last_name: "limoges", handle: "Justin_L_Photo", date_added: "" },
+        { first_name: "kt", last_name: "mcbratney", handle: "k_to_the_t", date_added: "" },
+        { first_name: "luke", last_name: "bolin", handle: "LukeBolin", date_added: "" },
+        { first_name: "marcus", last_name: "ross", handle: "MarcusRoss", date_added: "" },
+        { first_name: "megan", last_name: "hunt", handle: "lasertron", date_added: "" },
+        { first_name: "nicholas", last_name: "peterson", handle: "nicholaspeter", date_added: "" },
+        { first_name: "peter", last_name: "cales", handle: "measurecutcut", date_added: "" },
+        { first_name: "rahul", last_name: "gupta", handle: "hul", date_added: "" },
+        { first_name: "sarah", last_name: "johnson", handle: "saj4583", date_added: "" },
+        { first_name: "sarah", last_name: "tvrdik",handle: "FashFlood", date_added: "" },
+        { first_name: "steve", last_name: "gordan", handle: "RDQLUS1", date_added: "" },
+        { first_name: "sumeet", last_name: "jain", handle: "sumeetjain", date_added: "" },
+        { first_name: "tom", last_name: "flaherty", handle: "thomasflaherty", date_added: "" }
       ]
     };
     return data;

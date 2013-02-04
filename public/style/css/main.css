@@ -150,7 +150,7 @@ html, body {
   width: 100%;
   padding: 265px 0 0;
   margin: 0px;
-  background: url(/img/omaha-bkgd.png) no-repeat; }
+  background: url(/public/img/omaha-bkgd.png) no-repeat; }
   .scape #street {
     position: relative;
     display: block;

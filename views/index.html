@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="/public/style/css/main.css">
 
-    <script src="public/js/modernizr-2.6.2.min.js"></script>
+    <script src="../public/js/modernizr-2.6.2.min.js"></script>
     <script type="text/javascript">
     WebFontConfig = { google: { families: [ 'Exo:200,600:latin', 'Press+Start+2P::latin' ] } };
     (function() {
@@ -22,46 +22,47 @@
 
     /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
     window.grunticon=function(e,t){if(!e||e.length!==3)return;var n=window,r=!!n.document.createElementNS&&!!n.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,i=function(t){var i=n.document.createElement("link"),s=n.document.getElementsByTagName("script")[0];i.rel="stylesheet",i.href=e[t&&r?0:t?1:2],s.parentNode.insertBefore(i,s)},s=new n.Image;s.onerror=function(){i(!1)},s.onload=function(){i(s.width===1&&s.height===1)},s.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="};
-    grunticon( [ "../style/8bits/icons.data.svg.css", "../style/8bits/icons.data.png.css", "../style/8bits/icons.fallback.css" ] );</script>
+    grunticon( [ "/public/style/8bits/icons.data.svg.css", "../style/8bits/icons.data.png.css", "/public/style/8bits/icons.fallback.css" ] );</script>
     <noscript><link href="/public/style/8bits/icons.fallback.css" rel="stylesheet"></noscript>
   </head>
 
   <body>
 
-    <script src="components/jquery/jquery.js"></script>
-    <script src="components/es5-shim/es5-shim.js"></script>
-    <script src="components/es5-shim/es5-sham.js"></script>
-    <script data-main="requireMain.js" src="components/requirejs/requirejs.js"></script>
+    <script src="../../components/jquery/jquery.js"></script>
+    <script src="../../components/es5-shim/es5-shim.js"></script>
+    <script src="../../components/es5-shim/es5-sham.js"></script>
+    <script data-main="requireMain.js" src="../../components/requirejs/requirejs.js"></script>
 
     <script>
       require(
         [
-          'components/flight/lib/compose',
-          'components/flight/lib/registry',
-          'components/flight/lib/advice',
-          'components/flight/lib/logger',
-          'components/flight/tools/debug/debug'
+          '../../components/flight/lib/compose',
+          '../../components/flight/lib/registry',
+          '../../components/flight/lib/advice',
+          '../../components/flight/lib/logger',
+          '../../components/flight/tools/debug/debug'
         ],
 
         function( compose, registry, advice, withLogging, debug ) {
           debug.enable( true );
           compose.mixin( registry, [ advice.withAdvice, withLogging ] );
-          require( [ 'app/boot/page' ], function( initialize ) {
+          require( [ '../app/boot/page' ], function( initialize ) {
             initialize();
           });
         }
       );
     </script>
 
-    <header>
-    	<h1>Welcome to 8Bit Omaha</h1>
-    	<div id="userInfo"></div>
+    <header class="header">
+    	<h1 class="omaha" title="8-Bit Omaha">8-Bit <span class="thick">Omaha</span></h1>
+    	<nav class="nav"></nav>
     </header>
-    <div id="theStreets">
-    	
-    </div>
-    <div id="playerCards">
-    	
-    </div>
+
+    <section class="scape">
+    </section>
+
+    <section class="bits-container">
+    </section>
+    
   </body>
 </html>

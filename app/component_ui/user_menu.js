@@ -8,9 +8,9 @@ define(
 
   function(defineComponent) {
 
-    return defineComponent(cards);
+    return defineComponent(userMenu);
 
-    function cards() {
+    function userMenu() {
 
       this.defaultAttrs({
       });

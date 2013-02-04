@@ -16,17 +16,17 @@ var express = require('express'),
 	server.listen(8000);
 
 	// Connect to the db
-	var databaseUrl = "8bit"; // "username:password@example.com/mydb"
-	var collections = ["users"]
-	var db = mongojs.connect(databaseUrl, collections);
-	db.users.find(function(err, users) {
-		if( err || !users ) console.log("User not saved");
-		else /*users.forEach( function(user) {*/
-			//console.log(users);
-			//res.render('index.html', { users: users });
-			allUsers = users;
-		//});
-	});
+	// var databaseUrl = "8bit"; // "username:password@example.com/mydb"
+	// var collections = ["users"]
+	// var db = mongojs.connect(databaseUrl, collections);
+	// db.users.find(function(err, users) {
+	// 	if( err || !users ) console.log("User not saved");
+	// 	else /*users.forEach( function(user) {*/
+	// 		//console.log(users);
+	// 		//res.render('index.html', { users: users });
+	// 		allUsers = users;
+	// 	//});
+	// });
 	
 	var oa = new OAuth(
 		"https://api.twitter.com/oauth/request_token",
@@ -34,7 +34,7 @@ var express = require('express'),
 		"253hJFYT0ycsQdy1NEjp7Q",
 		"KRnLaoNlmKaTTFSXJJ7zI6VXKnf0yEr8kr6klRtyiM0",
 		"1.0",
-		"http://localhost:8000/i/",
+		"http://localhost:8000/",
 		"HMAC-SHA1"
 	);
 
@@ -68,19 +68,19 @@ var express = require('express'),
 					if (error){
 						console.log(error);
 						//res.send("yeah something broke.");
-						res.render('index.html', { users: allUsers });
+						res.render('index.html');
 					} else {
 						req.session.oauth.access_token = oauth_access_token;
 						req.session.oauth.access_token_secret = oauth_access_token_secret;
 						console.log(results);
-						res.redirect('/i');
+						res.render('index.html');
 					}
 				}
 				);
 			} else
 				//next(new Error("you're not supposed to be here."))
 				//console.log("index");
-				res.render('index.html', { users: allUsers });
+				res.render('index.html');
 		})
 		.get('/auth/twitter', function(req, res){
 			console.log(req.session.oauth),
@@ -99,32 +99,32 @@ var express = require('express'),
 			}
 			});
 		})
-		.get('/i', function(req, res, next){
-			if (req.session.oauth) {
-				req.session.oauth.verifier = req.query.oauth_verifier;
-				console.log(req.session.oauth);
-				var oauth = req.session.oauth;
+		// .get('/i', function(req, res, next){
+		// 	if (req.session.oauth) {
+		// 		req.session.oauth.verifier = req.query.oauth_verifier;
+		// 		console.log(req.session.oauth);
+		// 		var oauth = req.session.oauth;
 
-				oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
-				function(error, oauth_access_token, oauth_access_token_secret, results){		
-					if (error){
-						console.log(error);
-						//res.send("yeah something broke.");
-						res.redirect('/');
-					} else {
-						req.session.oauth.access_token = oauth_access_token;
-						req.session.oauth.access_token_secret = oauth_access_token_secret;
-						//console.log(req.session.oauth);
-						console.log(results);
-						res.render('index.html', { users: allUsers, oauth: results });
-					}
-				}
-				);
-			} else
-				//next(new Error("you're not supposed to be here."))
-				//console.log("index");
-				res.redirect('/');
-		});
+		// 		oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
+		// 		function(error, oauth_access_token, oauth_access_token_secret, results){		
+		// 			if (error){
+		// 				console.log(error);
+		// 				//res.send("yeah something broke.");
+		// 				res.redirect('/');
+		// 			} else {
+		// 				req.session.oauth.access_token = oauth_access_token;
+		// 				req.session.oauth.access_token_secret = oauth_access_token_secret;
+		// 				//console.log(req.session.oauth);
+		// 				console.log(results);
+		// 				res.render('index.html', { oauth: results });
+		// 			}
+		// 		}
+		// 		);
+		// 	} else
+		// 		//next(new Error("you're not supposed to be here."))
+		// 		//console.log("index");
+		// 		res.redirect('/');
+		// });
 
 /**************************************************
 ** GAME VARIABLES
@@ -177,6 +177,8 @@ function onSocketConnection(client) {
 
 	// Listen for move player message
 	client.on("move player", onMovePlayer);
+
+	//this.emit("db data", { users: allUsers });
 };
 
 // Socket client has disconnected

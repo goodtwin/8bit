@@ -51,7 +51,9 @@ function init() {
 	});
 
 	// Initialise the local player
-	localPlayer = new Player(startX, startY);
+	//localPlayer = new Player(startX, startY);
+	//localPlayer.img = new Image();
+	//localPlayer.img.src = 
 
 	// Initialise socket connection
 	socket = io.connect("http://localhost", {port: 8000, transports: ["websocket"]});
@@ -115,6 +117,11 @@ function onResize(e) {
 // Socket connected
 function onSocketConnected() {
 	console.log("Connected to socket server");
+
+	// Initialise the local player
+	//localPlayer = new Player(startX, startY);
+	//localPlayer.img = new Image();
+	//localPlayer.img.src = 
 
 	// Send local player data to the game server
 	socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
