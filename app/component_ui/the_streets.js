@@ -19,8 +19,14 @@ define(
         this.$node.html( data.markup );
       }
 
+      this.renderEightBits = function(){
+        init();
+        animate();
+      }
+
       this.after('initialize', function() {
         this.on( document, 'theStreetsServed', this.showCanvas );
+        this.on( document, 'playerCardsShown', this.renderEightBits);
       });
     }
   }

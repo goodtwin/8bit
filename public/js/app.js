@@ -34,8 +34,8 @@ function init() {
 	// Initialise Omaha
 	omahaPlayers = [];
 	$( '.eight-bit' ).each(function( i ){
-		var startX = Math.round(Math.random()*(canvas.width-40)),
-			startY = Math.round(Math.random()*(canvas.height-80)),
+		var startX = startX,
+			startY = startY,
 			id = $( this ).attr('id'),
 			imgUri = $( this ).find('[class*=-bit_]').css('background-image').replace('url(','').replace(')','');
 		
@@ -51,7 +51,7 @@ function init() {
 	});
 
 	// Initialise the local player
-	//localPlayer = new Player(startX, startY);
+	localPlayer = new Player(startX, startY);
 	//localPlayer.img = new Image();
 	//localPlayer.img.src = 
 

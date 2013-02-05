@@ -22,6 +22,7 @@ define(
 
       this.showCards = function( e, data ){
         this.$node.html( data.markup );
+        this.trigger('playerCardsShown');
       }
 
       this.flipToggle = function(e){

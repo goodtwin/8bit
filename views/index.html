@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="/public/style/css/main.css">
 
-    <script src="../public/js/modernizr-2.6.2.min.js"></script>
+    <script src="public/js/modernizr-2.6.2.min.js"></script>
     <script type="text/javascript">
     WebFontConfig = { google: { families: [ 'Exo:200,600:latin', 'Press+Start+2P::latin' ] } };
     (function() {
@@ -28,25 +28,30 @@
 
   <body>
 
-    <script src="../../components/jquery/jquery.js"></script>
-    <script src="../../components/es5-shim/es5-shim.js"></script>
-    <script src="../../components/es5-shim/es5-sham.js"></script>
-    <script data-main="requireMain.js" src="../../components/requirejs/requirejs.js"></script>
+    <script src="components/jquery/jquery.js"></script>
+    <script src="components/es5-shim/es5-shim.js"></script>
+    <script src="components/es5-shim/es5-sham.js"></script>
+    <script data-main="requireMain.js" src="components/requirejs/requirejs.js"></script>
+    <script src="public/js/app.js"></script>
+    <script src="public/js/Keys.js"></script>
+    <script src="public/js/Player.js"></script>
+     <script src="public/js/Omaha.js"></script>
+      <script src="public/js/requestAnimationFrame.js"></script>
 
     <script>
       require(
         [
-          '../../components/flight/lib/compose',
-          '../../components/flight/lib/registry',
-          '../../components/flight/lib/advice',
-          '../../components/flight/lib/logger',
-          '../../components/flight/tools/debug/debug'
+          'components/flight/lib/compose',
+          'components/flight/lib/registry',
+          'components/flight/lib/advice',
+          'components/flight/lib/logger',
+          'components/flight/tools/debug/debug'
         ],
 
         function( compose, registry, advice, withLogging, debug ) {
           debug.enable( true );
           compose.mixin( registry, [ advice.withAdvice, withLogging ] );
-          require( [ '../app/boot/page' ], function( initialize ) {
+          require( [ 'app/boot/page' ], function( initialize ) {
             initialize();
           });
         }
