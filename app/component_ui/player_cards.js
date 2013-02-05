@@ -13,6 +13,11 @@ define(
     function playerCards() {
 
       this.defaultAttrs({
+        visualSelector : '.visual',
+        detailsSelector : '.details',
+        eightBitSelector: '.eight-bit',
+        flippedClass: 'flipped'
+
       });
 
       this.showCards = function( e, data ){
@@ -20,14 +25,17 @@ define(
       }
 
       this.flipToggle = function(e){
-          var p = $( this ).parent();
-          p.toggleClass( 'flipped' );
-          p.siblings().removeClass( 'flipped' );
+          var that = $(e.target).closest(this.select('eightBitSelector'));
+          that.toggleClass( this.attr.flippedClass );
+          that.siblings().removeClass( this.attr.flippedClass );
       }
       
       this.after('initialize', function() {
         this.on( document, 'playerCardsServed', this.showCards );
-        this.on( 'click',  this.flipToggle);
+        this.on( 'click',  {
+          visualSelector: this.flipToggle,
+          detailsSelector: this.flipToggle
+        });
       });
     }
   }
