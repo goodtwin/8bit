@@ -135,8 +135,9 @@ html, body {
             .bit {
                 @include inline-block;
                 height:120px;
-                width: 80px;
+                width: 120px;
                 background-size: contain;
+                background-position:50% 50%;
             }
 
             .arrow_btn {

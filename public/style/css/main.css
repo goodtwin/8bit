@@ -235,8 +235,9 @@ html, body {
         *display: inline;
         *vertical-align: auto;
         height: 120px;
-        width: 80px;
-        background-size: contain; }
+        width: 120px;
+        background-size: contain;
+        background-position: 50% 50%; }
       .bits-container .eight-bit .visual .arrow_btn {
         position: absolute;
         right: 10px;
