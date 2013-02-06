@@ -14,7 +14,7 @@ var canvas,			// Canvas DOM element
 ** GAME INITIALISATION
 **************************************************/
 function init() {
-	// Declare the canvas and rendering context
+	//Declare the canvas and rendering context
 	canvas = document.getElementById("street");
 	ctx = canvas.getContext("2d");
 
@@ -22,7 +22,7 @@ function init() {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight / 3;
 
-	// Initialise keyboard controls
+	//Initialise keyboard controls
 	keys = new Keys();
 
 	// Calculate a random start position for the local player
@@ -93,7 +93,7 @@ var setEventHandlers = function() {
 	socket.on("remove player", onRemovePlayer);
 };
 
-// Keyboard key down
+Keyboard key down
 function onKeydown(e) {
 	if (localPlayer) {
 		keys.onKeyDown(e);

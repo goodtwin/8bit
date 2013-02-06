@@ -107,6 +107,10 @@ Handlebars.registerHelper('with', function(context, options) {
 Handlebars.registerHelper('log', function(context) {
   Handlebars.log(context);
 });
+//Custom
+Handlebars.registerHelper('trim', function(context) {
+  return this.first_name.replace(/\s/g, '');
+});
 
 }(Handlebars));
 ;

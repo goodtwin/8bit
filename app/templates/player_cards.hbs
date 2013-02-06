@@ -1,12 +1,12 @@
 {{#each users}}
-<div id="{{this.first_name}}-{{this.last_name}}" class="eight-bit new">
+<div id="{{trim}}-{{last_name}}" class="eight-bit new">
 	<div class="visual">
-        <div class="bit -bit_{{this.first_name}}-{{this.last_name}}"></div>
+        <div class="bit -bit_{{trim}}-{{last_name}}"></div>
         <a href="#" class="arrow_btn"><span class="arrow"></span></a>
     </div>
     <div class="details">
-    	<h2 class="name">{{this.first_name}} {{this.last_name}}</h2>
-        <a href="http://twitter.com/{{this.handle}}" target="blank" class="handle">@{{this.handle}}</a>
+    	<h2 class="name">{{first_name}} {{last_name}}</h2>
+        <a href="http://twitter.com/{{handle}}" target="blank" class="handle">@{{handle}}</a>
         <a href="#" class="detail_btn">Set As Twitter Profile</a>
         <a href="#" class="detail_btn">Download 8-Bit</a>
     </div>

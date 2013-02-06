@@ -17,7 +17,6 @@ define(
         detailsSelector : '.details',
         eightBitSelector: '.eight-bit',
         flippedClass: 'flipped'
-
       });
 
       this.showCards = function( e, data ){

@@ -34,8 +34,8 @@ var Omaha = function(startX, startY) {
 			imgw = this.img.width,  
 			sev = 0,
 			newsev = new Array(1,-1,2,-2,0,0,1,-1,2,-2),
-			h = canvas.height - imgh*1.5, 
-			w = canvas.width - imgw*1.5,
+			h = $('#street').height() - imgh*1.5, 
+			w = $('#street').width() - imgw*1.5,
 			vb,hb,dy,dx,curr;
 			
 		function newpath(){

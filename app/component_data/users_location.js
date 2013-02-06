@@ -26,7 +26,7 @@ define(
       }
 
       this.after("initialize", function() {
-        this.on( document, 'userInfoServed', this.getTheStreets );
+        this.on( document, 'playerCardsShown', this.getTheStreets );
       });
     }
 

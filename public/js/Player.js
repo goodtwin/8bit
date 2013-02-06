@@ -6,7 +6,8 @@ var Player = function(startX, startY) {
 		y = startY,
 		id,
 		dy= 2 , 
-		dx = 2;
+		dx = 2,
+		canvas = document.getElementById("street");
 	
 	// Getters and setters
 	var getX = function() {
@@ -58,7 +59,9 @@ var Player = function(startX, startY) {
 			this.img = new Image();
 			this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
 		}
-	    ctx.drawImage(this.img, x, y, this.img.width*2, this.img.height*2);
+	    ctx.drawImage(this.img, x, y, this.img.width, this.img.height);
+
+
 	};
 
 	// Define which variables and methods can be accessed

@@ -32,11 +32,10 @@
     <script src="components/es5-shim/es5-shim.js"></script>
     <script src="components/es5-shim/es5-sham.js"></script>
     <script data-main="requireMain.js" src="components/requirejs/requirejs.js"></script>
-    <script src="public/js/app.js"></script>
     <script src="public/js/Keys.js"></script>
     <script src="public/js/Player.js"></script>
-     <script src="public/js/Omaha.js"></script>
-      <script src="public/js/requestAnimationFrame.js"></script>
+    <script src="public/js/Omaha.js"></script>
+    <script src="public/js/requestAnimationFrame.js"></script>
 
     <script>
       require(
@@ -49,8 +48,8 @@
         ],
 
         function( compose, registry, advice, withLogging, debug ) {
-          debug.enable( true );
-          compose.mixin( registry, [ advice.withAdvice, withLogging ] );
+          debug.enable( false );
+          compose.mixin( registry, [ advice.withAdvice ] );
           require( [ 'app/boot/page' ], function( initialize ) {
             initialize();
           });
@@ -64,6 +63,7 @@
     </header>
 
     <section class="scape">
+      <canvas id="street"></canvas>
     </section>
 
     <section class="bits-container">
