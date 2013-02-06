@@ -21,14 +21,14 @@ define(
 
       this.showCards = function( e, data ){
         this.$node.html( data.markup );
-        this.trigger('playerCardsShown');
-      }
+        this.trigger('playerCardsShown', { });
+      };
 
       this.flipToggle = function(e){
-          var that = $(e.target).closest(this.select('eightBitSelector'));
-          that.toggleClass( this.attr.flippedClass );
-          that.siblings().removeClass( this.attr.flippedClass );
-      }
+        var that = $(e.target).closest(this.select('eightBitSelector'));
+        that.toggleClass( this.attr.flippedClass );
+        that.siblings().removeClass( this.attr.flippedClass );
+      };
       
       this.after('initialize', function() {
         this.on( document, 'playerCardsServed', this.showCards );

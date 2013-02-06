@@ -1,7 +1,7 @@
 /**************************************************
 ** GAME PLAYER CLASS
 **************************************************/
-var Player = function(startX, startY, canvas) {
+var Player = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		id,
@@ -39,14 +39,14 @@ var Player = function(startX, startY, canvas) {
 		if (keys.up) {
 			y = y - dy > 0 ? y - dy : prevY;
 		} else if (keys.down) {
-			y = y + dy < canvas.height-80 ? y + dy : prevY;
+			y = y + dy < $('#street').height()-80 ? y + dy : prevY;
 		};
 
 		// Left key takes priority over right
 		if (keys.left) {
 			x = x - dx > 0 ? x - dx : prevX;
 		} else if (keys.right) {
-			x = x + dx < canvas.width-50 ? x + dx : prevX;
+			x = x + dx < $('#street').width()-50 ? x + dx : prevX;
 		};
 
 		return (prevX != x || prevY != y) ? true : false;

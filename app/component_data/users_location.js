@@ -19,14 +19,19 @@ define(
 
       this.getTheStreets = function(){
         this.trigger( 'theStreetsServed', { markup: this.renderTheStreets({ oauth: false }) } );
-      }
+      };
 
       this.renderTheStreets = function(){
         return streetsTemplate({});
-      }
+      };
+
+      this.getEightBits = function(){
+        this.trigger( 'eightBitsServed',  { users: dataStore.users } );
+      };
 
       this.after("initialize", function() {
         this.on( document, 'playerCardsShown', this.getTheStreets );
+        this.on( document, 'eightBitsRequested', this.getEightBits );
       });
     }
 

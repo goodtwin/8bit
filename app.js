@@ -16,17 +16,17 @@ var express = require('express'),
 	server.listen(8000);
 
 	// Connect to the db
-	var databaseUrl = "8bit"; // "username:password@example.com/mydb"
-	var collections = ["users"]
-	var db = mongojs.connect(databaseUrl, collections);
-	db.users.find(function(err, users) {
-		if( err || !users ) console.log("User not saved");
-		else /*users.forEach( function(user) {*/
-			//console.log(users);
-			//res.render('index.html', { users: users });
-			allUsers = users;
-		//});
-	});
+	// var databaseUrl = "8bit"; // "username:password@example.com/mydb"
+	// var collections = ["users"]
+	// var db = mongojs.connect(databaseUrl, collections);
+	// db.users.find(function(err, users) {
+	// 	if( err || !users ) console.log("User not saved");
+	// 	else /*users.forEach( function(user) {*/
+	// 		//console.log(users);
+	// 		//res.render('index.html', { users: users });
+	// 		allUsers = users;
+	// 	//});
+	// });
 	
 	var oa = new OAuth(
 		"https://api.twitter.com/oauth/request_token",
@@ -73,6 +73,7 @@ var express = require('express'),
 						req.session.oauth.access_token = oauth_access_token;
 						req.session.oauth.access_token_secret = oauth_access_token_secret;
 						console.log(results);
+						Results = results;
 						res.render('index.html');
 					}
 				}
@@ -178,7 +179,8 @@ function onSocketConnection(client) {
 	// Listen for move player message
 	client.on("move player", onMovePlayer);
 
-	this.emit("db data", { users: allUsers });
+	// Listen for Oauth request
+	client.on('lookingForOauth', onOauthRequest);
 };
 
 // Socket client has disconnected
@@ -237,6 +239,14 @@ function onMovePlayer(data) {
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
+};
+
+// Player has moved
+function onOauthRequest() {
+	var oauth = typeof Results == "undefined" || Results === false ? false : true;
+	var results = oauth ? Results : false;
+	//console.log();
+	this.emit("oauth returned", {oauth: oauth, results: results});
 };
 
 
