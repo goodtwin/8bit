@@ -16,17 +16,17 @@ var express = require('express'),
 	server.listen(8000);
 
 	// Connect to the db
-	// var databaseUrl = "8bit"; // "username:password@example.com/mydb"
-	// var collections = ["users"]
-	// var db = mongojs.connect(databaseUrl, collections);
-	// db.users.find(function(err, users) {
-	// 	if( err || !users ) console.log("User not saved");
-	// 	else /*users.forEach( function(user) {*/
-	// 		//console.log(users);
-	// 		//res.render('index.html', { users: users });
-	// 		allUsers = users;
-	// 	//});
-	// });
+	var databaseUrl = "8bit"; // "username:password@example.com/mydb"
+	var collections = ["users"]
+	var db = mongojs.connect(databaseUrl, collections);
+	db.users.find(function(err, users) {
+		if( err || !users ) console.log("User not saved");
+		else /*users.forEach( function(user) {*/
+			//console.log(users);
+			//res.render('index.html', { users: users });
+			allUsers = users;
+		//});
+	});
 	
 	var oa = new OAuth(
 		"https://api.twitter.com/oauth/request_token",
@@ -178,7 +178,7 @@ function onSocketConnection(client) {
 	// Listen for move player message
 	client.on("move player", onMovePlayer);
 
-	//this.emit("db data", { users: allUsers });
+	this.emit("db data", { users: allUsers });
 };
 
 // Socket client has disconnected

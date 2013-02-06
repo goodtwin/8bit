@@ -30,14 +30,15 @@ define(
       });
 
       this.showCanvas = function( e, data ){
-        //this.$node.html( data.markup );
+        this.$node.html( data.markup );
         // Declare the canvas and rendering context
-        ctx = $(this.select('canvasSelector'))[0].getContext("2d");
+        canvas = document.getElementById("street");
+        ctx = canvas.getContext("2d");
 
         // Maximise the canvas
-        $(this.select('canvasSelector')).width(window.innerWidth);
-        $(this.select('canvasSelector')).height(window.innerHeight / 3);
-        that = this;
+        canvas.width = window.innerWidth / 2;
+        canvas.height = window.innerHeight / 3;
+        
         this.trigger('canvasShown');
       }
 
@@ -45,35 +46,30 @@ define(
         // Initialise keyboard controls
         keys = new Keys();
 
-        console.log($(this.select('canvasSelector')).width());
-
-        // startX = Math.round(Math.random()*$(this.select('canvasSelector')).width()-40),
-        // startY = Math.round(Math.random()*$(this.select('canvasSelector')).height()-80);
-
-        startX = 0,
-        startY = 0;
+        startX = startX = Math.round(Math.random()*(canvas.width-40)),
+        startY = Math.round(Math.random()*(canvas.height-80));
 
         // Initialise Omaha
         omahaPlayers = [];
         $('.eight-bit').each(function( i ){
-          var startX = 0,
-            startY = 0,
-            id = $( this ).attr('id'),
-            imgUri = $( this ).find('[class*=-bit_]').css('background-image').replace('url(','').replace(')','');
+          var startX = Math.round(Math.random()*(canvas.width-40)),
+              startY = Math.round(Math.random()*(canvas.height-80)),
+              id = $( this ).attr('id'),
+              imgUri = $( this ).find('[class*=-bit_]').css('background-image').replace('url(','').replace(')','');
           
-          var newPlayer = new Omaha(startX, startY);
-          newPlayer.id = id;
-          newPlayer.currX = startX;
-          newPlayer.currY = startY;
-          newPlayer.img = new Image();
-          newPlayer.img.src = imgUri;
+          var newPlayer = new Omaha(startX, startY, canvas);
+              newPlayer.id = id;
+              newPlayer.currX = startX;
+              newPlayer.currY = startY;
+              newPlayer.img = new Image();
+              newPlayer.img.src = imgUri;
 
           // Add new player to the Omaha players array
           omahaPlayers.push(newPlayer);
         });
 
         // Initialise the local player
-        localPlayer = new Player(startX, startY);
+        localPlayer = new Player(startX, startY, canvas);
         //localPlayer.img = new Image();
         //localPlayer.img.src = 
 
@@ -109,7 +105,7 @@ define(
 
       this.draw = function() {
         // Wipe the canvas clean
-        ctx.clearRect(0, 0, $(this.select('canvasSelector')).width(), $(this.select('canvasSelector')).height());
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Draw the Omaha players
         var i;
@@ -145,7 +141,7 @@ define(
       this.onResize = function(e) {
         console.log('resize')
         // Maximise the canvas
-        $(this.select('canvasSelector')).width(window.innerWidth);
+        canvas.width = window.innerWidth / 2;
       };
 
       // Socket connected
@@ -160,8 +156,6 @@ define(
         that.trigger('socketConnected');
         // Send local player data to the game server
         socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
-
-
       };
 
       // Socket disconnected
@@ -221,10 +215,10 @@ define(
       };
 
       this.after('initialize', function() {
+        that = this;
         this.on( document, 'theStreetsServed', this.showCanvas );
         this.on( document, 'socketConnected', this.renderEightBits);
         this.on( document, 'gameInitialized', this.animateFrame);
-        this.on( document, 'loopAnimation', this.animateFrame);
         this.on( document, 'update', this.update);
         this.on( document, 'draw', this.draw);
         this.on( document, 'keydown', this.onKeydown);

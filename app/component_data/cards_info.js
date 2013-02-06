@@ -16,7 +16,6 @@ define(
     return defineComponent(cardsInfo);
 
     function cardsInfo() {
-      var s = this;
 
       this.startOAuth = function(ev, data) {
 

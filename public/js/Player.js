@@ -1,13 +1,12 @@
 /**************************************************
 ** GAME PLAYER CLASS
 **************************************************/
-var Player = function(startX, startY) {
+var Player = function(startX, startY, canvas) {
 	var x = startX,
 		y = startY,
 		id,
-		dy= 2 , 
-		dx = 2,
-		canvas = document.getElementById("street");
+		dy= 4 , 
+		dx = 4;
 	
 	// Getters and setters
 	var getX = function() {
@@ -59,7 +58,7 @@ var Player = function(startX, startY) {
 			this.img = new Image();
 			this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
 		}
-	    ctx.drawImage(this.img, x, y, this.img.width, this.img.height);
+	    ctx.drawImage(this.img, x, y, this.img.width*1.5, this.img.height*1.5);
 
 
 	};

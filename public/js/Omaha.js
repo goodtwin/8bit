@@ -1,7 +1,7 @@
 /**************************************************
 ** GAME PLAYER CLASS
 **************************************************/
-var Omaha = function(startX, startY) {
+var Omaha = function(startX, startY, canvas) {
 	var x = startX,
 		y = startY,
 		c1 = 0,
@@ -34,8 +34,8 @@ var Omaha = function(startX, startY) {
 			imgw = this.img.width,  
 			sev = 0,
 			newsev = new Array(1,-1,2,-2,0,0,1,-1,2,-2),
-			h = $('#street').height() - imgh*1.5, 
-			w = $('#street').width() - imgw*1.5,
+			h = canvas.height - imgh*1.5, 
+			w = canvas.width - imgw*1.5,
 			vb,hb,dy,dx,curr;
 			
 		function newpath(){
@@ -74,7 +74,8 @@ var Omaha = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-	    ctx.drawImage(this.img, x, y, this.img.width*1.5, this.img.height*1.5);
+		console.log(canvas);
+	    ctx.drawImage(this.img, x, y, this.img.width, this.img.height);
 	};
 
 	// Define which variables and methods can be accessed
