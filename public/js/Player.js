@@ -58,7 +58,7 @@ var Player = function(startX, startY, canvas) {
 			this.img = new Image();
 			this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
 		}
-	    ctx.drawImage(this.img, x, y, this.img.width*1.5, this.img.height*1.5);
+	    ctx.drawImage(this.img, x, y, this.img.width*2, this.img.height*2);
 
 
 	};

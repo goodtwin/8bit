@@ -36,8 +36,8 @@ define(
         ctx = canvas.getContext("2d");
 
         // Maximise the canvas
-        canvas.width = window.innerWidth / 2;
-        canvas.height = window.innerHeight / 3;
+        canvas.width = window.innerWidth;
+        canvas.height = 390;
         
         this.trigger('canvasShown');
       }
@@ -141,7 +141,7 @@ define(
       this.onResize = function(e) {
         console.log('resize')
         // Maximise the canvas
-        canvas.width = window.innerWidth / 2;
+        canvas.width = window.innerWidth;
       };
 
       // Socket connected

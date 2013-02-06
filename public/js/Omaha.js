@@ -74,8 +74,7 @@ var Omaha = function(startX, startY, canvas) {
 
 	// Draw player
 	var draw = function(ctx) {
-		console.log(canvas);
-	    ctx.drawImage(this.img, x, y, this.img.width, this.img.height);
+	    ctx.drawImage(this.img, x, y, this.img.width*1.5, this.img.height*1.5);
 	};
 
 	// Define which variables and methods can be accessed
