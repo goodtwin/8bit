@@ -21,7 +21,7 @@ define(
 
       this.showCards = function( e, data ){
         this.$node.html( data.markup );
-        this.trigger('playerCardsShown', { });
+        this.trigger('playerCardsShown', { oauth: data.oauth, results: data.results });
       };
 
       this.flipToggle = function(e){

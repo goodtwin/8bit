@@ -17,16 +17,20 @@ define(
 
     function streetInfo() {
 
-      this.getTheStreets = function(){
-        this.trigger( 'theStreetsServed', { markup: this.renderTheStreets({ oauth: false }) } );
+      this.getTheStreets = function(e, data){
+        this.trigger( 'theStreetsServed', { 
+          markup: this.renderTheStreets({ oauth: data.oauth, results: data.results }),
+          oauth: data.oauth, 
+          results: data.results
+        } );
       };
 
-      this.renderTheStreets = function(){
-        return streetsTemplate({});
+      this.renderTheStreets = function(data){
+        return streetsTemplate(data);
       };
 
-      this.getEightBits = function(){
-        this.trigger( 'eightBitsServed',  { users: dataStore.users } );
+      this.getEightBits = function(e, data){
+        this.trigger( 'eightBitsServed',  { users: dataStore.users, oauth: data.oauth, results: data.results } );
       };
 
       this.after("initialize", function() {

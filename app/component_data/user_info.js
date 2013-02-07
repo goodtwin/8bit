@@ -25,18 +25,20 @@ define(
       };
       
       this.getUser = function(data){
-        console.log(data);
-        that.trigger( 'userInfoServed', { markup: that.renderMenu(data) } );
+        dataStore.oauth.push({
+          oauth: data.oauth, 
+          results: data.results
+        });
+        that.trigger( 'userInfoServed', { markup: that.renderMenu(  data  ), oauth: dataStore.oauth, results: dataStore.results } );
       };
       
-      this.renderMenu = function(){
-        return menuTemplate({});
+      this.renderMenu = function( data ){
+        return menuTemplate( data );
       };
 
       this.after('initialize', function() {
         that = this;
         this.on( 'userInfoRequested', this.startOAuth );
-        //this.on( 'oauthServed', this.getUser );
 
         var socket = io.connect("http://localhost");
         socket.on("oauth returned", this.getUser);

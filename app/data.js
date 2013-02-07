@@ -45,6 +45,8 @@ define(
         { first_name: "steve", last_name: "gordan", handle: "RDQLUS1", date_added: "" },
         { first_name: "sumeet", last_name: "jain", handle: "sumeetjain", date_added: "" },
         { first_name: "tom", last_name: "flaherty", handle: "thomasflaherty", date_added: "" }
+      ],
+      oauth: [
       ]
     };
     return data;

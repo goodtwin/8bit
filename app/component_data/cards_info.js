@@ -21,9 +21,11 @@ define(
 
       };
       
-      this.getPlayerCards = function(data){
+      this.getPlayerCards = function(e, data){
         this.trigger( 'playerCardsServed', { 
-          markup: this.renderCards( { users: dataStore.users, oauth: false } ) 
+          markup: this.renderCards( { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } ),
+          oauth: dataStore.oauth, 
+          results: dataStore.results  
         });
       };
 
@@ -32,7 +34,7 @@ define(
       };
 
       this.after('initialize', function() {
-        this.on( document, 'userInfoServed', this.getPlayerCards );
+        this.on( document, 'userMenuRendered', this.getPlayerCards );
       });
     }
 

@@ -20,6 +20,7 @@ define(
 
       this.showUser = function( e, data ){
         this.$node.html( data.markup );
+        this.trigger('userMenuRendered', data );
       };
 
       this.after('initialize', function() {

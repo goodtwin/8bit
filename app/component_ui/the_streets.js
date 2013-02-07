@@ -36,40 +36,22 @@ define(
         this.select('canvasSelector').attr('width', window.innerWidth);
         this.select('canvasSelector').attr('height', 390);
 
-        this.trigger('canvasShown');
+        this.trigger('canvasShown', { oauth: data.oauth, results: data.results });
       }
 
-      this.renderEightBits = function(){
+      this.initializeGame = function(e, data){
         // Initialise keyboard controls
-        
-
         keys = new Keys();
 
         startX = Math.round(Math.random()*(this.select('canvasSelector').attr('width')-40)),
         startY = Math.round(Math.random()*(this.select('canvasSelector').attr('height')-80));
 
         // Initialise Omaha
-        this.trigger('eightBitsRequested');
-
-        // omahaPlayers = [];
-        // $('.eight-bit').each(function( i ){
-        //   var startX = Math.round(Math.random()*(that.select('canvasSelector').attr('width')-40)),
-        //       startY = Math.round(Math.random()*(that.select('canvasSelector').attr('height')-80)),
-        //       id = $( this ).attr('id'),
-        //       imgUri = $( this ).find('[class*=-bit_]').css('background-image').replace('url(','').replace(')','');
-          
-        //   var newPlayer = new Omaha(startX, startY);
-        //       newPlayer.id = id;
-        //       newPlayer.currX = startX;
-        //       newPlayer.currY = startY;
-        //       newPlayer.img = new Image();
-        //       newPlayer.img.src = imgUri;
-
-        //   // Add new player to the Omaha players array
-        //   omahaPlayers.push(newPlayer);
-        // });
-
+        this.trigger('eightBitsRequested', { oauth: data.oauth, results: data.results });
         
+        // if( data.results.screen_name ){
+        //   this.trigger('localPlayerRequested', { oauth: data.oauth, results: data.results });
+        // }
         // Initialise the local player
         //localPlayer = new Player(startX, startY);
         //localPlayer.img = new Image();
@@ -141,7 +123,6 @@ define(
 
       // Browser window resize
       this.onResize = function(e) {
-        console.log('resize')
         // Maximise the canvas
         this.select('canvasSelector').attr('width', window.innerWidth);
       };
@@ -155,7 +136,7 @@ define(
         //localPlayer = new Player(startX, startY);
         //localPlayer.img = new Image();
         //localPlayer.img.src = 
-        that.trigger('socketConnected');
+        //that.trigger('socketConnected');
         // Send local player data to the game server
         //socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
       };
@@ -244,7 +225,7 @@ define(
       this.after('initialize', function() {
         that = this;
         this.on( document, 'theStreetsServed', this.showCanvas );
-        this.on( document, 'socketConnected', this.renderEightBits);
+        this.on( document, 'canvasShown', this.initializeGame);
         this.on( document, 'gameInitialized', this.animateFrame);
         this.on( document, 'eightBitsServed', this.createOmahaPlayers);
         //this.on( document, 'oauthServed', this.createlocalPlayer);
