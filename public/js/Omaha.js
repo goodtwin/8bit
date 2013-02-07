@@ -7,7 +7,9 @@ var Omaha = function(startX, startY) {
 		c1 = 0,
 		c2 = 0,
 		dir = Math.random() > .3 ? 180 : 0,
-		vel =  Math.random() < 0.5 ? .3 : .8;
+		vel =  Math.random() < 0.5 ? .3 : .8,
+		shadow = new Image();
+		shadow.src = 'public/img/bit_shadows.svg';
 	
 	// Getters and setters
 	var getX = function() {
@@ -74,6 +76,7 @@ var Omaha = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
+	    ctx.drawImage(shadow, x-(this.img.width/2), y+(this.img.height*1.35));
 	    ctx.drawImage(this.img, x, y, this.img.width*1.5, this.img.height*1.5);
 	};
 

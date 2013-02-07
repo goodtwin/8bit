@@ -6,7 +6,9 @@ var Player = function(startX, startY) {
 		y = startY,
 		id,
 		dy= 4 , 
-		dx = 4;
+		dx = 4,
+		shadow = new Image();
+		shadow.src = 'public/img/bit_shadows.svg';
 	
 	// Getters and setters
 	var getX = function() {
@@ -54,10 +56,11 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-		if (typeof this.img == "undefined") {
-			this.img = new Image();
-			this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
-		}
+		// if (typeof this.img == "undefined") {
+		// 	this.img = new Image();
+		// 	this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
+		// }
+	    ctx.drawImage(shadow, x, y+(this.img.height*1.85));
 	    ctx.drawImage(this.img, x, y, this.img.width*2, this.img.height*2);
 	};
 
