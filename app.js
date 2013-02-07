@@ -9,6 +9,7 @@ var express = require('express'),
     MongoClient = require('mongodb').MongoClient,
     mongojs = require("mongojs"),
     OAuth= require('oauth').OAuth,
+    twitter = require('ntwitter'),
   	util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
@@ -36,6 +37,23 @@ var express = require('express'),
 		"1.0",
 		"http://localhost:8000/",
 		"HMAC-SHA1"
+	);
+
+	var t = new twitter({
+	    consumer_key: "253hJFYT0ycsQdy1NEjp7Q",
+	    consumer_secret: "KRnLaoNlmKaTTFSXJJ7zI6VXKnf0yEr8kr6klRtyiM0",
+	    access_token_key: "275539731-7Jqu2a53nNmcsvjWpIPWQsBBDwm8QtXJ7yPYzfI0",
+	    access_token_secret: "i5zgbf68AJc7BAZuTzGbq9FJJO1XvxRjMydGtJlGY"
+	});
+
+	t.stream(
+	    'statuses/filter',
+	    { follow: ['7452872', '69147333']},
+	    function(stream) {
+	        stream.on('data', function(tweet) {
+	            console.log(tweet);
+	        });
+	    }
 	);
 
 	swig.init({

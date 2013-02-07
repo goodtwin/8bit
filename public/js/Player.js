@@ -60,7 +60,26 @@ var Player = function(startX, startY) {
 		// 	this.img = new Image();
 		// 	this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
 		// }
-	    ctx.drawImage(shadow, x, y+(this.img.height*1.85));
+	    var ex = x+this.img.width,
+	    	ey = y+this.img.height*1.9,
+	    	height = 20,
+	    	width = 60,
+	    	grd = ctx.createRadialGradient(ex,ey,12,ex,ey,35);
+		    grd.addColorStop(0, "rgba(50, 50, 50, 0.3)");
+		    grd.addColorStop(1, "rgba(250, 250, 250, 0.1)");
+	    ctx.beginPath();
+		    ctx.moveTo(ex - width/2, ey); // A1
+		    ctx.bezierCurveTo(
+		      ex - width/2, ey - height/2, // C1
+		      ex + width/2, ey - height/2, // C2
+		      ex + width/2, ey ); // A2
+		    ctx.bezierCurveTo(
+		      ex + width/2, ey + height/2, // C3
+		      ex - width/2, ey + height/2, // C4
+		      ex - width/2, ey ); // A1		 
+		    ctx.fillStyle = grd;
+		    ctx.fill();
+	    ctx.closePath();
 	    ctx.drawImage(this.img, x, y, this.img.width*2, this.img.height*2);
 	};
 

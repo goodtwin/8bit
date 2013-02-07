@@ -76,7 +76,26 @@ var Omaha = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-	    ctx.drawImage(shadow, x-(this.img.width/2), y+(this.img.height*1.35));
+	    var ex = x+this.img.width/1.5,
+	    	ey = y+this.img.height*1.4,
+	    	height = 15,
+	    	width = 50,
+	    	grd = ctx.createRadialGradient(ex,ey,9,ex,ey,30);
+		    grd.addColorStop(0, "rgba(50, 50, 50, 0.3)");
+		    grd.addColorStop(1, "rgba(250, 250, 250, 0.1)");
+	    ctx.beginPath();
+		    ctx.moveTo(ex - width/2, ey); // A1
+		    ctx.bezierCurveTo(
+		      ex - width/2, ey - height/2, // C1
+		      ex + width/2, ey - height/2, // C2
+		      ex + width/2, ey ); // A2
+		    ctx.bezierCurveTo(
+		      ex + width/2, ey + height/2, // C3
+		      ex - width/2, ey + height/2, // C4
+		      ex - width/2, ey ); // A1		 
+		    ctx.fillStyle = grd;
+		    ctx.fill();
+	    ctx.closePath();
 	    ctx.drawImage(this.img, x, y, this.img.width*1.5, this.img.height*1.5);
 	};
 
