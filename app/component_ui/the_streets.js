@@ -38,16 +38,16 @@ define(
       }
 
       this.initializeGame = function(e, data){
-        // Initialise keyboard controls
+        // Initialize keyboard controls
         keys = new Keys();
 
-        // Initialise Omaha
+        // Initialize Omaha
         this.trigger('eightBitsRequested');
 
-        // Initialise socket connection
+        // Initialize socket connection
         socket = io.connect("http://localhost");
 
-        // Initialise remote players array
+        // Initialize remote players array
         remotePlayers = [];
 
         this.trigger('gameInitialized');
@@ -56,7 +56,6 @@ define(
       this.animateFrame = function(){
         that.trigger('update');
         that.trigger('draw');
-        // Request a new animation frame using Paul Irish's shim
         window.requestAnimFrame(that.animateFrame);
       }
 
@@ -64,8 +63,7 @@ define(
         // Update local player and check for change
         if(localPlayer){
           if (localPlayer.update(keys)) {
-            // Send local player data to the game server
-            socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY(), img: localPlayer.img.src});
+            socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY(), handle: localPlayer.handle, img: localPlayer.img.src});
           };
         };
 
@@ -112,7 +110,6 @@ define(
 
       // Browser window resize
       this.onResize = function(e) {
-        // Maximise the canvas
         this.select('canvasSelector').attr('width', window.innerWidth);
       };
 
@@ -120,9 +117,6 @@ define(
       this.onSocketConnected = function() {
         socket = io.connect("http://localhost");
         console.log("Connected to socket server");
-
-        //Send local player data to the game server
-        //socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
       };
 
       // Socket disconnected
@@ -134,14 +128,17 @@ define(
       this.onNewPlayer = function(data) {
         console.log("New player connected: "+data.id);
 
-        // Initialise the new player
+        // Initialize the new player
         var newPlayer = new Player(data.x, data.y);
         newPlayer.id = data.id;
+        newPlayer.handle = data.handle;
         newPlayer.img = new Image();
         newPlayer.img.src = data.img;
 
         // Add new player to the remote players array
         remotePlayers.push(newPlayer);
+
+        that.removeFromOmahaPlayers({handle: newPlayer.handle })
       };
 
       // Move player
@@ -174,8 +171,7 @@ define(
       };
 
       this.playerById = function(id) {
-        var i;
-        for (i = 0; i < remotePlayers.length; i++) {
+        for (var i = 0; i < remotePlayers.length; i++) {
           if (remotePlayers[i].id == id)
             return remotePlayers[i];
         };
@@ -194,10 +190,10 @@ define(
           
           var newPlayer = new Omaha(startX, startY);
               newPlayer.id = id;
+              newPlayer.handle = handle;
               newPlayer.img = new Image();
               newPlayer.img.src = imgUri;
 
-          // Add new player to the Omaha players array
           omahaPlayers.push(newPlayer);
         };
       };
@@ -211,10 +207,18 @@ define(
             imgUri = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
         
         localPlayer = new Player(startX, startY);
+        localPlayer.handle = handle;
         localPlayer.img = new Image();
         localPlayer.img.src = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
 
-        socket.emit("new player", { x: localPlayer.getX(), y: localPlayer.getY(), img: localPlayer.img.src });
+        socket.emit("new player", { x: localPlayer.getX(), y: localPlayer.getY(), handle: localPlayer.handle, img: localPlayer.img.src });
+
+        this.removeFromOmahaPlayers({handle: localPlayer.handle })
+      };
+
+      this.removeFromOmahaPlayers = function(data){
+        var match = omahaPlayers.filter(function (user) { return user.handle == data.handle });
+        omahaPlayers.splice(omahaPlayers.indexOf(match[0]), 1);
       };
 
       this.after('initialize', function() {
@@ -234,19 +238,10 @@ define(
 
 
         var socket = io.connect("http://localhost");
-        // Socket connection successful
         socket.on("connect", this.onSocketConnected);
-
-        // Socket disconnection
         socket.on("disconnect", this.onSocketDisconnect);
-
-        // New player message received
         socket.on("new player", this.onNewPlayer);
-
-        // Player move message received
         socket.on("move player", this.onMovePlayer);
-
-        // Player removed message received
         socket.on("remove player", this.onRemovePlayer);
       });
     }

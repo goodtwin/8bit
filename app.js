@@ -176,16 +176,17 @@ function onNewPlayer(data) {
 	// Create a new player
 	var newPlayer = new Player(data.x, data.y);
 	newPlayer.id = this.id;
+	newPlayer.handle = data.handle;
 	newPlayer.img = data.img;
 
 	// Broadcast new player to connected socket clients
-	this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY(), img: newPlayer.img});
+	this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY(), handle: newPlayer.handle, img: newPlayer.img});
 
 	// Send existing players to the new player
 	var i, existingPlayer;
 	for (i = 0; i < players.length; i++) {
 		existingPlayer = players[i];
-		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), img: existingPlayer.img});
+		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), handle: existingPlayer.handle, img: existingPlayer.img});
 	};
 		
 	// Add new player to the players array
@@ -208,10 +209,10 @@ function onMovePlayer(data) {
 	movePlayer.setY(data.y);
 
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), img: movePlayer.img});
+	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), handle: movePlayer.handle, img: movePlayer.img});
 };
 
-// Player has moved
+// Oauth state requested
 function onOauthRequest() {
 	var oauth = typeof Results == "undefined" || Results === false ? false : true;
 	var results = oauth ? Results : false;
@@ -223,7 +224,7 @@ function onOauthRequest() {
 	var i, existingPlayer;
 	for (i = 0; i < players.length; i++) {
 		existingPlayer = players[i];
-		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), img: existingPlayer.img});
+		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), handle: existingPlayer.handle, img: existingPlayer.img});
 	};
 };
 

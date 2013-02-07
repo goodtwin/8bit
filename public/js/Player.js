@@ -59,8 +59,6 @@ var Player = function(startX, startY) {
 			this.img.src = $('.-bit_andrew-wirick').css('background-image').replace('url(','').replace(')','');
 		}
 	    ctx.drawImage(this.img, x, y, this.img.width*2, this.img.height*2);
-
-
 	};
 
 	// Define which variables and methods can be accessed
