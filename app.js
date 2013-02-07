@@ -5,11 +5,13 @@ var express = require('express'),
 	app = express(),
 	cons = require('consolidate'),
     swig = require('swig'),
-    server = require('http').createServer(app),
+    http = require('http'),
+    https = require('https'),
+    server = http.createServer(app),
     MongoClient = require('mongodb').MongoClient,
     mongojs = require("mongojs"),
     OAuth= require('oauth').OAuth,
-    twitter = require('ntwitter'),
+    Twitter = require('ntwitter'),
   	util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
@@ -32,29 +34,19 @@ var express = require('express'),
 	var oa = new OAuth(
 		"https://api.twitter.com/oauth/request_token",
 		"https://api.twitter.com/oauth/access_token",
-		"253hJFYT0ycsQdy1NEjp7Q",
-		"KRnLaoNlmKaTTFSXJJ7zI6VXKnf0yEr8kr6klRtyiM0",
+		"8YVoUbVLwaWmoxLgPk5nqg",
+		"rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc",
 		"1.0",
 		"http://localhost:8000/",
 		"HMAC-SHA1"
 	);
 
-	var t = new twitter({
-	    consumer_key: "253hJFYT0ycsQdy1NEjp7Q",
-	    consumer_secret: "KRnLaoNlmKaTTFSXJJ7zI6VXKnf0yEr8kr6klRtyiM0",
-	    access_token_key: "275539731-7Jqu2a53nNmcsvjWpIPWQsBBDwm8QtXJ7yPYzfI0",
-	    access_token_secret: "i5zgbf68AJc7BAZuTzGbq9FJJO1XvxRjMydGtJlGY"
+	var t = new Twitter({
+	    consumer_key: "8YVoUbVLwaWmoxLgPk5nqg",
+	    consumer_secret: "rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc",
+	    access_token_key: "15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI",
+	    access_token_secret: "6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo"
 	});
-
-	t.stream(
-	    'statuses/filter',
-	    { follow: ['7452872', '69147333']},
-	    function(stream) {
-	        stream.on('data', function(tweet) {
-	            console.log(tweet);
-	        });
-	    }
-	);
 
 	swig.init({
 		cache: false,
@@ -89,7 +81,7 @@ var express = require('express'),
 					} else {
 						req.session.oauth.access_token = oauth_access_token;
 						req.session.oauth.access_token_secret = oauth_access_token_secret;
-						console.log(results);
+						console.log(req.session.oauth);
 						Results = results;
 						res.render('index.html');
 					}
@@ -99,7 +91,7 @@ var express = require('express'),
 				res.render('index.html');
 		})
 		.get('/auth/twitter', function(req, res){
-			console.log(req.session.oauth),
+			//console.log(req.session.oauth),
 			oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
 				if (error) {
 					console.log(error);
@@ -168,6 +160,8 @@ function onSocketConnection(client) {
 
 	// Listen for Oauth request
 	client.on('lookingForOauth', onOauthRequest);
+
+	client.on('lookingForTweets', onTweetsRequest);
 };
 
 // Socket client has disconnected
@@ -244,6 +238,41 @@ function onOauthRequest() {
 		existingPlayer = players[i];
 		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), handle: existingPlayer.handle, img: existingPlayer.img});
 	};
+};
+
+// Tweets requested
+function onTweetsRequest(data) {
+	console.log('stream started');
+	var twitterIds = [],
+		that = this;
+	for (var i = 0; i < data.users.length; i++) {
+		twitterIds.push(data.users[i].twitter_id)
+	};
+	t.stream(
+	    'statuses/filter',
+	    { follow: twitterIds },
+	    function(stream) {
+	        stream.on('data', function(tweet) {
+	        	if(tweet.disconnect){
+	        		stream.destroy;
+	        	}
+	        	else{
+	            	var match = data.users.filter(function (person) { return person.handle == tweet.user.screen_name });
+	    			if(match.length){
+	            		console.log(tweet.user.screen_name+": "+tweet.text);
+	            		that.emit("new tweet", { tweet: tweet.text, handle: tweet.user.screen_name });
+	            	}
+	            	else{
+	            		console.log('retweet: '+tweet.user.screen_name);
+	            	}
+	            }
+	        });
+	        stream.on('destroy', function (response) {
+			    console.log('stream destroyed');
+			    onTweetsRequest(data);
+			});
+	    }
+	);
 };
 
 

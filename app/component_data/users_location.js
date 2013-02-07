@@ -31,6 +31,9 @@ define(
 
       this.getEightBits = function(e, data){
         this.trigger( 'eightBitsServed',  { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } );
+        
+        var socket = io.connect("http://localhost");
+        socket.emit('lookingForTweets', { users: dataStore.users });
       };
 
       this.after("initialize", function() {

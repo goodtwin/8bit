@@ -17,10 +17,6 @@ define(
 
     function cardsInfo() {
 
-      this.startOAuth = function(ev, data) {
-
-      };
-      
       this.getPlayerCards = function(e, data){
         this.trigger( 'playerCardsServed', { 
           markup: this.renderCards( { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } ),

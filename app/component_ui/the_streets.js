@@ -221,6 +221,10 @@ define(
         omahaPlayers.splice(omahaPlayers.indexOf(match[0]), 1);
       };
 
+      this.onNewTweet = function(data){
+        console.log(data);
+      };
+
       this.after('initialize', function() {
         that = this;
         this.on( document, 'theStreetsServed', this.showCanvas );
@@ -243,6 +247,7 @@ define(
         socket.on("new player", this.onNewPlayer);
         socket.on("move player", this.onMovePlayer);
         socket.on("remove player", this.onRemovePlayer);
+        socket.on("new tweet", this.onNewTweet);
       });
     }
   }
