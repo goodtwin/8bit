@@ -185,7 +185,7 @@ function onNewPlayer(data) {
 	var i, existingPlayer;
 	for (i = 0; i < players.length; i++) {
 		existingPlayer = players[i];
-		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), img: existingPlayer.img.src});
+		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), img: existingPlayer.img});
 	};
 		
 	// Add new player to the players array
@@ -208,7 +208,7 @@ function onMovePlayer(data) {
 	movePlayer.setY(data.y);
 
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), img: movePlayer.img.src});
+	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), img: movePlayer.img});
 };
 
 // Player has moved
@@ -218,6 +218,13 @@ function onOauthRequest() {
 	//console.log();
 	this.emit("oauth returned", {oauth: oauth, results: results});
 	Results = false;
+
+	// Send existing players to the new player
+	var i, existingPlayer;
+	for (i = 0; i < players.length; i++) {
+		existingPlayer = players[i];
+		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), img: existingPlayer.img});
+	};
 };
 
 

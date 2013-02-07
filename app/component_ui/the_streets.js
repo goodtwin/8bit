@@ -45,7 +45,7 @@ define(
         this.trigger('eightBitsRequested');
 
         // Initialise socket connection
-        //socket = io.connect("http://localhost");
+        socket = io.connect("http://localhost");
 
         // Initialise remote players array
         remotePlayers = [];
@@ -161,7 +161,7 @@ define(
 
       // Remove player
       this.onRemovePlayer = function(data) {
-        var removePlayer = playerById(data.id);
+        var removePlayer = that.playerById(data.id);
 
         // Player not found
         if (!removePlayer) {
