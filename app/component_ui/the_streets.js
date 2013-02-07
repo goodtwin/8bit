@@ -19,8 +19,6 @@ define(
           localPlayer,  // Local player
           remotePlayers,  // Remote players
           socket,     // Socket connection
-          startX,
-          startY,
           that;
 
       this.defaultAttrs({
@@ -43,22 +41,11 @@ define(
         // Initialise keyboard controls
         keys = new Keys();
 
-        startX = Math.round(Math.random()*(this.select('canvasSelector').attr('width')-40)),
-        startY = Math.round(Math.random()*(this.select('canvasSelector').attr('height')-80));
-
         // Initialise Omaha
-        this.trigger('eightBitsRequested', { oauth: data.oauth, results: data.results });
-        
-        // if( data.results.screen_name ){
-        //   this.trigger('localPlayerRequested', { oauth: data.oauth, results: data.results });
-        // }
-        // Initialise the local player
-        //localPlayer = new Player(startX, startY);
-        //localPlayer.img = new Image();
-        //localPlayer.img.src = 
+        this.trigger('eightBitsRequested');
 
         // Initialise socket connection
-        socket = io.connect("http://localhost");
+        //socket = io.connect("http://localhost");
 
         // Initialise remote players array
         remotePlayers = [];
@@ -75,10 +62,12 @@ define(
 
       this.update = function(){
         // Update local player and check for change
-        // if (localPlayer.update(keys)) {
-        //   // Send local player data to the game server
-        //   socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
-        // };
+        if(localPlayer){
+          if (localPlayer.update(keys)) {
+            // Send local player data to the game server
+            socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY(), img: localPlayer.img.src});
+          };
+        };
 
         // Update the Omaha players position
         var i;
@@ -92,19 +81,19 @@ define(
         ctx.clearRect(0, 0, this.select('canvasSelector').width(), this.select('canvasSelector').height());
 
         // Draw the Omaha players
-        var i;
-        for (i = 0; i < omahaPlayers.length; i++) {
+        for (var i = 0; i < omahaPlayers.length; i++) {
           omahaPlayers[i].draw(ctx);
         };
 
         // Draw the remote players
-        var i;
-        for (i = 0; i < remotePlayers.length; i++) {
+        for (var i = 0; i < remotePlayers.length; i++) {
           remotePlayers[i].draw(ctx);
         };
 
         // Draw the local player
-        //localPlayer.draw(ctx);
+        if(localPlayer){
+          localPlayer.draw(ctx);
+        }
       }
 
       // Keyboard key down
@@ -132,12 +121,7 @@ define(
         socket = io.connect("http://localhost");
         console.log("Connected to socket server");
 
-        // Initialise the local player
-        //localPlayer = new Player(startX, startY);
-        //localPlayer.img = new Image();
-        //localPlayer.img.src = 
-        //that.trigger('socketConnected');
-        // Send local player data to the game server
+        //Send local player data to the game server
         //socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
       };
 
@@ -153,6 +137,8 @@ define(
         // Initialise the new player
         var newPlayer = new Player(data.x, data.y);
         newPlayer.id = data.id;
+        newPlayer.img = new Image();
+        newPlayer.img.src = data.img;
 
         // Add new player to the remote players array
         remotePlayers.push(newPlayer);
@@ -160,7 +146,7 @@ define(
 
       // Move player
       this.onMovePlayer = function(data) {
-        var movePlayer = playerById(data.id);
+        var movePlayer = that.playerById(data.id);
 
         // Player not found
         if (!movePlayer) {
@@ -203,23 +189,32 @@ define(
           var startX = Math.round(Math.random()*(that.select('canvasSelector').attr('width')-40)),
               startY = Math.round(Math.random()*(that.select('canvasSelector').attr('height')-80)),
               id = (data.users[i].first_name+'-'+data.users[i].last_name).replace(/\s/g, ''),
+              handle = data.users[i].handle,
               imgUri = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
           
           var newPlayer = new Omaha(startX, startY);
               newPlayer.id = id;
-              newPlayer.currX = startX;
-              newPlayer.currY = startY;
               newPlayer.img = new Image();
               newPlayer.img.src = imgUri;
 
           // Add new player to the Omaha players array
           omahaPlayers.push(newPlayer);
         };
-          //this.trigger('omahaPlayersCreated', { omahaPlayers: omahaPlayers });
       };
 
       this.createlocalPlayer = function(e, data) {
-        console.log(data);
+        // Initialize the local player
+        var startX = Math.round(Math.random()*(this.select('canvasSelector').attr('width')-40)),
+            startY = Math.round(Math.random()*(this.select('canvasSelector').attr('height')-80)),
+            id = (data.details.first_name+'-'+data.details.last_name).replace(/\s/g, ''),
+            handle = data.details.handle,
+            imgUri = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
+        
+        localPlayer = new Player(startX, startY);
+        localPlayer.img = new Image();
+        localPlayer.img.src = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
+
+        socket.emit("new player", { x: localPlayer.getX(), y: localPlayer.getY(), img: localPlayer.img.src });
       };
 
       this.after('initialize', function() {
@@ -228,7 +223,7 @@ define(
         this.on( document, 'canvasShown', this.initializeGame);
         this.on( document, 'gameInitialized', this.animateFrame);
         this.on( document, 'eightBitsServed', this.createOmahaPlayers);
-        //this.on( document, 'oauthServed', this.createlocalPlayer);
+        this.on( document, 'localUserServed', this.createlocalPlayer);
         
 
         this.on( document, 'update', this.update);

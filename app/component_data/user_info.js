@@ -24,12 +24,19 @@ define(
         socket.emit('lookingForOauth');
       };
       
-      this.getUser = function(data){
-        dataStore.oauth.push({
-          oauth: data.oauth, 
-          results: data.results
-        });
+      this.setUser = function(data){
+        dataStore.oauth = data.oauth;
+        dataStore.results = data.results;
+        
         that.trigger( 'userInfoServed', { markup: that.renderMenu(  data  ), oauth: dataStore.oauth, results: dataStore.results } );
+        if(dataStore.oauth){
+          that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
+        };
+      };
+
+      this.getUser = function(data){
+        var match = dataStore.users.filter(function (user) { return user.handle == data.results.screen_name });
+        return match[0];
       };
       
       this.renderMenu = function( data ){
@@ -39,9 +46,10 @@ define(
       this.after('initialize', function() {
         that = this;
         this.on( 'userInfoRequested', this.startOAuth );
+        this.on( 'localUserRequested', this.getUser );
 
         var socket = io.connect("http://localhost");
-        socket.on("oauth returned", this.getUser);
+        socket.on("oauth returned", this.setUser);
       });
     }
 

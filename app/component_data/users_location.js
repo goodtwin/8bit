@@ -30,7 +30,7 @@ define(
       };
 
       this.getEightBits = function(e, data){
-        this.trigger( 'eightBitsServed',  { users: dataStore.users, oauth: data.oauth, results: data.results } );
+        this.trigger( 'eightBitsServed',  { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } );
       };
 
       this.after("initialize", function() {
