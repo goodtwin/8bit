@@ -41,12 +41,14 @@ var express = require('express'),
 		"HMAC-SHA1"
 	);
 
-	var t = new Twitter({
-	    consumer_key: "8YVoUbVLwaWmoxLgPk5nqg",
-	    consumer_secret: "rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc",
-	    access_token_key: "15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI",
-	    access_token_secret: "6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo"
-	});
+	// var t = new Twitter({
+	//     consumer_key: "8YVoUbVLwaWmoxLgPk5nqg",
+	//     consumer_secret: "rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc",
+	//     access_token_key: "15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI",
+	//     access_token_secret: "6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo"
+	// });
+
+	
 
 	swig.init({
 		cache: false,
@@ -248,31 +250,6 @@ function onTweetsRequest(data) {
 	for (var i = 0; i < data.users.length; i++) {
 		twitterIds.push(data.users[i].twitter_id)
 	};
-	t.stream(
-	    'statuses/filter',
-	    { follow: twitterIds },
-	    function(stream) {
-	        stream.on('data', function(tweet) {
-	        	if(tweet.disconnect){
-	        		stream.destroy;
-	        	}
-	        	else{
-	            	var match = data.users.filter(function (person) { return person.handle == tweet.user.screen_name });
-	    			if(match.length){
-	            		console.log(tweet.user.screen_name+": "+tweet.text);
-	            		that.emit("new tweet", { tweet: tweet.text, handle: tweet.user.screen_name });
-	            	}
-	            	else{
-	            		console.log('retweet: '+tweet.user.screen_name);
-	            	}
-	            }
-	        });
-	        stream.on('destroy', function (response) {
-			    console.log('stream destroyed');
-			    onTweetsRequest(data);
-			});
-	    }
-	);
 };
 
 
