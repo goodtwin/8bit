@@ -1,8 +1,11 @@
 requirejs.config({
+	shim : {
+		'underscore' : []
+	},
 	paths  : {
 		'hbs' : 'components/requireHandlebars/hbs',
 		'handlebars' : 'components/requireHandlebars/Handlebars',
-		'underscore' : 'components/requireHandlebars/hbs/underscore',
+		'underscore' : 'public/js/lodash.min',
 		'i18nprecompile' : 'components/requireHandlebars/hbs/i18nprecompile',
 		'json2' : 'components/requireHandlebars/hbs/json2'
 	},

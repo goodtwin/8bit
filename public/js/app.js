@@ -93,7 +93,7 @@ var setEventHandlers = function() {
 	socket.on("remove player", onRemovePlayer);
 };
 
-Keyboard key down
+//Keyboard key down
 function onKeydown(e) {
 	if (localPlayer) {
 		keys.onKeyDown(e);
