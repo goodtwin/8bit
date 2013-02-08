@@ -38,8 +38,6 @@ define( ['underscore'],
 			this.img.src = this.imgUri;
 
 			// create initial position psuedo-randomly
-			// todo: take out hard coded image height and width,
-			// replace with lookups
 			this.x = Math.random() * ( this.$canvas.width() - 40 );
 			this.y = Math.random() * ( this.$canvas.height() - 80);
 
@@ -77,14 +75,11 @@ define( ['underscore'],
 	 		update : function( ctx ) {
 				var prevX = this.x,
 					prevY = this.y,
-					imgHeight = this.img.height,
-					imgWidth = this.img.width,
 					sev = 0,
 					newsev = [ 1, -1, 2, -2, 0, 0, 1, -1, 2, -2 ],
-					h = this.$canvas.height() - imgHeight * 1.5, 
-					w = this.$canvas.width() - imgWidth * 1.5,
-					dir = 0,
-					vb, hb, dy, dx, curr;
+					h = this.$canvas.height() - (this.img.height * 1.6), 
+					w = this.$canvas.width() - (this.img.width * 1.6),
+					dir = 0;
 					
 				this.movementCounter++;
 				if ( this.movementCounter >= this.countsUntilChange ){
@@ -92,42 +87,55 @@ define( ['underscore'],
 					this.movementCounter = 0;
 				}
 
-				curr = dir += sev;
-
 				// calculate variance in per move velocity
-				//dy = velocityX;// * ( 1 + Math.sin( curr * Math.PI / 180 ) );
-				//dx = velocityY;// * ( 1 + Math.cos( curr * Math.PI / 180 ) );
 				this.y += this.velocityY;
-				this.x += this.velocityX;// + Math.round( Math.random() ) * 2 - 1;
+				this.x += this.velocityX;
 
-				//horizontal-vertical bounce.
-				vb = 180 - dir;
-				hb = 0 - dir;
-				// //Corner rebounds?
-				// if (( y < 1 ) && ( x < 1 )){
-				// 	y = 1;
-				// 	x = 1;
-				// 	this.velocityX =  Math.random() * 2 + 2;
-				// 	this.velocityY = Math.random() * 2 + 2;			
-				// 	dir = 45;
-				// }
-				// if (( y < 1 ) && ( x > w )){
-				// 	y = 1;
-				// 	x = w;
-				// 	dir = 135;
-				// }
-				// if (( y > h ) && ( x < 1 )){
-				// 	y = h; x = 1; dir = 315; }
-				// if (( y > h ) && ( x > w )){ y = h; x = w; dir = 225; }
-				// //edge rebounds.
-				// if ( y < 1 ) {y = 1; dir = hb;}  
-				// if ( y > h ) {y = h; dir = hb;}  
-				// if ( x < 1 ) {x = 1; dir = Math.random() > .7 ? 180 : 0;} 
-				// if ( x > w ) {x = w; dir = Math.random() > .3 ? 180 : 0;} 
+				this.validateDX( w );
+				this.validateDY( h );
 
 				return ( prevX !== this.x || prevY !== this.y ) ? true : false;
 			},
+
+			validateDY : function( h ) {
+				if ( this.y < 1 ){
+					this.velocityY = Math.random();
+				} 
+				else if( this.y > h ) {
+					this.velocityY = Math.random() * -1;
+				}
+			},
+
+			validateDX : function( w ) {
+				if ( this.x < 1 ){
+					this.velocityX = Math.random();
+				} 
+				else if( this.x > w ) {
+					this.velocityX = Math.random() * -1;
+				}
+			},
+
 			draw : function( drawingCtx ) {
+				var ellipseX = this.x + this.img.width / 1.5,
+			    	ellipseY = this.y + this.img.height * 1.4,
+			    	ellipseHeight = 15,
+			    	ellipseWidth = 50,
+			    	ellipseGradient = drawingCtx.createRadialGradient(ellipseX,ellipseY,9,ellipseX,ellipseY,30);
+				    ellipseGradient.addColorStop(0, "rgba(50, 50, 50, 0.3)");
+				    ellipseGradient.addColorStop(1, "rgba(250, 250, 250, 0.1)");
+			    drawingCtx.beginPath();
+				    drawingCtx.moveTo(ellipseX - ellipseWidth / 2, ellipseY); // A1
+				    drawingCtx.bezierCurveTo(
+						ellipseX - ellipseWidth / 2, ellipseY - ellipseHeight / 2, // C1
+						ellipseX + ellipseWidth / 2, ellipseY - ellipseHeight / 2, // C2
+						ellipseX + ellipseWidth / 2, ellipseY ); // A2
+				    drawingCtx.bezierCurveTo(
+						ellipseX + ellipseWidth / 2, ellipseY + ellipseHeight / 2, // C3
+						ellipseX - ellipseWidth / 2, ellipseY + ellipseHeight / 2, // C4
+						ellipseX - ellipseWidth / 2, ellipseY ); // A1		 
+				    drawingCtx.fillStyle = ellipseGradient;
+				    drawingCtx.fill();
+			    drawingCtx.closePath();
 			    drawingCtx.drawImage( this.img,
 			    	this.x,
 			    	this.y,
@@ -142,115 +150,3 @@ define( ['underscore'],
 	return ReturnCharacter;
 
 });
-// var Omaha = function( startX, startY ) {
-// 	var x = startX,
-// 		y = startY,
-// 		CHANGE_DIRECTION = {
-// 			SEED : 300,
-// 			MULTIPLE : 1000
-// 		},
-// 		counter1 = 0,
-// 		counter2 = 0,
-// 		dir = Math.random() > .3 ? 180 : 0,
-// 		velocityX =  Math.random() * 2 - 1;
-// 		velocityY = Math.random() * 2 - 1;
-	
-// 	// Getters and setters
-// 	var getX = function() {
-// 		return x;
-// 	};
-
-// 	var getY = function() {
-// 		return y;
-// 	};
-
-// 	var setX = function( newX ) {
-// 		x = newX;
-// 	};
-
-// 	var setY = function( newY ) {
-// 		y = newY;
-// 	};
-
-// 	function newpath(){
-// 		this.sev = Math.floor( Math.random() * -100 );
-
-// 		this.counter2 = Math.floor( CHANGE_DIRECTION.SEED +
-// 			Math.random() * CHANGE_DIRECTION.MULTIPLE );
-
-// 		// choose random velocity amount
-// 		this.velocityX =  Math.random() * 2 - 1;
-// 		this.velocityY = Math.random() * 2 - 1;
-// 	}
-
-// 	// Update player position
-// 	var update = function( ctx ) {
-// 		var prevX = x,
-// 			prevY = y,
-// 			imgHeight = this.img.height,  
-// 			imgWidth = this.img.width,  
-// 			sev = 0,
-// 			newsev = [ 1, -1, 2, -2, 0, 0, 1, -1, 2, -2 ],
-// 			h = $('#street').height() - imgHeight * 1.5, 
-// 			w = $('#street').width() - imgWidth * 1.5,
-// 			vb, hb, dy, dx, curr;
-			
-
-
-// 		counter1++;
-// 		if ( counter1 >= counter2 ){
-// 			newpath();
-// 			counter1 = 0;
-// 		}
-
-// 		curr = dir += sev;
-
-// 		// calculate variance in per move velocity
-// 		//dy = velocityX;// * ( 1 + Math.sin( curr * Math.PI / 180 ) );
-// 		//dx = velocityY;// * ( 1 + Math.cos( curr * Math.PI / 180 ) );
-// 		y += velocityY;
-// 		x += velocityX;// + Math.round( Math.random() ) * 2 - 1;
-
-// 		//horizontal-vertical bounce.
-// 		vb = 180 - dir;
-// 		hb = 0 - dir;
-// 		//Corner rebounds?
-// 		if (( y < 1 ) && ( x < 1 )){
-// 			y = 1;
-// 			x = 1;
-// 			this.velocityX =  Math.random() * 2 + 2;
-// 			this.velocityY = Math.random() * 2 + 2;			
-// 			dir = 45;
-// 		}
-// 		if (( y < 1 ) && ( x > w )){
-// 			y = 1;
-// 			x = w;
-// 			dir = 135;
-// 		}
-// 		if (( y > h ) && ( x < 1 )){
-// 			y = h; x = 1; dir = 315; }
-// 		if (( y > h ) && ( x > w )){ y = h; x = w; dir = 225; }
-// 		//edge rebounds.
-// 		if ( y < 1 ) {y = 1; dir = hb;}  
-// 		if ( y > h ) {y = h; dir = hb;}  
-// 		if ( x < 1 ) {x = 1; dir = Math.random() > .7 ? 180 : 0;} 
-// 		if ( x > w ) {x = w; dir = Math.random() > .3 ? 180 : 0;} 
-
-// 		return ( prevX != x || prevY != y ) ? true : false;
-// 	};
-
-// 	// Draw player
-// 	var draw = function( ctx ) {
-// 	    ctx.drawImage( this.img, x, y, this.img.width * 1.5, this.img.height * 1.5 );
-// 	};
-
-// 	// Define which variables and methods can be accessed
-// 	return {
-// 		getX: getX,
-// 		getY: getY,
-// 		setX: setX,
-// 		setY: setY,
-// 		update: update,
-// 		draw: draw
-// 	}
-// };
