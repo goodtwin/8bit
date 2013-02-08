@@ -42,8 +42,8 @@ define( ['underscore'],
 			this.y = Math.random() * ( this.$canvas.height() - 80);
 
 			// counters and other instance params for movements
-			this.velocityX = 0;
-			this.velocityY = 0;
+			this.changeX = 0;
+			this.changeY = 0;
 			this.movementCounter = 0;
 			this.countsUntilChange = 0;
 
@@ -63,23 +63,18 @@ define( ['underscore'],
 				this.y = newY;
 			},
 			newpath: function(){
-				this.sev = Math.floor( Math.random() * -100 );
-
 				this.countsUntilChange = Math.floor( CHANGE_DIRECTION.SEED +
 					Math.random() * CHANGE_DIRECTION.MULTIPLE );
 
 				// choose random velocity amount
-				this.velocityX =  Math.random() * 2 - 1;
-				this.velocityY = Math.random() * 2 - 1;
+				this.changeX =  Math.random() * 2 - 1;
+				this.changeY = Math.random() * 2 - 1;
 			},
 	 		update : function( ctx ) {
 				var prevX = this.x,
 					prevY = this.y,
-					sev = 0,
-					newsev = [ 1, -1, 2, -2, 0, 0, 1, -1, 2, -2 ],
 					h = this.$canvas.height() - (this.img.height * 1.6), 
-					w = this.$canvas.width() - (this.img.width * 1.6),
-					dir = 0;
+					w = this.$canvas.width() - (this.img.width * 1.6);
 					
 				this.movementCounter++;
 				if ( this.movementCounter >= this.countsUntilChange ){
@@ -88,8 +83,8 @@ define( ['underscore'],
 				}
 
 				// calculate variance in per move velocity
-				this.y += this.velocityY;
-				this.x += this.velocityX;
+				this.y += this.changeY;
+				this.x += this.changeX;
 
 				this.validateDX( w );
 				this.validateDY( h );
@@ -99,19 +94,19 @@ define( ['underscore'],
 
 			validateDY : function( h ) {
 				if ( this.y < 1 ){
-					this.velocityY = Math.random();
+					this.changeY = Math.random();
 				} 
 				else if( this.y > h ) {
-					this.velocityY = Math.random() * -1;
+					this.changeY = Math.random() * -1;
 				}
 			},
 
 			validateDX : function( w ) {
 				if ( this.x < 1 ){
-					this.velocityX = Math.random();
+					this.changeX = Math.random();
 				} 
 				else if( this.x > w ) {
-					this.velocityX = Math.random() * -1;
+					this.changeX = Math.random() * -1;
 				}
 			},
 
