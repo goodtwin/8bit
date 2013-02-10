@@ -21,7 +21,7 @@ define(
 
       this.startOAuth = function(ev, data) {
         var socket = io.connect('http://localhost');
-        socket.emit('lookingForOauth');
+        socket.emit('db data request');
       };
       
       // this.setUser = function(data){
@@ -35,7 +35,6 @@ define(
       // };
 
       this.setData = function(data){
-        console.log(data);
         dataStore.users = data.users;
         dataStore.oauth = data.oauth;
         dataStore.results = data.results;

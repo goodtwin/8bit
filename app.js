@@ -48,21 +48,23 @@ var express = require('express'),
 		dbTwitterIds = dbTwitterIds.join(",");
 
 		var request = oa.get( 
-			'https://stream.twitter.com/1/statuses/filter.json?follow=' + dbTwitterIds, 
+			'https://stream.twitter.com/1.1/statuses/filter.json?follow=' + dbTwitterIds, 
 			'15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI', 
 			'6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo' 
 		);
 		request.addListener( 'response', function( response ) {
-		  response.setEncoding( 'utf8' );
-		  response.addListener( 'data',  function( chunk ) {
-		  	//if(socket){
-		    	console.log( "addListener: " + chunk );
-		    	//onNewTweet( chunk );
-		    	socket.sockets.emit( 'new tweet', { tweet: chunk } );
-		    //} 
+			response.setEncoding( 'utf8' );
+			response.addListener( 'data',  function( chunk ) {
+				if( chunk == '' ){
+					console.log( 'silence' );
+				}
+				else {
+					//console.log( "addListener: " + chunk );
+					socket.sockets.emit( 'new tweet', { tweet: chunk } );
+				}
 		  });
 		  response.addListener( 'end', function () {
-		    console.log( '--- END ---' );
+				console.log( '--- END ---' );
 		  });
 		});
 		request.end();
@@ -181,10 +183,8 @@ function onSocketConnection(client) {
 	// Listen for move player message
 	client.on( 'move player', onMovePlayer );
 
-	// Listen for Oauth request
-	client.on( 'lookingForOauth', onOauthRequest );
-
-	//client.on( 'lookingForTweets', onTweetsRequest );
+	// Listen for Mongo Data request
+	client.on( 'db data request', onDBDataRequest );
 };
 
 // Socket client has disconnected
@@ -262,8 +262,8 @@ function onMovePlayer(data) {
 		img: movePlayer.img } );
 };
 
-// Oauth state requested
-function onOauthRequest() {
+// Mongo data requested
+function onDBDataRequest() {
 	var oauth = typeof Results == 'undefined' || Results === false ? false : true,
 		results = oauth ? Results : false;
 
@@ -271,6 +271,7 @@ function onOauthRequest() {
 		users: dbUsers, 
 		oauth: oauth, 
 		results: results } );
+	
 	Results = false;
 
 	// Send existing players to the new player
@@ -287,11 +288,11 @@ function onOauthRequest() {
 };
 
 // Send new Tweet
-function onNewTweet( data ) {
-	console.log("onNewTweet: " + data);
-	//console.log(this);
-	socket.emit( 'new tweet', { tweet: data } );
-};
+// function onNewTweet( data ) {
+// 	console.log("onNewTweet: " + data);
+// 	//console.log(this);
+// 	socket.emit( 'new tweet', { tweet: data } );
+// };
 
 
 /**************************************************

@@ -179,6 +179,15 @@ define(
 				return false;
 			};
 
+			this.omahaPlayerByHandle = function(handle) {
+				for (var i = 0; i < omahaPlayers.length; i++) {
+					if (omahaPlayers[i].id == id)
+						return omahaPlayers[i];
+				};
+				
+				return false;
+			};
+
 			this.createOmahaPlayers = function(e, data){
 				omahaPlayers = [];
 				for (var i = 0; i < data.users.length; i++) {
@@ -218,7 +227,11 @@ define(
 			};
 
 			this.onNewTweet = function(data){
-				console.log(data);
+				var tweet = JSON.parse( data.tweet );
+				var tweeter = omahaPlayerByHandle(tweet.user.screen_name);
+				console.log(tweeter);
+				//var match = omahaPlayers.filter(function (user) { return user.handle == tweet.user.screen_name });
+				console.log( tweet.user.screen_name + ': ' + tweet.text );
 			};
 
 			this.after('initialize', function() {
