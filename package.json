@@ -8,10 +8,10 @@
     "consolidate" : "*",
     "socket.io" : "0.9.13",
     "grunt-grunticon" : "*",
-    "mongodb" : "1.2.10",
-    "mongojs" : "0.5.1",
     "swig" : "*",
     "oauth" : "0.9.8",
-    "ntwitter" : "*"
+    "mongodb" : "1.2.10",
+    "mongojs" : "0.5.1"/*,
+    "ntwitter" : "*"*/
   }
 }

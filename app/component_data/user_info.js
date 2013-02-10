@@ -20,11 +20,23 @@ define(
       var that;
 
       this.startOAuth = function(ev, data) {
-        var socket = io.connect("http://localhost");
+        var socket = io.connect('http://localhost');
         socket.emit('lookingForOauth');
       };
       
-      this.setUser = function(data){
+      // this.setUser = function(data){
+      //   dataStore.oauth = data.oauth;
+      //   dataStore.results = data.results;
+        
+      //   that.trigger( 'userInfoServed', { markup: that.renderMenu(  data  ), oauth: dataStore.oauth, results: dataStore.results } );
+      //   if(dataStore.oauth){
+      //     that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
+      //   };
+      // };
+
+      this.setData = function(data){
+        console.log(data);
+        dataStore.users = data.users;
         dataStore.oauth = data.oauth;
         dataStore.results = data.results;
         
@@ -48,8 +60,9 @@ define(
         this.on( 'userInfoRequested', this.startOAuth );
         this.on( 'localUserRequested', this.getUser );
 
-        var socket = io.connect("http://localhost");
-        socket.on("oauth returned", this.setUser);
+        var socket = io.connect( 'http://localhost' );
+        //socket.on( 'oauth returned', this.setUser );
+        socket.on( 'db data returned', this.setData )
       });
     }
 
