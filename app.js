@@ -11,7 +11,8 @@ var express = require('express'),
     mongojs = require("mongojs"),
     OAuth= require('oauth').OAuth,
   	util = require('util'),					
-	io = require('socket.io'),				
+	io = require('socket.io'),
+	socket = io.listen(server),				
 	Player = require('./Player').Player;	
 
 	server.listen(8000);
@@ -51,14 +52,15 @@ var express = require('express'),
 			'15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI', 
 			'6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo' 
 		);
-		request.addListener( 'response', function(response) {
+		request.addListener( 'response', function( response ) {
 		  response.setEncoding( 'utf8' );
-		  response.addListener( 'data', onNewTweet );
+		  response.addListener( 'data',  function( chunk ) {
 		  	//if(socket){
-		    	//console.log(chunk);
-		    	//this.emit( 'new tweet', { tweet: chunk } );
+		    	console.log( "addListener: " + chunk );
+		    	//onNewTweet( chunk );
+		    	socket.sockets.emit( 'new tweet', { tweet: chunk } );
 		    //} 
-		  //});
+		  });
 		  response.addListener( 'end', function () {
 		    console.log( '--- END ---' );
 		  });
@@ -142,7 +144,7 @@ function init() {
 	players = [];
 
 	// Set up Socket.IO to listen on port 8000
-	socket = io.listen(server);
+	//socket = io.listen(server);
 
 	// Configure Socket.IO
 	socket.configure(function() {
@@ -264,7 +266,7 @@ function onMovePlayer(data) {
 function onOauthRequest() {
 	var oauth = typeof Results == 'undefined' || Results === false ? false : true,
 		results = oauth ? Results : false;
-	
+
 	this.emit( 'db data returned', { 
 		users: dbUsers, 
 		oauth: oauth, 
@@ -286,8 +288,9 @@ function onOauthRequest() {
 
 // Send new Tweet
 function onNewTweet( data ) {
-	console.log(data);
-	this.emit( 'new tweet', { tweet: data } );
+	console.log("onNewTweet: " + data);
+	//console.log(this);
+	socket.emit( 'new tweet', { tweet: data } );
 };
 
 
