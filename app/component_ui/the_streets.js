@@ -4,10 +4,11 @@ define(
 	[
 		'components/flight/lib/component',
 		'public/js/OmahaCharacter',
+		'public/js/LocalCharacter',
 		'/socket.io/socket.io.js'
 	],
 
-	function(defineComponent, OmahaCharacter) {
+	function(defineComponent, OmahaCharacter, LocalCharacter) {
 
 		return defineComponent(theStreets);
 
@@ -202,12 +203,12 @@ define(
 				omahaPlayers = [];
 				for (var i = 0; i < data.users.length; i++) {
 						var id = (data.users[i].first_name+'-'+data.users[i].last_name).replace(/\s/g, ''),
-								newPlayer = new OmahaCharacter({
-										$canvas : that.select('canvasSelector'),
-										id : id,
-										handle : data.users[i].handle,
-										imgUri : $('.-bit_'+id).css('background-image').replace('url(','').replace(')','')            
-								});
+							newPlayer = new OmahaCharacter({
+								$canvas : that.select('canvasSelector'),
+								id : id,
+								handle : data.users[i].handle,
+								imgUri : $('.-bit_'+id).css('background-image').replace('url(','').replace(')','')            
+							});
 
 						omahaPlayers.push(newPlayer);
 				};
@@ -215,20 +216,18 @@ define(
 
 			this.createlocalPlayer = function(e, data) {
 				// Initialize the local player
-				var startX = Math.round(Math.random()*(this.select('canvasSelector').attr('width')-40)),
-						startY = Math.round(Math.random()*(this.select('canvasSelector').attr('height')-80)),
-						id = (data.details.first_name+'-'+data.details.last_name).replace(/\s/g, ''),
-						handle = data.details.handle,
-						imgUri = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
+				var id = (data.details.first_name+'-'+data.details.last_name).replace(/\s/g, '');
 				
-				localPlayer = new Player(startX, startY);
-				localPlayer.handle = handle;
-				localPlayer.img = new Image();
-				localPlayer.img.src = $('.-bit_'+id).css('background-image').replace('url(','').replace(')','');
+				localPlayer = new LocalCharacter({
+									$canvas : that.select('canvasSelector'),
+									id : id,
+									handle : data.details.handle,
+									imgUri : $('.-bit_'+id).css('background-image').replace('url(','').replace(')','')            
+								});
 
-				socket.emit("new player", { x: localPlayer.getX(), y: localPlayer.getY(), handle: localPlayer.handle, img: localPlayer.img.src });
+				socket.emit("new player", { x: localPlayer.getX(), y: localPlayer.getY(), handle: localPlayer.handle, img: localPlayer.img.src } );
 
-				this.removeFromOmahaPlayers({handle: localPlayer.handle })
+				this.removeFromOmahaPlayers( { handle: localPlayer.handle } )
 			};
 
 			this.removeFromOmahaPlayers = function(data){
