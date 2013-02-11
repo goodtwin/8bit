@@ -61,7 +61,7 @@ var express = require('express'),
 		request.addListener( 'response', function( response ) {
 			response.setEncoding( 'utf8' );
 			response.addListener( 'data',  function( chunk ) {
-				console.log( "addListener: " + chunk );
+				console.log( chunk );
 				socket.sockets.emit( 'new tweet', { tweet: chunk } );
 				lastTweet = chunk;
 		  });

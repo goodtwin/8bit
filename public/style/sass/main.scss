@@ -289,3 +289,100 @@ html, body {
     }
 }
 
+.footer {
+    overflow: hidden;
+    background-color: #00BCE4;
+    
+    .bird {
+        padding: .5em;
+        text-align: center;
+        box-shadow: 0 1px 2px #00acd0;
+        .bird-icon {
+            @include inline-block;
+            overflow: hidden;
+            width: 50px;
+            img {
+                max-width: 100%;
+                height:auto;
+            }
+        }
+    }
+    
+    .tweet-box {
+        textarea {
+            width: 100%;
+            height: 400px;
+            background-color: #00BCE4;
+            resize: none;
+            outline: none;
+            border: 0px;
+            padding: 2em;
+            font-size: 1.5em;
+            color: white;
+            @include neue;
+            box-shadow: inset 0 1px 2px #00acd0;
+        }
+        ::-webkit-input-placeholder {
+           color: white;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: white;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: white;  
+        }
+
+        :-ms-input-placeholder {  
+           color: white;  
+        }
+    }
+    
+    .login {
+        padding: .25em;
+        box-shadow: 0 -1px 2px #00acd0;
+        padding: 2em;
+        input {
+            @include inline-block;
+            width: 20%;
+            padding: 10px 8px 10px 8px;
+            background-color: #8CD6EE;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 0 #00acd0, inset 0 -1px #4CC7E8;
+            color: #8CD6EE;
+            font-size: 1.125em;
+            font-weight: 400;  
+            color: #00acd0;
+            @include neue;
+            border: 0px;
+            outline: none;
+            margin-right: .5em;
+        }
+        ::-webkit-input-placeholder {
+           color: #00acd0;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: #00acd0;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: #00acd0;  
+        }
+
+        :-ms-input-placeholder {  
+           color: #00acd0;  
+        }
+
+        .submit {
+            @include inline-block;
+            float: right;
+            margin: 0 auto;
+            @include btn-blue;
+            padding: 12px 8px 12px 8px;
+        }
+    }
+
+}
+
