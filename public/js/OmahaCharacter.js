@@ -46,7 +46,6 @@ define( ['underscore'],
 			this.changeY = 0;
 			this.movementCounter = 0;
 			this.countsUntilChange = 0;
-
 		};
 
 		OmahaCharacter.prototype = {
@@ -137,6 +136,11 @@ define( ['underscore'],
 			    	this.img.width * 1.5,
 			    	this.img.height * 1.5 );
 			}
+
+			// speak : function( tweet, drawingCtx ) {
+			// 	return typeof tweet.user.screen_name == "undefined" ? false : true;
+			// 	//console.log( tweet.user.screen_name + ': ' + tweet.text );
+			// }
 		};
 
 		return OmahaCharacter;

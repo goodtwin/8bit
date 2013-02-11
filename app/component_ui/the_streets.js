@@ -18,11 +18,16 @@ define(
 					omahaPlayers,   // 'Static' players
 					localPlayer,  // Local player
 					remotePlayers,  // Remote players
+					tweeter,
+					tweet,
 					socket,     // Socket connection
 					that;
 
 			this.defaultAttrs({
-				canvasSelector : '#street'
+				canvasSelector : '#street',
+				tweetBubbleSelector : '.tweet-bubble',
+				tweetSelector : '.tweet',
+				tweeterSelector : '.tweeter',
 			});
 
 			this.showCanvas = function( e, data ){
@@ -91,6 +96,10 @@ define(
 				// Draw the local player
 				if(localPlayer){
 					localPlayer.draw(ctx);
+				}
+
+				if( (typeof tweeter !== 'undefined') && (tweeter !== false) ){
+					this.select('tweetBubbleSelector').show().css( { 'top': tweeter.y + (205 - this.select('tweetBubbleSelector').height()) , 'left': tweeter.x - 43 } );
 				}
 			}
 
@@ -180,12 +189,13 @@ define(
 			};
 
 			this.omahaPlayerByHandle = function(handle) {
+				var newTweeter;
 				for (var i = 0; i < omahaPlayers.length; i++) {
-					if (omahaPlayers[i].id == id)
-						return omahaPlayers[i];
+					if (omahaPlayers[i].handle.toLowerCase() == handle.toLowerCase()){
+						newTweeter = omahaPlayers[i];
+					}
 				};
-				
-				return false;
+				return newTweeter;
 			};
 
 			this.createOmahaPlayers = function(e, data){
@@ -227,12 +237,30 @@ define(
 			};
 
 			this.onNewTweet = function(data){
-				var tweet = JSON.parse( data.tweet );
-				var tweeter = omahaPlayerByHandle(tweet.user.screen_name);
-				console.log(tweeter);
-				//var match = omahaPlayers.filter(function (user) { return user.handle == tweet.user.screen_name });
-				console.log( tweet.user.screen_name + ': ' + tweet.text );
+				var newTweet = JSON.parse( data.tweet );
+				var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name );
+				
+				if ( typeof newTweeter !== 'undefined' ) {
+					tweet = newTweet;
+					tweeter = newTweeter;
+					
+					var tweetText = newTweet.text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')
+					tweetText = tweetText.replace(/(^|\s)@(\w+)/g, '$1<a href="http://www.twitter.com/$2">@$2</a>');
+					
+					that.select('tweetSelector').html( tweetText );
+					that.select('tweeterSelector').attr( 'href', 'http://twitter.com/' + newTweet.user.screen_name );
+				}
+
+				setTimeout( that.onNewTweet(), 12000 )
 			};
+
+			// this.displayTweet = function(tweet, tweeter){
+			// 	console.log(tweeter);
+			// 	console.log( tweet.user.screen_name + ': ' + tweet.text );
+			// 	// for (var i = 0; i < omahaPlayers.length; i++) {
+			// 	// 	omahaPlayers[i].tweeting = false;
+			// 	// };
+			// };
 
 			this.after('initialize', function() {
 				that = this;

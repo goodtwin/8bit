@@ -42,6 +42,10 @@ var express = require('express'),
 	);
 
 	function beginTwitterStream() {
+		// var chunk = {"created_at":"Mon Feb 11 14:30:22 +0000 2013","id":300975065506390017,"id_str":"300975065506390017","text":"@codypeterson Thank you, it's very much appreciated! http://google.com","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":300973487735046144,"in_reply_to_status_id_str":"300973487735046144","in_reply_to_user_id":647403,"in_reply_to_user_id_str":"647403","in_reply_to_screen_name":"codypeterson","user":{"id":275539731,"id_str":"275539731","name":"Adam Hardy","screen_name":"thompson","location":"","url":null,"description":null,"protected":false,"followers_count":34,"friends_count":90,"listed_count":0,"created_at":"Fri Apr 29 14:20:55 +0000 2011","favourites_count":10,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":147,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/2242049968\/me_normal.jpg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/2242049968\/me_normal.jpg","profile_link_color":"0084B4","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"default_profile":true,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"entities":{"hashtags":[],"urls":[],"user_mentions":[{"screen_name":"codypeterson","name":"Cody Peterson \u2234","id":647403,"id_str":"647403","indices":[0,13]}]},"favorited":false,"retweeted":false};
+		// setInterval(function(){
+		// 	socket.sockets.emit( 'new tweet', { tweet: chunk } );
+		// }, 9000);
 		for (var i = 0; i < dbUsers.length; i++) {
 			dbTwitterIds.push( dbUsers[i].twitter_id );
 		};
@@ -59,7 +63,7 @@ var express = require('express'),
 					console.log( 'silence' );
 				}
 				else {
-					//console.log( "addListener: " + chunk );
+					console.log( "addListener: " + chunk );
 					socket.sockets.emit( 'new tweet', { tweet: chunk } );
 				}
 		  });

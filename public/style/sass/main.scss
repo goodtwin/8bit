@@ -50,6 +50,49 @@ html, body {
     margin: 0px;
     background: url(/public/img/omaha-bkgd.png) no-repeat;
 
+    .tweet-bubble {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 300px;
+        height: auto;
+        padding: 1em;
+        z-index: 9999;
+        background-color: rgb(0,188,228);
+        background-color: rgba(0,188,228,.9);
+        border-radius: 8px;
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50px;
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px 10px 0 10px;
+            border-color: rgb(0,188,228) transparent transparent transparent;
+            border-color: rgba(0,188,228,.9) transparent transparent transparent;
+        }
+
+        .tweet {
+            display: block;
+            padding: 0 0 1em;
+            color: white;
+            @include neue;
+            a {
+                color: #8CD6EE;
+            }
+        }
+
+        .tweeter {
+            @include inline-block;
+            float: right;
+            @include btn-blue;
+            font-size: 1em;
+        }
+    }
+
     #street {
         position:relative;
     	display: block;
@@ -68,17 +111,17 @@ html, body {
 
     .eight-bit {
         position: relative;
-        overflow: hidden; 
+        //overflow: hidden; 
         @include inline-block; 
         vertical-align: middle;
         padding: .5%;    
         float: left;
         width: 100%;
-        height: auto;
+        height: 250px;
         text-align: center;
         cursor: pointer;
         @media screen and (min-width: 420px){
-            width: 50%;
+                width: 50%;
         }
         @media screen and (min-width: 610px){
             width: 33.33%;
@@ -92,9 +135,6 @@ html, body {
         @media screen and (min-width: 1500px){
             width: 16.66%;
         }
-
-        .visual { display: block; }
-        .details { display: none; }
         &.new {
             .visual {
                 &:before {
@@ -118,118 +158,132 @@ html, body {
             }
         }
         &.flipped {
-            .visual { display: none; }
-            .details { display: block; }
+            .eight-bit-inner {
+                @include transform(rotateX(90deg));
+            }
         }
         
-        .visual {
-            position: relative;
-            overflow: hidden; 
+        .eight-bit-inner {
             height: 240px;
-            width: 100%;
-            padding: 60px 0 0;
-            background-color: #F7F7F7;
-            box-shadow: 0 1px 0 #DDD;
+            -webkit-transition: -webkit-transform .8s;
+            transition: transform .8s; /* Animate the transform properties */
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d; /* <-NB */
 
-            .bit {
-                @include inline-block;
-                height:120px;
-                width: 120px;
-                background-size: contain;
-                background-position:50% 50%;
-            }
+            .visual { @include transform(translateZ(120px)); }
+            .details { @include transform(rotateX(-90deg) translateZ(-120px)); }
+            
+            .visual {
+                position: relative;
+                overflow: hidden;
+                height: 240px;
+                width: 100%;
+                padding: 60px 0 0;
+                background-color: #F7F7F7;
+                box-shadow: 0 1px 0 #DDD;
+                cursor: pointer;
 
-            .arrow_btn {
-                position: absolute;
-                right: 10px;
-                bottom: 10px;
-                width: 32px;
-                height: 28px;
-                @include btn-gray;
-                padding: 0px;
-                &:before {
-                    content: "";
+                .bit {
+                    @include inline-block;
+                    height:120px;
+                    width: 120px;
+                    background-size: contain;
+                    background-position:50% 50%;
+                }
+
+                .arrow_btn {
                     position: absolute;
-                    right: 8px;
-                    bottom: 5px;
-                    z-index: 300;
-                    height: 11px;
-                    width: 12px;  
-                    border-radius: 3px;
-                    border-right: 4px solid #fff;
-                    border-bottom:4px solid #fff;
-                    background-color: none;    
-                }
-                &:after {
-                    content: "";
-                    position: absolute;
-                    right: 8px;
-                    bottom: 6px;
-                    z-index: 300;
-                    height: 11px;
-                    width: 12px; 
-                    border-radius: 3px;
-                    border-right: 4px solid #D8D8D8;
-                    border-bottom:4px solid #D8D8D8;
-                    background-color: none;     
-                }
+                    right: 10px;
+                    bottom: 10px;
+                    width: 32px;
+                    height: 28px;
+                    @include btn-gray;
+                    padding: 0px;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        right: 8px;
+                        bottom: 5px;
+                        z-index: 300;
+                        height: 11px;
+                        width: 12px;  
+                        border-radius: 3px;
+                        border-right: 4px solid #fff;
+                        border-bottom:4px solid #fff;
+                        background-color: none;    
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        right: 8px;
+                        bottom: 6px;
+                        z-index: 300;
+                        height: 11px;
+                        width: 12px; 
+                        border-radius: 3px;
+                        border-right: 4px solid #D8D8D8;
+                        border-bottom:4px solid #D8D8D8;
+                        background-color: none;     
+                    }
 
-                .arrow {
-                    content: "";
-                    position: absolute;
-                    right: 8px;
-                    bottom: 12px;
-                    z-index: 200;
-                    height: 4px;
-                    border-radius: 10px;
-                    background-color: #D8D8D8;  
-                    width: 17px;    
-                    @include transform(rotate(40deg));
-                }
-            }
-        }
-        .details {
-            overflow: hidden;
-            height: 240px;
-            width: 100%;
-            background-color: #00BCE4;
-            box-shadow: 0 1px 0 #0096B6;
-            text-align: center;
-
-            .name {
-                display: block;
-                padding: 25px 0;
-                font-size: 1.5em;
-                line-height: 1em;
-                font-weight: 400;    
-                @include neue;
-                color: #FFF;
-                text-transform: uppercase;
-            }
-
-            .handle {
-                @include inline-block;
-                width: auto;
-                clear:both;
-                margin-bottom: 25px;
-                font-size: 1.25em;
-                line-height: 1.75em;
-                font-weight: 600;    
-                @include exo;
-                color: #FFF;
-                line-height: 0px;
-                @include transition(all .15s linear);
-                &:hover {
-                    color: #8CD6EE;
+                    .arrow {
+                        content: "";
+                        position: absolute;
+                        right: 8px;
+                        bottom: 12px;
+                        z-index: 200;
+                        height: 4px;
+                        border-radius: 10px;
+                        background-color: #D8D8D8;  
+                        width: 17px;    
+                        @include transform(rotate(40deg));
+                    }
                 }
             }
+            .details {
+                //overflow: hidden;
+                height: 240px;
+                width: 100%;
+                background-color: #00BCE4;
+                box-shadow: 0 1px 0 #0096B6;
+                text-align: center;
+                cursor: pointer;
 
-            .detail_btn {
-                display: block;
-                margin: 10px auto;
-                width: 90%;
-                padding: 10px 0 10px 0;
-                @include btn-blue;
+                .name {
+                    display: block;
+                    padding: 25px 0;
+                    font-size: 1.5em;
+                    line-height: 1em;
+                    font-weight: 400;    
+                    @include neue;
+                    color: #FFF;
+                    text-transform: uppercase;
+                }
+
+                .handle {
+                    @include inline-block;
+                    width: auto;
+                    clear:both;
+                    margin-bottom: 25px;
+                    font-size: 1.25em;
+                    line-height: 1.75em;
+                    font-weight: 600;    
+                    @include exo;
+                    color: #FFF;
+                    line-height: 0px;
+                    @include transition(all .15s linear);
+                    &:hover {
+                        color: #8CD6EE;
+                    }
+                }
+
+                .detail_btn {
+                    display: block;
+                    margin: 10px auto;
+                    width: 90%;
+                    padding: 10px 0 10px 0;
+                    @include btn-blue;
+                }
             }
         }
     }

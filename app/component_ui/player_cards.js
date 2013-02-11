@@ -16,6 +16,7 @@ define(
         visualSelector : '.visual',
         detailsSelector : '.details',
         eightBitSelector: '.eight-bit',
+        eightBitInnerSelector: '.eight-bit-inner',
         flippedClass: 'flipped'
       });
 
@@ -25,6 +26,7 @@ define(
       };
 
       this.flipToggle = function(e){
+        console.log(e.target);
         var that = $(e.target).closest(this.select('eightBitSelector'));
         that.toggleClass( this.attr.flippedClass );
         that.siblings().removeClass( this.attr.flippedClass );
@@ -33,8 +35,7 @@ define(
       this.after('initialize', function() {
         this.on( document, 'playerCardsServed', this.showCards );
         this.on( 'click',  {
-          visualSelector: this.flipToggle,
-          detailsSelector: this.flipToggle
+          eightBitSelector: this.flipToggle
         });
       });
     }
