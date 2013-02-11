@@ -113,7 +113,7 @@ html, body {
   zoom: 1;
   *display: inline;
   *vertical-align: auto;
-  padding: 0.5em 1em;
+  padding: 20px;
   font-size: 2em; }
 
 .nav {
@@ -434,14 +434,15 @@ html, body {
           transition: all 0.15s linear; }
           .bits-container .eight-bit .eight-bit-inner .details .detail_btn:hover {
             background-color: #00A8CB; }
+    .bits-container .eight-bit.user .visual {
+      background-color: #4CC7E8; }
 
 .footer {
-  overflow: hidden;
   background-color: #00BCE4; }
   .footer .bird {
     padding: .5em;
     text-align: center;
-    box-shadow: 0 1px 2px #00acd0; }
+    box-shadow: 0 1px 2px #00acd0, inset 0 1px 2px #0096b6; }
     .footer .bird .bird-icon {
       display: inline-block;
       vertical-align: baseline;
@@ -461,23 +462,23 @@ html, body {
     outline: none;
     border: 0px;
     padding: 2em;
-    font-size: 1.5em;
+    font-size: 2em;
     color: white;
     font-family: "Helvetica Neue", sans-serif;
-    box-shadow: inset 0 1px 2px #00acd0; }
+    box-shadow: inset 0 1px 2px #0096b6; }
   .footer .tweet-box ::-webkit-input-placeholder {
-    color: white; }
+    color: #0096b6; }
   .footer .tweet-box :-moz-placeholder {
     /* Firefox 18- */
-    color: white; }
+    color: #0096b6; }
   .footer .tweet-box ::-moz-placeholder {
     /* Firefox 19+ */
-    color: white; }
+    color: #0096b6; }
   .footer .tweet-box :-ms-input-placeholder {
-    color: white; }
+    color: #0096b6; }
   .footer .login {
     padding: .25em;
-    box-shadow: 0 -1px 2px #00acd0;
+    box-shadow: 0 -1px 2px #0096b6;
     padding: 2em; }
     .footer .login input {
       display: inline-block;
@@ -487,27 +488,27 @@ html, body {
       *vertical-align: auto;
       width: 20%;
       padding: 10px 8px 10px 8px;
-      background-color: #8CD6EE;
+      background-color: #4CC7E8;
       border-radius: 5px;
-      box-shadow: inset 0 1px 0 #00acd0, inset 0 -1px #4cc7e8;
+      box-shadow: inset 0 1px 0 #0096b6, inset 0 -1px #4cc7e8;
       color: #8CD6EE;
       font-size: 1.125em;
       font-weight: 400;
-      color: #00acd0;
+      color: #0096b6;
       font-family: "Helvetica Neue", sans-serif;
       border: 0px;
       outline: none;
       margin-right: .5em; }
     .footer .login ::-webkit-input-placeholder {
-      color: #00acd0; }
+      color: #0096b6; }
     .footer .login :-moz-placeholder {
       /* Firefox 18- */
-      color: #00acd0; }
+      color: #0096b6; }
     .footer .login ::-moz-placeholder {
       /* Firefox 19+ */
-      color: #00acd0; }
+      color: #0096b6; }
     .footer .login :-ms-input-placeholder {
-      color: #00acd0; }
+      color: #0096b6; }
     .footer .login .submit {
       display: inline-block;
       vertical-align: baseline;
@@ -531,6 +532,6 @@ html, body {
       -ms-transition: all 0.15s linear;
       -o-transition: all 0.15s linear;
       transition: all 0.15s linear;
-      padding: 12px 8px 12px 8px; }
+      padding: 13px 8px 13px 8px; }
       .footer .login .submit:hover {
         background-color: #00A8CB; }

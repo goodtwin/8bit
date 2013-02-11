@@ -23,6 +23,14 @@ define(
       this.showCards = function( e, data ){
         this.$node.html( data.markup );
         this.trigger('playerCardsShown', { oauth: data.oauth, results: data.results });
+        if( data.oauth ){
+          this.setUserInteractions( { oauth: data.oauth, results: data.results } );
+        }
+      };
+
+      this.setUserInteractions = function(data){
+        var userHandle = data.results.screen_name;
+        $( '.' + userHandle ).addClass( 'user' );
       };
 
       this.flipToggle = function(e){

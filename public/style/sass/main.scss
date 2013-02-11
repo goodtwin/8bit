@@ -18,7 +18,7 @@ html, body {
 
 .omaha {
     @include inline-block;
-    padding: .5em 1em;
+    padding: 20px;
     font-size: 2em;
 
 }
@@ -286,17 +286,22 @@ html, body {
                 }
             }
         }
+        &.user {
+            .visual {
+                background-color: #4CC7E8;
+            }
+        }
     }
 }
 
 .footer {
-    overflow: hidden;
+    //overflow: hidden;
     background-color: #00BCE4;
     
     .bird {
         padding: .5em;
         text-align: center;
-        box-shadow: 0 1px 2px #00acd0;
+        box-shadow: 0 1px 2px #00acd0, inset 0 1px 2px #0096b6 ;
         .bird-icon {
             @include inline-block;
             overflow: hidden;
@@ -317,62 +322,62 @@ html, body {
             outline: none;
             border: 0px;
             padding: 2em;
-            font-size: 1.5em;
+            font-size: 2em;
             color: white;
             @include neue;
-            box-shadow: inset 0 1px 2px #00acd0;
+            box-shadow: inset 0 1px 2px #0096b6;
         }
         ::-webkit-input-placeholder {
-           color: white;
+           color: #0096b6;
         }
 
         :-moz-placeholder { /* Firefox 18- */
-           color: white;  
+           color: #0096b6;  
         }
 
         ::-moz-placeholder {  /* Firefox 19+ */
-           color: white;  
+           color: #0096b6;  
         }
 
         :-ms-input-placeholder {  
-           color: white;  
+           color: #0096b6;  
         }
     }
     
     .login {
         padding: .25em;
-        box-shadow: 0 -1px 2px #00acd0;
+        box-shadow: 0 -1px 2px #0096b6;
         padding: 2em;
         input {
             @include inline-block;
             width: 20%;
             padding: 10px 8px 10px 8px;
-            background-color: #8CD6EE;
+            background-color: #4CC7E8;
             border-radius: 5px;
-            box-shadow: inset 0 1px 0 #00acd0, inset 0 -1px #4CC7E8;
+            box-shadow: inset 0 1px 0 #0096b6, inset 0 -1px #4CC7E8;
             color: #8CD6EE;
             font-size: 1.125em;
             font-weight: 400;  
-            color: #00acd0;
+            color: #0096b6;
             @include neue;
             border: 0px;
             outline: none;
             margin-right: .5em;
         }
         ::-webkit-input-placeholder {
-           color: #00acd0;
+           color: #0096b6;
         }
 
         :-moz-placeholder { /* Firefox 18- */
-           color: #00acd0;  
+           color: #0096b6;  
         }
 
         ::-moz-placeholder {  /* Firefox 19+ */
-           color: #00acd0;  
+           color: #0096b6;  
         }
 
         :-ms-input-placeholder {  
-           color: #00acd0;  
+           color: #0096b6;  
         }
 
         .submit {
@@ -380,7 +385,7 @@ html, body {
             float: right;
             margin: 0 auto;
             @include btn-blue;
-            padding: 12px 8px 12px 8px;
+            padding: 13px 8px 13px 8px;
         }
     }
 
