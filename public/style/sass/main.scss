@@ -111,7 +111,7 @@ html, body {
 
     .eight-bit {
         position: relative;
-        //overflow: hidden; 
+        overflow: hidden; 
         @include inline-block; 
         vertical-align: middle;
         padding: .5%;    

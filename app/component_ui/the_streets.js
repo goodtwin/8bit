@@ -247,11 +247,15 @@ define(
 					var tweetText = newTweet.text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')
 					tweetText = tweetText.replace(/(^|\s)@(\w+)/g, '$1<a href="http://www.twitter.com/$2">@$2</a>');
 					
+					that.select('tweetBubbleSelector').show();
 					that.select('tweetSelector').html( tweetText );
 					that.select('tweeterSelector').attr( 'href', 'http://twitter.com/' + newTweet.user.screen_name );
 				}
 
-				setTimeout( that.onNewTweet(), 12000 )
+				setTimeout( function(){
+					tweeter = false;
+					that.select('tweetBubbleSelector').hide();
+				}, 12000 )
 			};
 
 			// this.displayTweet = function(tweet, tweeter){

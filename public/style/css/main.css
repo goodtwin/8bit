@@ -221,6 +221,7 @@ html, body {
   padding: 0.5% 0.5%; }
   .bits-container .eight-bit {
     position: relative;
+    overflow: hidden;
     display: inline-block;
     vertical-align: baseline;
     zoom: 1;
