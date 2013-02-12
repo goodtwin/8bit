@@ -61,9 +61,10 @@ var express = require( 'express' ),
 		request.addListener( 'response', function( response ) {
 			response.setEncoding( 'utf8' );
 			response.addListener( 'data',  function( chunk ) {
-				console.log( chunk );
-				socket.sockets.emit( 'new tweet', { tweet: chunk } );
-				lastTweet = chunk;
+				if( !chunk.match( new RegExp( String.fromCharCode(13), 'g' ) ) ){
+					socket.sockets.emit( 'new tweet', { tweet: chunk } );
+					lastTweet = chunk;
+				};
 		  });
 		  response.addListener( 'end', function () {
 				console.log( '--- END ---' );
