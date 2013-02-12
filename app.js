@@ -61,7 +61,7 @@ var express = require( 'express' ),
 		request.addListener( 'response', function( response ) {
 			response.setEncoding( 'utf8' );
 			response.addListener( 'data',  function( chunk ) {
-				if( !chunk.match( new RegExp( String.fromCharCode(13), 'g' ) ) ){
+				if( !chunk.match( new RegExp( String.fromCharCode(13) ) ) ){
 					socket.sockets.emit( 'new tweet', { tweet: chunk } );
 					lastTweet = chunk;
 				};
@@ -95,6 +95,7 @@ var express = require( 'express' ),
 		.set( 'views', __dirname + '/views' )
 		
 		.get( '/', function( req, res ) {
+			util.log('1: '+req.user);
 			if (req.session.oauth) {
 				req.session.oauth.verifier = req.query.oauth_verifier;
 				console.log(req.session.oauth);
@@ -106,6 +107,7 @@ var express = require( 'express' ),
 						console.log(error);
 						res.render( 'index.html' );
 					} else {
+						util.log('2: '+req.session.oauth);
 						req.session.oauth.access_token = oauth_access_token;
 						req.session.oauth.access_token_secret = oauth_access_token_secret;
 						console.log(req.session.oauth);
@@ -115,6 +117,7 @@ var express = require( 'express' ),
 				}
 				);
 			} else
+				util.log('3: '+req.session.oauth);
 				res.render( 'index.html' );
 		})
 		.get( '/auth/twitter', function( req, res ){
@@ -290,6 +293,8 @@ function onDBDataRequest() {
 	};
 
 	this.emit( 'new tweet', { tweet: lastTweet } );
+
+	util.log(this);
 };
 
 /**************************************************
