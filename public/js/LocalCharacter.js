@@ -38,8 +38,8 @@ define( ['underscore'],
 			this.img.src = this.imgUri;
 
 			// create initial position psuedo-randomly
-			this.x = Math.random() * ( this.$canvas.width() - 40 );
-			this.y = Math.random() * ( this.$canvas.height() - 80);
+			this.x = this.StartX || Math.random() * ( this.$canvas.width() - 40 );
+			this.y = this.StartY || Math.random() * ( this.$canvas.height() - 80);
 
 			// create cursor image
 			this.cursor = new Image();

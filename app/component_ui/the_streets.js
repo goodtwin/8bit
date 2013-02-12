@@ -139,11 +139,17 @@ define(
 				console.log("New player connected: "+data.id);
 
 				// Initialize the new player
-				var newPlayer = new Player(data.x, data.y);
-				newPlayer.id = data.id;
-				newPlayer.handle = data.handle;
-				newPlayer.img = new Image();
-				newPlayer.img.src = data.img;
+				var newPlayer = new LocalCharacter({
+									$canvas : that.select('canvasSelector'),
+									id : data.id,
+									handle : data.handle,
+									imgUri : data.img,            
+									startX : data.x, 
+									startY : data.y });
+				//newPlayer.id = data.id;
+				//newPlayer.handle = data.handle;
+				//newPlayer.img = new Image();
+				//newPlayer.img.src = data.img;
 
 				// Add new player to the remote players array
 				remotePlayers.push(newPlayer);
