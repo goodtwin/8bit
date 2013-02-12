@@ -12,10 +12,6 @@ define( ['underscore'],
 				// make no opts/assumptions right now,
 				// let all opts be passed in by constructor
 				// callee
-			},
-			CHANGE_DIRECTION = {
-				SEED : 100,
-				MULTIPLE: 100
 			};
 
 		// LocalCharacter: create a new local character for the canvas
@@ -38,8 +34,8 @@ define( ['underscore'],
 			this.img.src = this.imgUri;
 
 			// create initial position psuedo-randomly
-			this.x = this.StartX || Math.random() * ( this.$canvas.width() - 40 );
-			this.y = this.StartY || Math.random() * ( this.$canvas.height() - 80);
+			this.x = this.startX || Math.random() * ( this.$canvas.width() - 40 );
+			this.y = this.startY || Math.random() * ( this.$canvas.height() - 180 ) + 100;
 
 			// create cursor image
 			this.cursor = new Image();
@@ -70,7 +66,7 @@ define( ['underscore'],
 
 				// Up key takes priority over down
 				if (keys.up) {
-					this.y = this.y - dy > 0 ? this.y - dy : prevY;
+					this.y = this.y - dy > 100 ? this.y - dy : prevY;
 				} else if (keys.down) {
 					this.y = this.y + dy < $('#street').height()-80 ? this.y + dy : prevY;
 				};

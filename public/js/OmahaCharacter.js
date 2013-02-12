@@ -39,7 +39,7 @@ define( ['underscore'],
 
 			// create initial position psuedo-randomly
 			this.x = Math.random() * ( this.$canvas.width() - 40 );
-			this.y = Math.random() * ( this.$canvas.height() - 80);
+			this.y = Math.random() * ( this.$canvas.height() - 180 ) + 100;
 
 			// counters and other instance params for movements
 			this.changeX = 0;
@@ -72,8 +72,8 @@ define( ['underscore'],
 	 		update : function( ctx ) {
 				var prevX = this.x,
 					prevY = this.y,
-					h = this.$canvas.height() - (this.img.height * 1.6), 
-					w = this.$canvas.width() - (this.img.width * 1.6);
+					h = this.$canvas.height() - ( this.img.height * 1.6 ), 
+					w = this.$canvas.width() - ( this.img.width * 1.6 );
 					
 				this.movementCounter++;
 				if ( this.movementCounter >= this.countsUntilChange ){
@@ -92,7 +92,7 @@ define( ['underscore'],
 			},
 
 			validateDY : function( h ) {
-				if ( this.y < 1 ){
+				if ( this.y < 100 ){
 					this.changeY = Math.random();
 				} 
 				else if( this.y > h ) {

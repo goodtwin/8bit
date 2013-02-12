@@ -1,19 +1,19 @@
 /**************************************************
 ** NODE.JS REQUIREMENTS
 **************************************************/
-var express = require('express'),
+var express = require( 'express' ),
 	app = express(),
-	cons = require('consolidate'),
-    swig = require('swig'),
-    http = require('http'),
+	cons = require( 'consolidate' ),
+    swig = require( 'swig' ),
+    http = require( 'http' ),
     server = http.createServer(app),
-    MongoClient = require('mongodb').MongoClient,
-    mongojs = require("mongojs"),
-    OAuth= require('oauth').OAuth,
-  	util = require('util'),					
-	io = require('socket.io'),
+    MongoClient = require( 'mongodb' ).MongoClient,
+    mongojs = require( 'mongojs' ),
+    OAuth= require( 'oauth' ).OAuth,
+  	util = require( 'util' ),					
+	io = require( 'socket.io' ),
 	socket = io.listen(server),				
-	Player = require('./Player').Player;	
+	Player = require( './Player' ).Player;	
 
 	server.listen(8000);
 
@@ -25,7 +25,7 @@ var express = require('express'),
 		dbTwitterIds = [];
 	
 	db.users.find(function(err, users) {
-		if( err || !users ) console.log('User not saved');
+		if( err || !users ) console.log( 'User not saved' );
 		else dbUsers = users;
 		beginTwitterStream();
 	});
@@ -191,13 +191,13 @@ function onSocketConnection(client) {
 
 // Socket client has disconnected
 function onClientDisconnect() {
-	util.log('Player has disconnected: '+this.id);
+	util.log( 'Player has disconnected: ' + this.id);
 
-	var removePlayer = playerById(this.id);
+	var removePlayer = playerById( this.id );
 
 	// Player not found
 	if (!removePlayer) {
-		util.log( 'Player not found: '+this.id );
+		util.log( 'Player not found: ' + this.id );
 		return;
 	};
 
@@ -237,7 +237,7 @@ function onNewPlayer(data) {
 	};
 		
 	// Add new player to the players array
-	players.push(newPlayer);
+	players.push( newPlayer );
 };
 
 // Player has moved
@@ -247,7 +247,7 @@ function onMovePlayer(data) {
 
 	// Player not found
 	if (!movePlayer) {
-		util.log( 'Player not found: '+this.id );
+		util.log( 'Player not found: ' + this.id );
 		return;
 	};
 
@@ -256,7 +256,7 @@ function onMovePlayer(data) {
 	movePlayer.setY( data.y );
 
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit('move player', { 
+	this.broadcast.emit( 'move player', { 
 		id: movePlayer.id, 
 		x: movePlayer.getX(), 
 		y: movePlayer.getY(), 
@@ -290,14 +290,6 @@ function onDBDataRequest() {
 
 	this.emit( 'new tweet', { tweet: lastTweet } );
 };
-
-// Send new Tweet
-// function onNewTweet( data ) {
-// 	console.log("onNewTweet: " + data);
-// 	//console.log(this);
-// 	socket.emit( 'new tweet', { tweet: data } );
-// };
-
 
 /**************************************************
 ** GAME HELPER FUNCTIONS

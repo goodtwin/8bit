@@ -46,7 +46,7 @@ html, body {
     position: relative;
     height: 650px;
     width: 100%;
-    padding: 265px 0 0;
+    padding: 165px 0 0;
     margin: 0px;
     background: url(/public/img/omaha-bkgd.png) no-repeat;
 
@@ -345,6 +345,7 @@ html, body {
     }
     
     .login {
+        overflow: hidden;;
         padding: .25em;
         box-shadow: 0 -1px 2px #0096b6;
         padding: 2em;
@@ -380,13 +381,19 @@ html, body {
            color: #0096b6;  
         }
 
-        .submit {
+        .footer-btn {
             @include inline-block;
-            float: right;
+            float: left;
             margin: 0 auto;
             @include btn-blue;
             padding: 13px 8px 13px 8px;
         }
+
+        .submit {
+            float: right;
+        }
+
+        
     }
 
 }

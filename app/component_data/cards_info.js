@@ -13,11 +13,11 @@ define(
     dataStore,
     cardsTemplate ) {
 
-    return defineComponent(cardsInfo);
+    return defineComponent( cardsInfo );
 
     function cardsInfo() {
 
-      this.getPlayerCards = function(e, data){
+      this.getPlayerCards = function( e, data ){
         this.trigger( 'playerCardsServed', { 
           markup: this.renderCards( { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } ),
           oauth: dataStore.oauth, 
@@ -25,11 +25,11 @@ define(
         });
       };
 
-      this.renderCards = function(data){
-        return cardsTemplate(data);
+      this.renderCards = function( data ){
+        return cardsTemplate( data );
       };
 
-      this.after('initialize', function() {
+      this.after( 'initialize', function() {
         this.on( document, 'userMenuRendered', this.getPlayerCards );
       });
     }

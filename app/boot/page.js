@@ -24,7 +24,7 @@ define(
       CardsInfoData.attachTo(document);
       PlayerCardsUI.attachTo('.bits-container');
       TheStreetsUI.attachTo('.scape');
-      UserMenuUI.attachTo('.nav');
+      UserMenuUI.attachTo('.footer');
     }
 
     return initialize;

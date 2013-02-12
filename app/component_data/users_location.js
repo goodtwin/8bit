@@ -13,27 +13,26 @@ define(
     dataStore,
     streetsTemplate ) {
 
-    return defineComponent(streetInfo);
+    return defineComponent( streetInfo );
 
-    function streetInfo() {
+    function streetInfo(){
 
-      this.getTheStreets = function(e, data){
+      this.getTheStreets = function( e, data ){
         this.trigger( 'theStreetsServed', { 
-          markup: this.renderTheStreets({ oauth: data.oauth, results: data.results }),
+          markup: this.renderTheStreets( { oauth: data.oauth, results: data.results } ),
           oauth: data.oauth, 
-          results: data.results
-        } );
+          results: data.results } );
       };
 
-      this.renderTheStreets = function(data){
-        return streetsTemplate(data);
+      this.renderTheStreets = function( data ){
+        return streetsTemplate( data );
       };
 
-      this.getEightBits = function(e, data){
-        this.trigger( 'eightBitsServed',  { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } );
-        
-        // var socket = io.connect("http://localhost");
-        // socket.emit('lookingForTweets', { users: dataStore.users });
+      this.getEightBits = function( e, data ){
+        this.trigger( 'eightBitsServed',  { 
+          users: dataStore.users, 
+          oauth: dataStore.oauth, 
+          results: dataStore.results } );
       };
 
       this.after("initialize", function() {

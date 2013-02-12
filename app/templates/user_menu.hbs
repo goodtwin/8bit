@@ -1,6 +1,20 @@
-<a href="#" class="nav_btn">Request An 8-Bit</a>
-{{#if oauth}}
-	<a href="/" class="nav_btn log-out">Hi, {{results.screen_name}}</a>
-{{else}}
-	<a href="/auth/twitter" class="nav_btn log-in">Login Via Twitter</a>
-{{/if}}
+<div class="bird">
+	<div class="bird-icon"><img src="public/img/twitter.svg"></div>
+</div>
+<div class="tweet-box">
+	<textarea placeholder="What's Up?"></textarea>
+</div>
+<div class="login">
+	{{#if oauth}}
+		<a href="/" class="footer-btn log-out">Hi, {{results.screen_name}}</a>
+		<a href="#" class="footer-btn submit">Tweet</a>
+	{{else}}
+		<input placeholder="Username or email">
+		<input placeholder="Password">
+		<a href="/auth/twitter" class="footer-btn submit">Sign In and Tweet</a>
+	{{/if}}
+</div>
+
+
+
+

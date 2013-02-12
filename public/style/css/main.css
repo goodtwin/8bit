@@ -148,7 +148,7 @@ html, body {
   position: relative;
   height: 650px;
   width: 100%;
-  padding: 265px 0 0;
+  padding: 165px 0 0;
   margin: 0px;
   background: url(/public/img/omaha-bkgd.png) no-repeat; }
   .scape .tweet-bubble {
@@ -477,6 +477,7 @@ html, body {
   .footer .tweet-box :-ms-input-placeholder {
     color: #0096b6; }
   .footer .login {
+    overflow: hidden;
     padding: .25em;
     box-shadow: 0 -1px 2px #0096b6;
     padding: 2em; }
@@ -509,13 +510,13 @@ html, body {
       color: #0096b6; }
     .footer .login :-ms-input-placeholder {
       color: #0096b6; }
-    .footer .login .submit {
+    .footer .login .footer-btn {
       display: inline-block;
       vertical-align: baseline;
       zoom: 1;
       *display: inline;
       *vertical-align: auto;
-      float: right;
+      float: left;
       margin: 0 auto;
       font-family: "Helvetica Neue", sans-serif;
       padding: 10px 8px 10px 8px;
@@ -533,5 +534,7 @@ html, body {
       -o-transition: all 0.15s linear;
       transition: all 0.15s linear;
       padding: 13px 8px 13px 8px; }
-      .footer .login .submit:hover {
+      .footer .login .footer-btn:hover {
         background-color: #00A8CB; }
+    .footer .login .submit {
+      float: right; }

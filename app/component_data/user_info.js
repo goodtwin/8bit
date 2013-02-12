@@ -19,22 +19,12 @@ define(
 
       var that;
 
-      this.startOAuth = function(ev, data) {
-        var socket = io.connect('http://localhost');
-        socket.emit('db data request');
+      this.startOAuth = function( ev, data ) {
+        var socket = io.connect( 'http://localhost' );
+        socket.emit( 'db data request' );
       };
-      
-      // this.setUser = function(data){
-      //   dataStore.oauth = data.oauth;
-      //   dataStore.results = data.results;
-        
-      //   that.trigger( 'userInfoServed', { markup: that.renderMenu(  data  ), oauth: dataStore.oauth, results: dataStore.results } );
-      //   if(dataStore.oauth){
-      //     that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
-      //   };
-      // };
 
-      this.setData = function(data){
+      this.setData = function( data ){
         dataStore.users = data.users;
         dataStore.oauth = data.oauth;
         dataStore.results = data.results;
@@ -45,8 +35,8 @@ define(
         };
       };
 
-      this.getUser = function(data){
-        var match = dataStore.users.filter(function (user) { return user.handle == data.results.screen_name });
+      this.getUser = function( data ){
+        var match = dataStore.users.filter(function ( user ) { return user.handle == data.results.screen_name });
         return match[0];
       };
       
@@ -54,13 +44,12 @@ define(
         return menuTemplate( data );
       };
 
-      this.after('initialize', function() {
+      this.after( 'initialize', function() {
         that = this;
         this.on( 'userInfoRequested', this.startOAuth );
         this.on( 'localUserRequested', this.getUser );
 
         var socket = io.connect( 'http://localhost' );
-        //socket.on( 'oauth returned', this.setUser );
         socket.on( 'db data returned', this.setData )
       });
     }
