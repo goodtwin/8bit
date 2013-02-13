@@ -44,6 +44,10 @@ define(
         return menuTemplate( data );
       };
 
+      this.test = function( data ){
+        console.log('test: '+data);
+      };
+
       this.after( 'initialize', function() {
         that = this;
         this.on( 'userInfoRequested', this.startOAuth );
@@ -51,6 +55,7 @@ define(
 
         var socket = io.connect( 'http://localhost' );
         socket.on( 'db data returned', this.setData )
+        socket.on( 'test', this.test )
       });
     }
 

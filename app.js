@@ -95,7 +95,7 @@ var express = require( 'express' ),
 		.set( 'views', __dirname + '/views' )
 		
 		.get( '/', function( req, res ) {
-			util.log('1: '+req.user);
+			util.log('1: '+req.session);
 			if (req.session.oauth) {
 				req.session.oauth.verifier = req.query.oauth_verifier;
 				console.log(req.session.oauth);
@@ -117,7 +117,8 @@ var express = require( 'express' ),
 				}
 				);
 			} else
-				util.log('3: '+req.session.oauth);
+			// just trying this
+				console.log ( util.inspect( req, false, null) );
 				res.render( 'index.html' );
 		})
 		.get( '/auth/twitter', function( req, res ){
@@ -293,8 +294,6 @@ function onDBDataRequest() {
 	};
 
 	this.emit( 'new tweet', { tweet: lastTweet } );
-
-	util.log(this);
 };
 
 /**************************************************

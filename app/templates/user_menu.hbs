@@ -1,8 +1,11 @@
 <div class="bird">
 	<div class="bird-icon"><img src="public/img/twitter.svg"></div>
 </div>
+
 <div class="tweet-box">
-	<textarea placeholder="What's Up?"></textarea>
+	{{#if oauth}}
+		<textarea placeholder="What's Up?"></textarea>
+	{{/if}}
 </div>
 <div class="login">
 	{{#if oauth}}
@@ -11,7 +14,7 @@
 	{{else}}
 		<input placeholder="Username or email">
 		<input placeholder="Password">
-		<a href="/auth/twitter" class="footer-btn submit">Sign In and Tweet</a>
+		<a href="/auth/twitter" class="footer-btn submit">Sign In</a>
 	{{/if}}
 </div>
 
