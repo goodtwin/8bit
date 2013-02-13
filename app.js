@@ -61,7 +61,7 @@ var express = require( 'express' ),
 		request.addListener( 'response', function( response ) {
 			response.setEncoding( 'utf8' );
 			response.addListener( 'data',  function( chunk ) {
-				if( !chunk.match( new RegExp( String.fromCharCode(13) ) ) ){
+				if( chunk.length > 2 ){
 					socket.sockets.emit( 'new tweet', { tweet: chunk } );
 					lastTweet = chunk;
 				};
@@ -95,7 +95,6 @@ var express = require( 'express' ),
 		.set( 'views', __dirname + '/views' )
 		
 		.get( '/', function( req, res ) {
-			util.log('1: '+req.session);
 			if (req.session.oauth) {
 				req.session.oauth.verifier = req.query.oauth_verifier;
 				console.log(req.session.oauth);
@@ -113,27 +112,27 @@ var express = require( 'express' ),
 						console.log(req.session.oauth);
 						Results = results;
 						res.render( 'index.html' );
+						//console.log ( util.inspect( req, false, null) );
 					}
 				}
 				);
-			} else
-			// just trying this
-				console.log ( util.inspect( req, false, null) );
+			} 
+			else {
 				res.render( 'index.html' );
+			}
 		})
 		.get( '/auth/twitter', function( req, res ){
-			//console.log(req.session.oauth),
+			var userHandle = req.query.screen_name;
 			oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
 				if (error) {
 					console.log(error);
-					//res.send( 'yeah no. didn\'t work.')
 					res.render( 'index.html' );
 				}
 				else {
 					req.session.oauth = {};
 					req.session.oauth.token = oauth_token;
 					req.session.oauth.token_secret = oauth_token_secret;
-					res.redirect( 'https://twitter.com/oauth/authenticate?oauth_token=' + oauth_token )
+					res.redirect( 'https://twitter.com/oauth/authenticate?oauth_token=' + oauth_token + '&screen_name=' + userHandle  );
 			}
 			});
 		});

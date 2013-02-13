@@ -107,7 +107,7 @@ define(
 				}
 
 				if( ( typeof tweeter !== 'undefined' ) && ( tweeter !== false ) ){
-					this.select( 'tweetBubbleSelector' ).show().css( { 'top': tweeter.y + (205 - this.select('tweetBubbleSelector').height()) , 'left': tweeter.x - 43 } );
+					this.select( 'tweetBubbleSelector' ).show().css( { 'top': tweeter.y , 'left': tweeter.x - 45 } );
 				}
 			};
 
