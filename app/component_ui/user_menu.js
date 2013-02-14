@@ -13,8 +13,8 @@ define(
     function userMenu() {
 
       this.defaultAttrs({
-        logInSelector : '.log-in',
-        logOutSelector: '.log-out',
+        logInSubmitSelector : '.login-submit',
+        tweetSubmitSelector: '.tweet-submit',
         requestSelector: '.request'
       });
 
@@ -25,6 +25,11 @@ define(
 
       this.after('initialize', function() {
         this.on( document, 'userInfoServed', this.showUser );
+        this.on( 'click',  {
+          logInSubmitSelector: this.flipToggle,
+          tweetSubmitSelector : this.setAsProfile,
+          downloadSelector : this.downloadEightBit
+        } );
 
         this.trigger('userInfoRequested');
       });

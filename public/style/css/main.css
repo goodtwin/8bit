@@ -540,5 +540,5 @@ html, body {
       padding: 13px 8px 13px 8px; }
       .footer .login .footer-btn:hover {
         background-color: #00A8CB; }
-    .footer .login .submit {
+    .footer .login .tweet-submit, .footer .login .login-submit {
       float: right; }

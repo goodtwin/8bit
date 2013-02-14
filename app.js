@@ -197,9 +197,9 @@ var express = require( 'express' ),
 			    	console.log(require('sys').inspect(error));
 			    } 
 			    else{
-			    	//setTimeout(function(){
+			    	setTimeout(function(){
 					  socket.sockets.emit( 'new tweet', { tweet: data } );
-					//},8000);
+					},8000);
 			    	lastTweet = data;
 			    	res.redirect('/');
 			    } 
