@@ -234,7 +234,10 @@ html, body {
     height: 250px;
     text-align: center;
     cursor: pointer;
-    -webkit-perspective: 10000; }
+    -webkit-perspective: 100000;
+    -moz-perspective: 100000;
+    -o-perspective: 100000;
+    perspective: 100000; }
     @media screen and (min-width: 420px) {
       .bits-container .eight-bit {
         width: 50%; } }

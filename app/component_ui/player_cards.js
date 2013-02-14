@@ -30,7 +30,11 @@ define(
 
       this.setUserInteractions = function(data){
         var userHandle = data.results.screen_name;
-        $( '.' + userHandle ).addClass( 'user' );
+        $( '.' + userHandle ).addClass( 'user' )
+        $( '.' + userHandle + '  .details .detail_btn' ).remove()
+        $( '.' + userHandle + '  .details' )
+          .append( '<a href="#" class="detail_btn set-as">Set As Twitter Profile</a>' ) 
+          .append( '<a href="#" class="detail_btn download">Download 8-Bit</a>' ); 
       };
 
       this.flipToggle = function(e){
