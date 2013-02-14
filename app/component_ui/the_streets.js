@@ -226,23 +226,41 @@ define(
 
 			this.createlocalPlayer = function( e, data ) {
 				// Initialize the local player
-				var id = ( data.details.first_name + '-' + data.details.last_name ).replace( /\s/g, '' );
-				
-				localPlayer = new LocalCharacter( {
-									$canvas : that.select( 'canvasSelector' ),
-									id : id,
-									handle : data.details.handle,
-									imgUri : $( '.-bit_' + id ).css( 'background-image' ).replace( 'url(', '' ).replace( ')', '' )            
-								} );
+				if( typeof data.details !== 'undefined') {
+					var id = ( data.details.first_name + '-' + data.details.last_name ).replace( /\s/g, '' );
+					
+					localPlayer = new LocalCharacter( {
+										$canvas : that.select( 'canvasSelector' ),
+										id : id,
+										handle : data.details.handle,
+										imgUri : $( '.-bit_' + id ).css( 'background-image' ).replace( 'url(', '' ).replace( ')', '' )            
+									} );
 
-				socket.emit( 'new player', { 
-					x : localPlayer.getX(), 
-					y : localPlayer.getY(), 
-					handle : localPlayer.handle, 
-					img : localPlayer.img.src 
-				} );
+					socket.emit( 'new player', { 
+						x : localPlayer.getX(), 
+						y : localPlayer.getY(), 
+						handle : localPlayer.handle, 
+						img : localPlayer.img.src 
+					} );
 
-				this.removeFromOmahaPlayers( { handle: localPlayer.handle } )
+					this.removeFromOmahaPlayers( { handle: localPlayer.handle } )
+				}
+				else {
+					var characterNumber = Math.floor(Math.random() * (5 + 1));
+					var id = ( data.dummy[characterNumber].first_name + '-' + data.dummy[characterNumber].last_name ).replace( /\s/g, '' );
+					localPlayer = new LocalCharacter( {
+										$canvas : that.select( 'canvasSelector' ),
+										id : id,
+										imgUri : data.dummy[characterNumber].imgUri            
+									} );
+
+					socket.emit( 'new player', { 
+						x : localPlayer.getX(), 
+						y : localPlayer.getY(), 
+						handle : localPlayer.handle, 
+						img : localPlayer.img.src 
+					} );
+				}
 			};
 
 			this.removeFromOmahaPlayers = function( data ){

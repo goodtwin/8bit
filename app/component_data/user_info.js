@@ -31,7 +31,12 @@ define(
         
         that.trigger( 'userInfoServed', { markup: that.renderMenu(  data  ), oauth: dataStore.oauth, results: dataStore.results } );
         if(dataStore.oauth){
-          that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
+          if( typeof (that.getUser( { results: dataStore.results })) !== 'undefined' ){
+            that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
+          }
+          else{
+            that.trigger( 'localUserServed', { dummy: dataStore.dummyUsers } );
+          }
         };
       };
 

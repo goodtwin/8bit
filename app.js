@@ -138,6 +138,7 @@ var express = require( 'express' ),
 							req.session.oauth.access_token = oauth_access_token;
 							req.session.oauth.access_token_secret = oauth_access_token_secret;
 							req.session.oauth.request_token_used = true;
+							console.log( util.inspect( results ) );
 							oauthResults = results;
 							res.render( 'index.html' );
 						}
