@@ -121,7 +121,7 @@ var express = require( 'express' ),
 		.get( '/i', function( req, res ) {
 			if (req.session.oauth) {
 				req.session.oauth.verifier = req.query.oauth_verifier;
-				console.log('1: '+ util.inspect( req.session.oauth ) );
+				//console.log('1: '+ util.inspect( req.session.oauth ) );
 				var oauth = req.session.oauth;
 				
 				if( oauth.request_token_used ){
@@ -131,13 +131,14 @@ var express = require( 'express' ),
 					oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
 					function(error, oauth_access_token, oauth_access_token_secret, results){			
 						if (error){
-							console.log('2: '+ util.inspect( error ) );
+							//console.log('2: '+ util.inspect( error ) );
 							res.render( 'index.html' );
 						} else {
-							console.log('3: '+ util.inspect( req.session.oauth ) );
+							//console.log('3: '+ util.inspect( req.session.oauth ) );
 							req.session.oauth.access_token = oauth_access_token;
 							req.session.oauth.access_token_secret = oauth_access_token_secret;
 							req.session.oauth.request_token_used = true;
+							req.session.oauth.screen_name = results.screen_name;
 							console.log( util.inspect( results ) );
 							oauthResults = results;
 							res.render( 'index.html' );
@@ -146,7 +147,7 @@ var express = require( 'express' ),
 				}
 			} 
 			else {
-				console.log('4');
+				//console.log('4');
 				res.render( 'index.html' );
 			}
 		})
@@ -187,6 +188,7 @@ var express = require( 'express' ),
 			    } 
 			    else{
 			    	console.log(data);
+			    	lastTweet = data;
 			    	res.redirect('/');
 			    } 
 			  }

@@ -200,13 +200,31 @@ define(
 			};
 
 			this.omahaPlayerByHandle = function( handle ) {
-				var newTweeter;
+				var thePlayer;
 				for ( var i = 0; i < omahaPlayers.length; i++ ) {
 					if ( omahaPlayers[i].handle.toLowerCase() == handle.toLowerCase()){
-						newTweeter = omahaPlayers[i];
+						thePlayer = omahaPlayers[i];
 					}
 				};
-				return newTweeter;
+				return thePlayer;
+			};
+
+			this.remotePlayerByHandle = function( handle ) {
+				var thePlayer;
+				for ( var i = 0; i < remotePlayers.length; i++ ) {
+					if ( remotePlayers[i].handle.toLowerCase() == handle.toLowerCase()){
+						thePlayer = remotePlayers[i];
+					}
+				};
+				return thePlayer;
+			};
+
+			this.localPlayerByHandle = function( handle ) {
+				var thePlayer;
+				if ( localPlayer.handle.toLowerCase() == handle.toLowerCase()){
+					thePlayer = localPlayer;
+				}
+				return thePlayer;
 			};
 
 			this.createOmahaPlayers = function( e, data ){
@@ -251,6 +269,7 @@ define(
 					localPlayer = new LocalCharacter( {
 										$canvas : that.select( 'canvasSelector' ),
 										id : id,
+										handle: data.handle,
 										imgUri : data.dummy[characterNumber].imgUri            
 									} );
 
@@ -269,8 +288,8 @@ define(
 			};
 
 			this.onNewTweet = function( data ){
-				var newTweet = JSON.parse( data.tweet );
-				var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name );
+				var newTweet = typeof JSON.parse( data.tweet ) == 'undefined' ? data.tweet : JSON.parse( data.tweet );
+				var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name ) || that.localPlayerByHandle( newTweet.user.screen_name ) || that.remotePlayerByHandle( newTweet.user.screen_name );
 				
 				if ( typeof newTweeter !== 'undefined' ) {
 					tweet = newTweet;

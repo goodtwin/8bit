@@ -35,7 +35,8 @@ define(
             that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
           }
           else{
-            that.trigger( 'localUserServed', { dummy: dataStore.dummyUsers } );
+            var handle = dataStore.results.screen_name;
+            that.trigger( 'localUserServed', { dummy: dataStore.dummyUsers, handle: handle } );
           }
         };
       };
