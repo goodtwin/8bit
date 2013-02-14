@@ -120,6 +120,7 @@ html, body {
         height: 250px;
         text-align: center;
         cursor: pointer;
+        -webkit-perspective: 10000;
         @media screen and (min-width: 420px){
                 width: 50%;
         }
