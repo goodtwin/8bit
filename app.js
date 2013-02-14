@@ -36,25 +36,22 @@ var express = require( 'express' ),
 		'https://api.twitter.com/oauth/access_token',
 		'8YVoUbVLwaWmoxLgPk5nqg',
 		'rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc',
-		'1.0',
-		'http://localhost:8000/',
+		'1.0A',
+		'http://localhost:8000/i',
 		'HMAC-SHA1'
 	);
 	
 	var lastTweet;
+	var oauthResults;
 
 	function beginTwitterStream() {
-		// var chunk = {"created_at":"Mon Feb 11 14:30:22 +0000 2013","id":300975065506390017,"id_str":"300975065506390017","text":"@codypeterson Thank you, it's very much appreciated! http://google.com","source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":300973487735046144,"in_reply_to_status_id_str":"300973487735046144","in_reply_to_user_id":647403,"in_reply_to_user_id_str":"647403","in_reply_to_screen_name":"codypeterson","user":{"id":275539731,"id_str":"275539731","name":"Adam Hardy","screen_name":"thompson","location":"","url":null,"description":null,"protected":false,"followers_count":34,"friends_count":90,"listed_count":0,"created_at":"Fri Apr 29 14:20:55 +0000 2011","favourites_count":10,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":147,"lang":"en","contributors_enabled":false,"is_translator":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/si0.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/a0.twimg.com\/profile_images\/2242049968\/me_normal.jpg","profile_image_url_https":"https:\/\/si0.twimg.com\/profile_images\/2242049968\/me_normal.jpg","profile_link_color":"0084B4","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"default_profile":true,"default_profile_image":false,"following":null,"follow_request_sent":null,"notifications":null},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"entities":{"hashtags":[],"urls":[],"user_mentions":[{"screen_name":"codypeterson","name":"Cody Peterson \u2234","id":647403,"id_str":"647403","indices":[0,13]}]},"favorited":false,"retweeted":false};
-		// setInterval(function(){
-		// 	socket.sockets.emit( 'new tweet', { tweet: chunk } );
-		// }, 9000);
 		for (var i = 0; i < dbUsers.length; i++) {
 			dbTwitterIds.push( dbUsers[i].twitter_id );
 		};
 		dbTwitterIds = dbTwitterIds.join(",");
 
 		var request = oa.get( 
-			'https://stream.twitter.com/1.1/statuses/filter.json?follow=' + dbTwitterIds, 
+			'https://stream.twitter.com/1/statuses/filter.json?follow=' + dbTwitterIds, 
 			'15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI', 
 			'6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo' 
 		);
@@ -96,28 +93,59 @@ var express = require( 'express' ),
 		
 		.get( '/', function( req, res ) {
 			if (req.session.oauth) {
-				req.session.oauth.verifier = req.query.oauth_verifier;
-				console.log(req.session.oauth);
-				var oauth = req.session.oauth;
+				// req.session.oauth.verifier = req.query.oauth_verifier;
+				// console.log('1: '+ util.inspect( req.session.oauth ) );
+				// var oauth = req.session.oauth;
 
-				oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
-				function(error, oauth_access_token, oauth_access_token_secret, results){			
-					if (error){
-						console.log(error);
-						res.render( 'index.html' );
-					} else {
-						util.log('2: '+req.session.oauth);
-						req.session.oauth.access_token = oauth_access_token;
-						req.session.oauth.access_token_secret = oauth_access_token_secret;
-						console.log(req.session.oauth);
-						Results = results;
-						res.render( 'index.html' );
-						//console.log ( util.inspect( req, false, null) );
-					}
-				}
-				);
+				// oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
+				// function(error, oauth_access_token, oauth_access_token_secret, results){			
+				// 	if (error){
+				// 		console.log('2: '+ util.inspect( error ) );
+				// 		res.render( 'index.html' );
+				// 	} else {
+				// 		console.log('3: '+ util.inspect( req.session.oauth ) );
+				// 		req.session.oauth.access_token = oauth_access_token;
+				// 		req.session.oauth.access_token_secret = oauth_access_token_secret;
+				// 		oauthResults = results;
+				// 		res.render( 'index.html' );
+				// 	}
+				// }
+				// );
+				res.redirect( '/auth/twitter' )
 			} 
 			else {
+				//console.log('4');
+				res.render( 'index.html' );
+			}
+		})
+		.get( '/i', function( req, res ) {
+			if (req.session.oauth) {
+				req.session.oauth.verifier = req.query.oauth_verifier;
+				console.log('1: '+ util.inspect( req.session.oauth ) );
+				var oauth = req.session.oauth;
+				
+				if( oauth.request_token_used ){
+					res.redirect( '/auth/twitter' );
+				}
+				else{
+					oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
+					function(error, oauth_access_token, oauth_access_token_secret, results){			
+						if (error){
+							console.log('2: '+ util.inspect( error ) );
+							res.render( 'index.html' );
+						} else {
+							console.log('3: '+ util.inspect( req.session.oauth ) );
+							req.session.oauth.access_token = oauth_access_token;
+							req.session.oauth.access_token_secret = oauth_access_token_secret;
+							req.session.oauth.request_token_used = true;
+							oauthResults = results;
+							res.render( 'index.html' );
+						}
+					});
+				}
+			} 
+			else {
+				console.log('4');
 				res.render( 'index.html' );
 			}
 		})
@@ -132,9 +160,36 @@ var express = require( 'express' ),
 					req.session.oauth = {};
 					req.session.oauth.token = oauth_token;
 					req.session.oauth.token_secret = oauth_token_secret;
+					req.session.oauth.request_token_used = false;
 					res.redirect( 'https://twitter.com/oauth/authenticate?oauth_token=' + oauth_token + '&screen_name=' + userHandle  );
 			}
 			});
+		})
+		.get( '/logout', function( req, res ){
+			req.session.oauth = false;
+			res.redirect('/');
+		})
+		.get( '/auth/twitter/tweet', function( req, res ){
+			var oauth_access_token = req.session.oauth.access_token,
+				oauth_access_token_secret = req.session.oauth.access_token_secret,
+				twitterStatus = req.query.status;
+			console.log(oauth_access_token); 
+			console.log(oauth_access_token_secret);
+			console.log(twitterStatus); 
+			oa.post(
+			  'https://api.twitter.com/1/statuses/update.json',
+			  oauth_access_token, oauth_access_token_secret,
+			  { 'status': twitterStatus },
+			  function(error, data) {
+			    if(error){
+			    	console.log(require('sys').inspect(error));
+			    } 
+			    else{
+			    	console.log(data);
+			    	res.redirect('/');
+			    } 
+			  }
+			);
 		});
 
 /**************************************************
@@ -270,15 +325,15 @@ function onMovePlayer(data) {
 
 // Mongo data requested
 function onDBDataRequest() {
-	var oauth = typeof Results == 'undefined' || Results === false ? false : true,
-		results = oauth ? Results : false;
+	var oauth = typeof oauthResults == 'undefined' || oauthResults === false ? false : true,
+		results = oauth ? oauthResults : false;
 
 	this.emit( 'db data returned', { 
 		users: dbUsers, 
 		oauth: oauth, 
 		results: results } );
 	
-	Results = false;
+	oauthResults = false;
 
 	// Send existing players to the new player
 	var i, existingPlayer;
