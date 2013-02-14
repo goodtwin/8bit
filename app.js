@@ -139,7 +139,7 @@ var express = require( 'express' ),
 							req.session.oauth.access_token_secret = oauth_access_token_secret;
 							req.session.oauth.request_token_used = true;
 							req.session.oauth.screen_name = results.screen_name;
-							console.log( util.inspect( results ) );
+							//console.log( util.inspect( results ) );
 							oauthResults = results;
 							res.render( 'index.html' );
 						}
@@ -150,6 +150,10 @@ var express = require( 'express' ),
 				//console.log('4');
 				res.render( 'index.html' );
 			}
+		})
+		.get( '/logout', function( req, res ){
+			req.session.oauth = false;
+			res.redirect('/');
 		})
 		.get( '/auth/twitter', function( req, res ){
 			var userHandle = req.query.screen_name;
@@ -167,9 +171,15 @@ var express = require( 'express' ),
 			}
 			});
 		})
-		.get( '/logout', function( req, res ){
-			req.session.oauth = false;
-			res.redirect('/');
+		.get( '/auth/twitter/set-profile', function( req, res ){
+			console.log('set-profile called');
+			 res.writeHead(200, {'content-type': 'text/json' });
+		     res.write( JSON.stringify({ test : 'set-profile called'}) );
+		     res.end('\n');
+		})
+		.get( '/auth/twitter/download', function( req, res ){
+			//req.session.oauth = false;
+			//res.redirect('/');
 		})
 		.get( '/auth/twitter/tweet', function( req, res ){
 			var oauth_access_token = req.session.oauth.access_token,
@@ -187,7 +197,9 @@ var express = require( 'express' ),
 			    	console.log(require('sys').inspect(error));
 			    } 
 			    else{
-			    	console.log(data);
+			    	//setTimeout(function(){
+					  socket.sockets.emit( 'new tweet', { tweet: data } );
+					//},8000);
 			    	lastTweet = data;
 			    	res.redirect('/');
 			    } 

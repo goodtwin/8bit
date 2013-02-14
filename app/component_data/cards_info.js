@@ -29,8 +29,18 @@ define(
         return cardsTemplate( data );
       };
 
+      this.requestProfilePost = function( data ){
+        $.ajax('/auth/twitter/set-profile', {
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) { console.log(data); },
+            error  : function()     { if ( callback ) callback(null); }
+        });
+      };
+
       this.after( 'initialize', function() {
         this.on( document, 'userMenuRendered', this.getPlayerCards );
+        this.on( document, 'requestProfilePost', this.requestProfilePost );
       });
     }
 

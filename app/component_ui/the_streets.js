@@ -254,13 +254,6 @@ define(
 										imgUri : $( '.-bit_' + id ).css( 'background-image' ).replace( 'url(', '' ).replace( ')', '' )            
 									} );
 
-					socket.emit( 'new player', { 
-						x : localPlayer.getX(), 
-						y : localPlayer.getY(), 
-						handle : localPlayer.handle, 
-						img : localPlayer.img.src 
-					} );
-
 					this.removeFromOmahaPlayers( { handle: localPlayer.handle } )
 				}
 				else {
@@ -272,14 +265,14 @@ define(
 										handle: data.handle,
 										imgUri : data.dummy[characterNumber].imgUri            
 									} );
+				}
 
-					socket.emit( 'new player', { 
+				socket.emit( 'new player', { 
 						x : localPlayer.getX(), 
 						y : localPlayer.getY(), 
 						handle : localPlayer.handle, 
 						img : localPlayer.img.src 
 					} );
-				}
 			};
 
 			this.removeFromOmahaPlayers = function( data ){
@@ -289,7 +282,7 @@ define(
 
 			this.onNewTweet = function( data ){
 				var newTweet = typeof JSON.parse( data.tweet ) == 'undefined' ? data.tweet : JSON.parse( data.tweet );
-				var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name ) || that.localPlayerByHandle( newTweet.user.screen_name ) || that.remotePlayerByHandle( newTweet.user.screen_name );
+				var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name ) || that.remotePlayerByHandle( newTweet.user.screen_name ) || that.localPlayerByHandle( newTweet.user.screen_name );
 				
 				if ( typeof newTweeter !== 'undefined' ) {
 					tweet = newTweet;
