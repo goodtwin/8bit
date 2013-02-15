@@ -52,7 +52,8 @@ define(
 
       this.setAsProfile = function( e, data ){
         e.preventDefault();
-        this.trigger('requestProfilePost');
+        //$( '.-bit_' + id )
+        this.trigger('requestProfilePost', { image: image });
       };
       
       this.after( 'initialize', function() {

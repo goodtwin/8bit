@@ -50,14 +50,21 @@ define(
         return menuTemplate( data );
       };
 
-      this.test = function( data ){
-        console.log('test: '+data);
+      this.postTweet = function( e, data ){
+        $.ajax('/auth/twitter/tweet', {
+            type: 'GET',
+            dataType: 'json',
+            data: { status: data.status },
+            success: function(data) { console.log(data); },
+            error  : function()     { if ( callback ) callback(null); }
+        });
       };
 
       this.after( 'initialize', function() {
         that = this;
         this.on( 'userInfoRequested', this.startOAuth );
         this.on( 'localUserRequested', this.getUser );
+        this.on( 'postTweet', this.postTweet );
 
         var socket = io.connect( 'http://localhost' );
         socket.on( 'db data returned', this.setData )

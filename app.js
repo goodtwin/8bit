@@ -173,9 +173,24 @@ var express = require( 'express' ),
 		})
 		.get( '/auth/twitter/set-profile', function( req, res ){
 			console.log('set-profile called');
-			 res.writeHead(200, {'content-type': 'text/json' });
-		     res.write( JSON.stringify({ test : 'set-profile called'}) );
-		     res.end('\n');
+			// var oauth_access_token = req.session.oauth.access_token,
+			// 	oauth_access_token_secret = req.session.oauth.access_token_secret,
+			// 	twitterStatus = req.query.status;
+			// oa.post(
+			// 	'https://api.twitter.com/1.1/account/update_profile_image.json',
+			// 	oauth_access_token, oauth_access_token_secret,
+			//   	{ 'image': twitterStatus },
+			//   function(error, data) {
+			//     if(error){
+			//     	console.log(require('sys').inspect(error));
+			//     } 
+			//     else{
+			//     	res.writeHead(200, {'content-type': 'text/json' });
+		 //     		res.write( JSON.stringify({ test : 'profile changed'}) );
+		 //     		res.end('\n');
+			//     } 
+			//   }
+			// );
 		})
 		.get( '/auth/twitter/download', function( req, res ){
 			//req.session.oauth = false;
@@ -185,9 +200,6 @@ var express = require( 'express' ),
 			var oauth_access_token = req.session.oauth.access_token,
 				oauth_access_token_secret = req.session.oauth.access_token_secret,
 				twitterStatus = req.query.status;
-			console.log(oauth_access_token); 
-			console.log(oauth_access_token_secret);
-			console.log(twitterStatus); 
 			oa.post(
 			  'https://api.twitter.com/1/statuses/update.json',
 			  oauth_access_token, oauth_access_token_secret,
@@ -197,11 +209,13 @@ var express = require( 'express' ),
 			    	console.log(require('sys').inspect(error));
 			    } 
 			    else{
-			    	setTimeout(function(){
+			    	//setTimeout(function(){
 					  socket.sockets.emit( 'new tweet', { tweet: data } );
-					},8000);
+					//},8000);
 			    	lastTweet = data;
-			    	res.redirect('/');
+			    	res.writeHead(200, {'content-type': 'text/json' });
+		     		res.write( JSON.stringify({ test : 'tweet sent'}) );
+		     		res.end('\n');
 			    } 
 			  }
 			);
