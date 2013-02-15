@@ -55,9 +55,14 @@ define(
             type: 'GET',
             dataType: 'json',
             data: { status: data.status },
-            success: function(data) { console.log(data); },
+            success: that.trigger( 'userTweetPosted', data ),
             error  : function()     { if ( callback ) callback(null); }
         });
+      };
+
+      this.requestLogIn = function( e, data ){
+        var username = data.username;
+        window.location.href = '/auth/twitter?username=' + username;
       };
 
       this.after( 'initialize', function() {
@@ -65,6 +70,7 @@ define(
         this.on( 'userInfoRequested', this.startOAuth );
         this.on( 'localUserRequested', this.getUser );
         this.on( 'postTweet', this.postTweet );
+        this.on( 'requestLogIn', this.requestLogIn );
 
         var socket = io.connect( 'http://localhost' );
         socket.on( 'db data returned', this.setData )

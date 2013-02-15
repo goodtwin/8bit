@@ -11,14 +11,10 @@
 	{{#if oauth}}
 		<a href="/logout" class="footer-btn log-out">Hi, {{results.screen_name}}. Log out?</a>
 		<a href="#" class="tweet-submit footer-btn">Tweet</a>
-		
-		<!--onclick="this.setAttribute('href', '/auth/twitter/tweet?status='+encodeURIComponent( document.getElementById('tweet-box-text').value ) )"-->
 	{{else}}
 		<input id="twitter_screen_name" placeholder="Username or email">
 		<input password="twitter_password" placeholder="Password">
-		<a id="submit-btn" href="#" onclick="this.setAttribute('href', '/auth/twitter?screen_name='+document.getElementById('twitter_screen_name').value )" class="footer-btn login-submit">Sign In</a>
-
-		<!--onclick="this.setAttribute('href', '/auth/twitter?screen_name='+document.getElementById('twitter_screen_name').value )"--> 
+		<a id="submit-btn" href="#" class="footer-btn login-submit">Sign In</a>
 	{{/if}}
 </div>
 
