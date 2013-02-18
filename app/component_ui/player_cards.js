@@ -47,13 +47,17 @@ define(
 
       this.downloadEightBit = function( e, data ){
         e.preventDefault();
-        console.log('download');
+        var id = data.el.offsetParent.id;
+        this.trigger('requestDownload', { id: id });
       };
 
       this.setAsProfile = function( e, data ){
         e.preventDefault();
-        //$( '.-bit_' + id )
-        this.trigger('requestProfilePost', { image: image });
+        var id = data.el.offsetParent.id;
+        var image = new Image(); 
+            image.src = '/public/style/8bits/png/bit_' + id + '.png';
+        console.log( image );
+        this.trigger('requestProfilePost', { image: image.src });
       };
       
       this.after( 'initialize', function() {

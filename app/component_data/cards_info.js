@@ -29,11 +29,34 @@ define(
         return cardsTemplate( data );
       };
 
-      this.requestProfilePost = function( data ){
+      this.requestProfilePost = function( e, data ){
+        console.log( data );
+       var canvas = document.createElement("canvas");
+       var img = data.image;
+       canvas.width = img.width;
+       canvas.height = img.height;
+       var ctxt = canvas.getContext("2d");
+       ctxt.drawImage(img, 0, 0);
+       var dataURL = canvas.toDataURL("image/png");
+       var dataURL = canvas.toDataURL("image/png");
+       var r=dataURL;
+       base64=r;
+       console.log(base64);  
         $.ajax('/auth/twitter/set-profile', {
             type: 'GET',
             dataType: 'json',
-            success: function(data) { console.log(data); },
+            success: function(data) { console.log( data ); },
+            error  : function()     { if ( callback ) callback(null); }
+        });
+      };
+
+      this.requestDownload = function( e, data ){
+        console.log( data ); 
+        $.ajax('auth/twitter/download', {
+            type: 'GET',
+            dataType: 'json',
+            data: { id: data.id },
+            success: function(data) { console.log( data ); },
             error  : function()     { if ( callback ) callback(null); }
         });
       };
@@ -41,6 +64,7 @@ define(
       this.after( 'initialize', function() {
         this.on( document, 'userMenuRendered', this.getPlayerCards );
         this.on( document, 'requestProfilePost', this.requestProfilePost );
+        this.on( document, 'requestDownload', this.requestDownload );
       });
     }
 

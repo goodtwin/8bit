@@ -12,6 +12,7 @@ var express = require( 'express' ),
     OAuth= require( 'oauth' ).OAuth,
   	util = require( 'util' ),					
 	io = require( 'socket.io' ),
+	fs = require( 'fs' ),
 	socket = io.listen(server),				
 	Player = require( './Player' ).Player;	
 
@@ -193,8 +194,15 @@ var express = require( 'express' ),
 			// );
 		})
 		.get( '/auth/twitter/download', function( req, res ){
-			//req.session.oauth = false;
-			//res.redirect('/');
+			// var id = req.query.id;
+			
+			// var file = __dirname + '/public/img/8bits/bit_' + id + '.svg'
+
+			// res.setHeader('Content-disposition', 'attachment; filename=' + id);
+			// res.setHeader('Content-type', 'img/svg');
+
+			// var filestream = fs.createReadStream(file);
+			// filestream.pipe(res);
 		})
 		.get( '/auth/twitter/tweet', function( req, res ){
 			var oauth_access_token = req.session.oauth.access_token,
