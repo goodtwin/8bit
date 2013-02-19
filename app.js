@@ -173,36 +173,37 @@ var express = require( 'express' ),
 			});
 		})
 		.get( '/auth/twitter/set-profile', function( req, res ){
-			console.log('set-profile called');
-			// var oauth_access_token = req.session.oauth.access_token,
-			// 	oauth_access_token_secret = req.session.oauth.access_token_secret,
-			// 	twitterStatus = req.query.status;
-			// oa.post(
-			// 	'https://api.twitter.com/1.1/account/update_profile_image.json',
-			// 	oauth_access_token, oauth_access_token_secret,
-			//   	{ 'image': twitterStatus },
-			//   function(error, data) {
-			//     if(error){
-			//     	console.log(require('sys').inspect(error));
-			//     } 
-			//     else{
-			//     	res.writeHead(200, {'content-type': 'text/json' });
-		 //     		res.write( JSON.stringify({ test : 'profile changed'}) );
-		 //     		res.end('\n');
-			//     } 
-			//   }
-			// );
+			var id = req.query.id,
+				image_origial = __dirname + '/public/style/8bits/png/bit_' + id + '.png',
+				base64Image;
+			//fs.readFile(image_origial, function(err, original_data){
+			    base64Image = new Buffer( fs.readFileSync(image_origial) ).toString('base64');
+			    base64Image = 'data:image/png;base64,' + base64Image;
+			    //var decodedImage = new Buffer(base64Image, 'base64');
+			    console.log(base64Image);
+			    //console.log('<img alt="sample" src="data:image/png;base64,' + base64Image + '">');
+			//});
+			var oauth_access_token = req.session.oauth.access_token,
+				oauth_access_token_secret = req.session.oauth.access_token_secret;
+			oa.post(
+				'https://api.twitter.com/1.1/account/update_profile_image.json',
+				oauth_access_token, oauth_access_token_secret,
+			  	{ 'image': base64Image },
+			  function(error, data) {
+			    if(error){
+			    	console.log(require('sys').inspect(error));
+			    } 
+			    else{
+			    	res.writeHead(200, {'content-type': 'text/json' });
+		     		res.write( JSON.stringify({ test : 'profile changed'}) );
+		     		res.end('\n');
+			    } 
+			  }
+			);
 		})
-		.get( '/auth/twitter/download', function( req, res ){
-			// var id = req.query.id;
-			
-			// var file = __dirname + '/public/img/8bits/bit_' + id + '.svg'
-
-			// res.setHeader('Content-disposition', 'attachment; filename=' + id);
-			// res.setHeader('Content-type', 'img/svg');
-
-			// var filestream = fs.createReadStream(file);
-			// filestream.pipe(res);
+		.get( '/auth/twitter/download/:id', function( req, res ){
+			var id = req.params.id;
+			res.download( __dirname + '/public/style/8bits/png/bit_' + id + '.png', id + '.png' );
 		})
 		.get( '/auth/twitter/tweet', function( req, res ){
 			var oauth_access_token = req.session.oauth.access_token,
@@ -217,9 +218,7 @@ var express = require( 'express' ),
 			    	console.log(require('sys').inspect(error));
 			    } 
 			    else{
-			    	//setTimeout(function(){
-					  socket.sockets.emit( 'new tweet', { tweet: data } );
-					//},8000);
+					socket.sockets.emit( 'new tweet', { tweet: data } );
 			    	lastTweet = data;
 			    	res.writeHead(200, {'content-type': 'text/json' });
 		     		res.write( JSON.stringify({ test : 'tweet sent'}) );

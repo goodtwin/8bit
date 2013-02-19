@@ -54,10 +54,7 @@ define(
       this.setAsProfile = function( e, data ){
         e.preventDefault();
         var id = data.el.offsetParent.id;
-        var image = new Image(); 
-            image.src = '/public/style/8bits/png/bit_' + id + '.png';
-        console.log( image );
-        this.trigger('requestProfilePost', { image: image.src });
+        this.trigger('requestProfilePost', { id: id });
       };
       
       this.after( 'initialize', function() {
