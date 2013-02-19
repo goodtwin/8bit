@@ -13,6 +13,7 @@ var express = require( 'express' ),
   	util = require( 'util' ),					
 	io = require( 'socket.io' ),
 	fs = require( 'fs' ),
+	nodemailer = require("nodemailer"),
 	socket = io.listen(server),				
 	Player = require( './Player' ).Player;	
 
@@ -70,6 +71,15 @@ var express = require( 'express' ),
 		});
 		request.end();
 	};
+
+	//NodeMailer
+	var smtpTransport = nodemailer.createTransport("SMTP",{
+	    service: "Gmail",
+	    auth: {
+	        user: "support@good-twin.com",
+	        pass: "gflyingpig3"
+	    }
+	});
 
 	// Swig
 	swig.init({
@@ -156,8 +166,41 @@ var express = require( 'express' ),
 			req.session.oauth = false;
 			res.redirect('/');
 		})
+
+		.get( '/email', function( req, res ){
+
+			var name = req.query.name,
+				email = req.query.email,
+				handle = req.query.handle,
+				body = req.query.text;
+
+			// setup e-mail data with unicode symbols
+			var mailOptions = {
+			    from: name + '<' + email +'>', // sender address
+			    to: 'greg@good-twin.com', // list of receivers
+			    subject: "8-Bit Request Form", // Subject line
+			    text: body //, // plaintext body
+			    //html: "<b>Hello world ✔</b>" // html body
+			}
+
+			// send mail with defined transport object
+			smtpTransport.sendMail(mailOptions, function(error, response){
+			    if(error){
+			        console.log(error);
+			    }else{
+			        console.log("Message sent: " + response.message);
+			        res.writeHead(200, {'content-type': 'text/json' });
+		     		res.write( JSON.stringify({ test : 'email sent'}) );
+		     		res.end('\n');
+			    }
+
+			    // if you don't want to use this transport object anymore, uncomment following line
+			    //smtpTransport.close(); // shut down the connection pool, no more messages
+			});
+		})
 		.get( '/auth/twitter', function( req, res ){
-			var userHandle = req.query.screen_name;
+			console.log(req.query.screen_name);
+			var userHandle = req.query.username || '';
 			oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results){
 				if (error) {
 					console.log(error);
@@ -172,35 +215,32 @@ var express = require( 'express' ),
 			}
 			});
 		})
-		.get( '/auth/twitter/set-profile', function( req, res ){
-			var id = req.query.id,
-				image_origial = __dirname + '/public/style/8bits/png/bit_' + id + '.png',
-				base64Image;
-			//fs.readFile(image_origial, function(err, original_data){
-			    base64Image = new Buffer( fs.readFileSync(image_origial) ).toString('base64');
-			    base64Image = 'data:image/png;base64,' + base64Image;
-			    //var decodedImage = new Buffer(base64Image, 'base64');
-			    console.log(base64Image);
-			    //console.log('<img alt="sample" src="data:image/png;base64,' + base64Image + '">');
-			//});
-			var oauth_access_token = req.session.oauth.access_token,
-				oauth_access_token_secret = req.session.oauth.access_token_secret;
-			oa.post(
-				'https://api.twitter.com/1.1/account/update_profile_image.json',
-				oauth_access_token, oauth_access_token_secret,
-			  	{ 'image': base64Image },
-			  function(error, data) {
-			    if(error){
-			    	console.log(require('sys').inspect(error));
-			    } 
-			    else{
-			    	res.writeHead(200, {'content-type': 'text/json' });
-		     		res.write( JSON.stringify({ test : 'profile changed'}) );
-		     		res.end('\n');
-			    } 
-			  }
-			);
-		})
+		// .get( '/auth/twitter/set-profile', function( req, res ){
+		// 	var id = req.query.id,
+		// 		image_origial = __dirname + '/public/style/8bits/png/bit_' + id + '.png',
+		// 		base64Image;
+		// 	    base64Image = new Buffer( fs.readFileSync(image_origial) ).toString('base64');
+		// 	    base64Image = 'data:image/png;base64,' + base64Image;
+		// 	    console.log(base64Image);
+
+		// 	var oauth_access_token = req.session.oauth.access_token,
+		// 		oauth_access_token_secret = req.session.oauth.access_token_secret;
+		// 	oa.post(
+		// 		'https://api.twitter.com/1.1/account/update_profile_image.json',
+		// 		oauth_access_token, oauth_access_token_secret,
+		// 	  	{ 'image': base64Image },
+		// 	  function(error, data) {
+		// 	    if(error){
+		// 	    	console.log(require('sys').inspect(error));
+		// 	    } 
+		// 	    else{
+		// 	    	res.writeHead(200, {'content-type': 'text/json' });
+		//      		res.write( JSON.stringify({ test : 'profile changed'}) );
+		//      		res.end('\n');
+		// 	    } 
+		// 	  }
+		// 	);
+		// })
 		.get( '/auth/twitter/download/:id', function( req, res ){
 			var id = req.params.id;
 			res.download( __dirname + '/public/style/8bits/png/bit_' + id + '.png', id + '.png' );
