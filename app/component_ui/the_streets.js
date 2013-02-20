@@ -48,7 +48,7 @@
 					this.select( 'canvasSelector' ).attr( 'width', window.innerWidth );
 					this.select( 'canvasSelector' ).attr( 'height', 490 );
 
-					this.trigger( 'canvasShown', { oauth: data.oauth, results: data.results } );
+					this.trigger( 'canvasShown' );
 				};
 
 				this.initializeGame = function( e, data ){

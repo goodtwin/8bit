@@ -23,7 +23,9 @@
 					tweetBoxSelector: '.tweet-box textarea',
 					usernameSelector: '#twitter_screen_name',
 					passwordSelector: '#twitter_password',
-					requestSelector: '.request'
+					requestSelector: '.request',
+					collapsibleSelector: '.collapsible',
+					tweetBoxContSelector: '.tweet-box'
 				});
 
 				this.showUser = function( e, data ){
@@ -35,6 +37,20 @@
 					e.preventDefault();
 					var username = this.select( 'usernameSelector' ).val();
 					this.trigger( 'requestLogIn', { username: username } );
+				};
+
+				this.toggleCollapse = function( e, data ){
+					var $a = this.select( 'collapsibleSelector' ),
+						$tweetBox = this.select( 'tweetBoxContSelector' ),
+						isCollapsed = $a.is( ".collapsed" );
+
+					$a.toggleClass( "collapsed" );
+					$tweetBox.stop();
+					$tweetBox[ isCollapsed ? "slideDown" : "slideUp" ](300);
+
+					if( e ){
+						e.preventDefault();
+					}
 				};
 
 				this.submitTweet = function( e, data ){
@@ -55,7 +71,8 @@
 					this.on( document, 'userTweetPosted', this.userTweetPosted );
 					this.on( 'click',  {
 						tweetSubmitSelector : this.submitTweet,
-						logInSubmitSelector : this.logIn
+						logInSubmitSelector : this.logIn,
+						collapsibleSelector: this.toggleCollapse
 					} );
 
 					this.trigger('userInfoRequested');

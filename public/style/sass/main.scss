@@ -3,6 +3,7 @@
 @import 'typo';
 @import 'base';
 
+
 * { @include box-sizing(border-box); }
 html, body {
   width:  100%;
@@ -303,6 +304,9 @@ html, body {
         padding: .5em;
         text-align: center;
         box-shadow: 0 1px 2px #00acd0, inset 0 1px 2px #0096b6 ;
+        .bird-btn {
+            float: right;
+        }
         .bird-icon {
             @include inline-block;
             overflow: hidden;
@@ -312,8 +316,36 @@ html, body {
                 height:auto;
             }
         }
+        .collapsible {
+            position: relative;
+            float: left;
+            display: block;
+            color: #8CD6EE;
+            &:before {
+                position: absolute;
+                right: -20px;
+                content: '-';
+                color: #8CD6EE;
+                text-shadow: 0 -1px 0 #0096B6;
+                font-size: 3em;
+            }
+            &.collapsed:before {
+                position: absolute;
+                right: -30px;
+                content: '+';
+                color: #8CD6EE;
+                text-shadow: 0 -1px 0 #0096B6;
+                font-size: 3em;
+            }
+        }
     }
-    
+    .bird-btn {
+        @include inline-block;
+        float: left;
+        margin: 0 auto;
+        @include btn-blue;
+        padding: 13px 8px 13px 8px;
+    }
     .tweet-box {
         textarea {
             width: 100%;
@@ -345,9 +377,8 @@ html, body {
         }
     }
     
-    .login {
-        overflow: hidden;;
-        padding: .25em;
+    .tweet-me {
+        overflow: hidden;
         box-shadow: 0 -1px 2px #0096b6;
         padding: 2em;
         input {
@@ -382,15 +413,7 @@ html, body {
            color: #0096b6;  
         }
 
-        .footer-btn {
-            @include inline-block;
-            float: left;
-            margin: 0 auto;
-            @include btn-blue;
-            padding: 13px 8px 13px 8px;
-        }
-
-        .tweet-submit, .login-submit {
+        .tweet-submit {
             float: right;
         }
 

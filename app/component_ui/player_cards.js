@@ -28,14 +28,13 @@
 
 				this.showCards = function( e, data ){
 					this.$node.html( data.markup );
-					this.trigger( 'playerCardsShown', { oauth: data.oauth, results: data.results } );
-					if( data.oauth ){
-						this.setUserInteractions( { oauth: data.oauth, results: data.results } );
-					}
+					this.trigger( 'playerCardsShown' );
 				};
 
-				this.setUserInteractions = function(data){
-					var userHandle = data.results.screen_name;
+				this.setUserInteractions = function( e, data ){
+					var userHandle = data.details ?
+						data.details.handle :
+						data.handle;
 					$( '.' + userHandle ).addClass( 'user' );
 					$( '.' + userHandle + ' .details .detail_btn' ).remove();
 					$( '.' + userHandle + ' .details' )
@@ -62,6 +61,7 @@
 				
 				this.after( 'initialize', function() {
 					this.on( document, 'playerCardsServed', this.showCards );
+					this.on( document, 'localUserServed', this.setUserInteractions );
 					this.on( 'click',  {
 						eightBitSelector: this.flipToggle,
 						setAsSelector : this.setAsProfile,

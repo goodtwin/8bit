@@ -21,9 +21,8 @@
 
 				this.getTheStreets = function( e, data ){
 					this.trigger( 'theStreetsServed', {
-						markup: this.renderTheStreets( { oauth: data.oauth, results: data.results } ),
-						oauth: data.oauth,
-						results: data.results } );
+						markup: this.renderTheStreets()
+					} );
 				};
 
 				this.renderTheStreets = function( data ){

@@ -31,9 +31,7 @@
 
 				this.setData = function( data ){
 					dataStore.users = data.users;
-					
-					
-					
+
 					// need to check auth status, and inform app if user is auth'd
 					$.ajax({
 						url : 'auth/status',
