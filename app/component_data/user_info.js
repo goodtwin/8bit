@@ -1,4 +1,4 @@
-/*global define, io, $, window */
+/*global define, io, $, window, console */
 
 ( function(){
 	'use strict';
@@ -9,8 +9,8 @@
 			'components/flight/lib/component',
 			'app/data',
 			'hbs!app/templates/user_menu',
-			'/socket.io/socket.io.js',
-			'config'
+			'config',
+			'/socket.io/socket.io.js'
 		],
 
 		function(defineComponent,
@@ -24,6 +24,7 @@
 				var that;
 
 				this.startOAuth = function( ev, data ) {
+					console.log( appconfig );
 					var socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
 					socket.emit( 'db data request' );
 				};

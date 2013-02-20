@@ -8,8 +8,8 @@
 			'components/flight/lib/component',
 			'public/js/OmahaCharacter',
 			'public/js/LocalCharacter',
-			'/socket.io/socket.io.js',
-			'config'
+			'config',
+			'/socket.io/socket.io.js'
 		],
 
 		function(defineComponent,
