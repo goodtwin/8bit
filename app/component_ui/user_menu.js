@@ -1,60 +1,66 @@
-'use strict';
+/*global define, $, document */
 
-define(
 
-  [
-    'components/flight/lib/component'
-  ],
+(function(){
+	'use strict';
 
-  function(defineComponent) {
+	define(
 
-    return defineComponent(userMenu);
+		[
+			'components/flight/lib/component'
+		],
 
-    function userMenu() {
+		function(defineComponent) {
 
-      this.defaultAttrs({
-        logInSubmitSelector : '.login-submit',
-        tweetSubmitSelector: '.tweet-submit',
-        tweetBoxSelector: '.tweet-box textarea',
-        usernameSelector: '#twitter_screen_name',
-        passwordSelector: '#twitter_password',
-        requestSelector: '.request'
-      });
+			return defineComponent(userMenu);
 
-      this.showUser = function( e, data ){
-        this.$node.html( data.markup );
-        this.trigger('userMenuRendered', data );
-      };
+			function userMenu() {
+				/*jshint validthis:true */
+				
+				this.defaultAttrs({
+					logInSubmitSelector : '.login-submit',
+					tweetSubmitSelector: '.tweet-submit',
+					tweetBoxSelector: '.tweet-box textarea',
+					usernameSelector: '#twitter_screen_name',
+					passwordSelector: '#twitter_password',
+					requestSelector: '.request'
+				});
 
-      this.logIn = function( e, data ){
-        e.preventDefault();
-        var username = this.select( 'usernameSelector' ).val();
-        this.trigger( 'requestLogIn', { username: username } );
-      };
+				this.showUser = function( e, data ){
+					this.$node.html( data.markup );
+					this.trigger('userMenuRendered', data );
+				};
 
-      this.submitTweet = function( e, data ){
-        e.preventDefault();
-        var status = this.select( 'tweetBoxSelector' ).val();
-        if( status.length > 0 ){
-          this.trigger( 'postTweet', { status: status } );
-        }
-      };
+				this.logIn = function( e, data ){
+					e.preventDefault();
+					var username = this.select( 'usernameSelector' ).val();
+					this.trigger( 'requestLogIn', { username: username } );
+				};
 
-      this.userTweetPosted = function( e, data ){
-        this.select( 'tweetBoxSelector' ).val( '' );
-        $( 'html, body' ).animate( { scrollTop: 0 }, 'fast' )
-      };
+				this.submitTweet = function( e, data ){
+					e.preventDefault();
+					var status = this.select( 'tweetBoxSelector' ).val();
+					if( status.length > 0 ){
+						this.trigger( 'postTweet', { status: status } );
+					}
+				};
 
-      this.after('initialize', function() {
-        this.on( document, 'userInfoServed', this.showUser );
-        this.on( document, 'userTweetPosted', this.userTweetPosted );
-        this.on( 'click',  {
-          tweetSubmitSelector : this.submitTweet,
-          logInSubmitSelector : this.logIn
-        } );
+				this.userTweetPosted = function( e, data ){
+					this.select( 'tweetBoxSelector' ).val( '' );
+					$( 'html, body' ).animate( { scrollTop: 0 }, 'fast' );
+				};
 
-        this.trigger('userInfoRequested');
-      });
-    }
-  }
-);
+				this.after('initialize', function() {
+					this.on( document, 'userInfoServed', this.showUser );
+					this.on( document, 'userTweetPosted', this.userTweetPosted );
+					this.on( 'click',  {
+						tweetSubmitSelector : this.submitTweet,
+						logInSubmitSelector : this.logIn
+					} );
+
+					this.trigger('userInfoRequested');
+				});
+			}
+		}
+	);
+})();

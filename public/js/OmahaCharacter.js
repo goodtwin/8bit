@@ -69,10 +69,10 @@ define( ['underscore'],
 				this.changeX =  Math.random() * 2 - 1;
 				this.changeY = Math.random() * 2 - 1;
 			},
-	 		update : function( ctx ) {
+			update : function( ctx ) {
 				var prevX = this.x,
 					prevY = this.y,
-					h = this.$canvas.height() - ( this.img.height * 1.6 ), 
+					h = this.$canvas.height() - ( this.img.height * 1.6 ),
 					w = this.$canvas.width() - ( this.img.width * 1.6 );
 					
 				this.movementCounter++;
@@ -94,7 +94,7 @@ define( ['underscore'],
 			validateDY : function( h ) {
 				if ( this.y < 100 ){
 					this.changeY = Math.random();
-				} 
+				}
 				else if( this.y > h ) {
 					this.changeY = Math.random() * -1;
 				}
@@ -103,7 +103,7 @@ define( ['underscore'],
 			validateDX : function( w ) {
 				if ( this.x < 1 ){
 					this.changeX = Math.random();
-				} 
+				}
 				else if( this.x > w ) {
 					this.changeX = Math.random() * -1;
 				}
@@ -111,36 +111,32 @@ define( ['underscore'],
 
 			draw : function( drawingCtx ) {
 				var ellipseX = this.x + this.img.width / 1.5,
-			    	ellipseY = this.y + this.img.height * 1.4,
-			    	ellipseHeight = 15,
-			    	ellipseWidth = 50,
-			    	ellipseGradient = drawingCtx.createRadialGradient(ellipseX,ellipseY,9,ellipseX,ellipseY,30);
-				    ellipseGradient.addColorStop(0, "rgba(50, 50, 50, 0.3)");
-				    ellipseGradient.addColorStop(1, "rgba(250, 250, 250, 0.1)");
-			    drawingCtx.beginPath();
-				    drawingCtx.moveTo(ellipseX - ellipseWidth / 2, ellipseY); // A1
-				    drawingCtx.bezierCurveTo(
+					ellipseY = this.y + this.img.height * 1.4,
+					ellipseHeight = 15,
+					ellipseWidth = 50,
+					ellipseGradient = drawingCtx.createRadialGradient(ellipseX,ellipseY,9,ellipseX,ellipseY,30);
+					ellipseGradient.addColorStop(0, "rgba(50, 50, 50, 0.3)");
+					ellipseGradient.addColorStop(1, "rgba(250, 250, 250, 0.1)");
+				drawingCtx.beginPath();
+					drawingCtx.moveTo(ellipseX - ellipseWidth / 2, ellipseY); // A1
+					drawingCtx.bezierCurveTo(
 						ellipseX - ellipseWidth / 2, ellipseY - ellipseHeight / 2, // C1
 						ellipseX + ellipseWidth / 2, ellipseY - ellipseHeight / 2, // C2
 						ellipseX + ellipseWidth / 2, ellipseY ); // A2
-				    drawingCtx.bezierCurveTo(
+					drawingCtx.bezierCurveTo(
 						ellipseX + ellipseWidth / 2, ellipseY + ellipseHeight / 2, // C3
 						ellipseX - ellipseWidth / 2, ellipseY + ellipseHeight / 2, // C4
-						ellipseX - ellipseWidth / 2, ellipseY ); // A1		 
-				    drawingCtx.fillStyle = ellipseGradient;
-				    drawingCtx.fill();
-			    drawingCtx.closePath();
-			    drawingCtx.drawImage( this.img,
-			    	this.x,
-			    	this.y,
-			    	this.img.width * 1.5,
-			    	this.img.height * 1.5 );
+						ellipseX - ellipseWidth / 2, ellipseY ); // A1
+					drawingCtx.fillStyle = ellipseGradient;
+					drawingCtx.fill();
+				drawingCtx.closePath();
+				drawingCtx.drawImage( this.img,
+					this.x,
+					this.y,
+					this.img.width * 1.5,
+					this.img.height * 1.5 );
 			}
 
-			// speak : function( tweet, drawingCtx ) {
-			// 	return typeof tweet.user.screen_name == "undefined" ? false : true;
-			// 	//console.log( tweet.user.screen_name + ': ' + tweet.text );
-			// }
 		};
 
 		return OmahaCharacter;

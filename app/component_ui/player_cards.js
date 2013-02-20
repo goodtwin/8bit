@@ -1,70 +1,74 @@
-'use strict';
+/*global define, $, document */
 
-define(
+(function(){
+	'use strict';
 
-  [
-    'components/flight/lib/component'
-  ],
+	define(
 
-  function(defineComponent) {
+		[
+			'components/flight/lib/component'
+		],
 
-    return defineComponent( playerCards );
+		function(defineComponent) {
 
-    function playerCards() {
+			return defineComponent( playerCards );
 
-      this.defaultAttrs( {
-        visualSelector : '.visual',
-        detailsSelector : '.details',
-        setAsSelector : '.set-as',
-        downloadSelector : '.download',
-        eightBitSelector: '.eight-bit',
-        eightBitInnerSelector: '.eight-bit-inner',
-        flippedClass: 'flipped'
-      } );
+			function playerCards() {
+				/*jshint validthis:true */
 
-      this.showCards = function( e, data ){
-        this.$node.html( data.markup );
-        this.trigger( 'playerCardsShown', { oauth: data.oauth, results: data.results } );
-        if( data.oauth ){
-          this.setUserInteractions( { oauth: data.oauth, results: data.results } );
-        }
-      };
+				this.defaultAttrs( {
+					visualSelector : '.visual',
+					detailsSelector : '.details',
+					setAsSelector : '.set-as',
+					downloadSelector : '.download',
+					eightBitSelector: '.eight-bit',
+					eightBitInnerSelector: '.eight-bit-inner',
+					flippedClass: 'flipped'
+				} );
 
-      this.setUserInteractions = function(data){
-        var userHandle = data.results.screen_name;
-        $( '.' + userHandle ).addClass( 'user' )
-        $( '.' + userHandle + ' .details .detail_btn' ).remove()
-        $( '.' + userHandle + ' .details' )
-          //.append( '<a href="#" class="detail_btn set-as">Set As Twitter Profile</a>' ) 
-          .append( '<a href="#" class="detail_btn download">Download 8-Bit</a>' ); 
-      };
+				this.showCards = function( e, data ){
+					this.$node.html( data.markup );
+					this.trigger( 'playerCardsShown', { oauth: data.oauth, results: data.results } );
+					if( data.oauth ){
+						this.setUserInteractions( { oauth: data.oauth, results: data.results } );
+					}
+				};
 
-      this.flipToggle = function(e){
-        var that = $( e.target ).closest( this.select( 'eightBitSelector' ) );
-        that.toggleClass( this.attr.flippedClass );
-        that.siblings().removeClass( this.attr.flippedClass );
-      };
+				this.setUserInteractions = function(data){
+					var userHandle = data.results.screen_name;
+					$( '.' + userHandle ).addClass( 'user' );
+					$( '.' + userHandle + ' .details .detail_btn' ).remove();
+					$( '.' + userHandle + ' .details' )
+						.append( '<a href="#" class="detail_btn download">Download 8-Bit</a>' );
+				};
 
-      this.downloadEightBit = function( e, data ){
-        e.preventDefault();
-        var id = data.el.offsetParent.id;
-        this.trigger('requestDownload', { id: id });
-      };
+				this.flipToggle = function(e){
+					var that = $( e.target ).closest( this.select( 'eightBitSelector' ) );
+					that.toggleClass( this.attr.flippedClass );
+					that.siblings().removeClass( this.attr.flippedClass );
+				};
 
-      this.setAsProfile = function( e, data ){
-        e.preventDefault();
-        var id = data.el.offsetParent.id;
-        this.trigger('requestProfilePost', { id: id });
-      };
-      
-      this.after( 'initialize', function() {
-        this.on( document, 'playerCardsServed', this.showCards );
-        this.on( 'click',  {
-          eightBitSelector: this.flipToggle,
-          setAsSelector : this.setAsProfile,
-          downloadSelector : this.downloadEightBit
-        } );
-      });
-    }
-  }
-);
+				this.downloadEightBit = function( e, data ){
+					e.preventDefault();
+					var id = data.el.offsetParent.id;
+					this.trigger('requestDownload', { id: id });
+				};
+
+				this.setAsProfile = function( e, data ){
+					e.preventDefault();
+					var id = data.el.offsetParent.id;
+					this.trigger('requestProfilePost', { id: id });
+				};
+				
+				this.after( 'initialize', function() {
+					this.on( document, 'playerCardsServed', this.showCards );
+					this.on( 'click',  {
+						eightBitSelector: this.flipToggle,
+						setAsSelector : this.setAsProfile,
+						downloadSelector : this.downloadEightBit
+					} );
+				});
+			}
+		}
+	);
+})();

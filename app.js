@@ -4,18 +4,19 @@
 var express = require( 'express' ),
 	app = express(),
 	cons = require( 'consolidate' ),
-    swig = require( 'swig' ),
-    http = require( 'http' ),
-    server = http.createServer(app),
-    MongoClient = require( 'mongodb' ).MongoClient,
-    mongojs = require( 'mongojs' ),
-    OAuth= require( 'oauth' ).OAuth,
-  	util = require( 'util' ),					
+		swig = require( 'swig' ),
+		http = require( 'http' ),
+		server = http.createServer(app),
+		MongoClient = require( 'mongodb' ).MongoClient,
+		mongojs = require( 'mongojs' ),
+		OAuth= require( 'oauth' ).OAuth,
+	util = require( 'util' ),
 	io = require( 'socket.io' ),
 	fs = require( 'fs' ),
 	nodemailer = require("nodemailer"),
-	socket = io.listen(server),				
-	Player = require( './Player' ).Player;	
+	socket = io.listen(server),
+	appconfig = require("./appconfig.js"),
+	Player = require( './Player' ).Player;
 
 	server.listen(8000);
 
@@ -39,7 +40,7 @@ var express = require( 'express' ),
 		'8YVoUbVLwaWmoxLgPk5nqg',
 		'rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc',
 		'1.0A',
-		'http://8bit.ringwraith.good-twin.com/i',
+		'http://' + appconfig.baseuri + '/i',
 		'HMAC-SHA1'
 	);
 	
@@ -49,13 +50,13 @@ var express = require( 'express' ),
 	function beginTwitterStream() {
 		for (var i = 0; i < dbUsers.length; i++) {
 			dbTwitterIds.push( dbUsers[i].twitter_id );
-		};
+		}
 		dbTwitterIds = dbTwitterIds.join(",");
 
-		var request = oa.get( 
-			'https://stream.twitter.com/1/statuses/filter.json?follow=' + dbTwitterIds, 
-			'15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI', 
-			'6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo' 
+		var request = oa.get(
+			'https://stream.twitter.com/1/statuses/filter.json?follow=' + dbTwitterIds,
+			'15099732-WJfpG9YEuaVpOYL5cyAx5rHHHBYYwa3GW4kSeRGLI',
+			'6IoTSV1dPSRTI0y7pfKWoy08y8NmAA6Zw8Tl47jloo'
 		);
 		request.addListener( 'response', function( response ) {
 			response.setEncoding( 'utf8' );
@@ -63,29 +64,29 @@ var express = require( 'express' ),
 				if( chunk.length > 2 ){
 					socket.sockets.emit( 'new tweet', { tweet: chunk } );
 					lastTweet = chunk;
-				};
-		  });
-		  response.addListener( 'end', function () {
+				}
+			});
+			response.addListener( 'end', function () {
 				console.log( '--- END ---' );
-		  });
+			});
 		});
 		request.end();
-	};
+	}
 
 	//NodeMailer
 	var smtpTransport = nodemailer.createTransport("SMTP",{
-	    service: "Gmail",
-	    auth: {
-	        user: "support@good-twin.com",
-	        pass: "gflyingpig3"
-	    }
+			service: "Gmail",
+			auth: {
+					user: "support@good-twin.com",
+					pass: "gflyingpig3"
+			}
 	});
 
 	// Swig
 	swig.init({
 		cache: false,
-	    root: __dirname + '/views',
-	    allowErrors: true // allows errors to be thrown and caught by express instead of suppressed by Swig
+			root: __dirname + '/views',
+			allowErrors: true // allows errors to be thrown and caught by express instead of suppressed by Swig
 	});
 
 	//Express
@@ -104,26 +105,8 @@ var express = require( 'express' ),
 		
 		.get( '/', function( req, res ) {
 			if (req.session.oauth) {
-				// req.session.oauth.verifier = req.query.oauth_verifier;
-				// console.log('1: '+ util.inspect( req.session.oauth ) );
-				// var oauth = req.session.oauth;
-
-				// oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
-				// function(error, oauth_access_token, oauth_access_token_secret, results){			
-				// 	if (error){
-				// 		console.log('2: '+ util.inspect( error ) );
-				// 		res.render( 'index.html' );
-				// 	} else {
-				// 		console.log('3: '+ util.inspect( req.session.oauth ) );
-				// 		req.session.oauth.access_token = oauth_access_token;
-				// 		req.session.oauth.access_token_secret = oauth_access_token_secret;
-				// 		oauthResults = results;
-				// 		res.render( 'index.html' );
-				// 	}
-				// }
-				// );
-				res.redirect( '/auth/twitter' )
-			} 
+				res.redirect( '/auth/twitter' );
+			}
 			else {
 				//console.log('4');
 				res.render( 'index.html' );
@@ -139,24 +122,24 @@ var express = require( 'express' ),
 					res.redirect( '/auth/twitter' );
 				}
 				else{
-					oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
-					function(error, oauth_access_token, oauth_access_token_secret, results){			
-						if (error){
-							//console.log('2: '+ util.inspect( error ) );
-							res.render( 'index.html' );
-						} else {
-							//console.log('3: '+ util.inspect( req.session.oauth ) );
-							req.session.oauth.access_token = oauth_access_token;
-							req.session.oauth.access_token_secret = oauth_access_token_secret;
-							req.session.oauth.request_token_used = true;
-							req.session.oauth.screen_name = results.screen_name;
-							//console.log( util.inspect( results ) );
-							oauthResults = results;
-							res.render( 'index.html' );
-						}
-					});
+					oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier,
+						function(error, oauth_access_token, oauth_access_token_secret, results){
+							if (error){
+								//console.log('2: '+ util.inspect( error ) );
+								res.render( 'index.html' );
+							} else {
+								//console.log('3: '+ util.inspect( req.session.oauth ) );
+								req.session.oauth.access_token = oauth_access_token;
+								req.session.oauth.access_token_secret = oauth_access_token_secret;
+								req.session.oauth.request_token_used = true;
+								req.session.oauth.screen_name = results.screen_name;
+								//console.log( util.inspect( results ) );
+								oauthResults = results;
+								res.render( 'index.html' );
+							}
+						});
 				}
-			} 
+			}
 			else {
 				//console.log('4');
 				res.render( 'index.html' );
@@ -176,26 +159,26 @@ var express = require( 'express' ),
 
 			// setup e-mail data with unicode symbols
 			var mailOptions = {
-			    from: name + '<' + email +'>', // sender address
-			    to: 'greg@good-twin.com', // list of receivers
-			    subject: "8-Bit Request Form", // Subject line
-			    text: body //, // plaintext body
-			    //html: "<b>Hello world ✔</b>" // html body
-			}
+					from: name + '<' + email +'>', // sender address
+					to: 'greg@good-twin.com', // list of receivers
+					subject: "8-Bit Request Form", // Subject line
+					text: body //, // plaintext body
+					//html: "<b>Hello world ✔</b>" // html body
+			};
 
 			// send mail with defined transport object
 			smtpTransport.sendMail(mailOptions, function(error, response){
-			    if(error){
-			        console.log(error);
-			    }else{
-			        console.log("Message sent: " + response.message);
-			        res.writeHead(200, {'content-type': 'text/json' });
-		     		res.write( JSON.stringify({ test : 'email sent'}) );
-		     		res.end('\n');
-			    }
+					if(error){
+							console.log(error);
+					}else{
+							console.log("Message sent: " + response.message);
+							res.writeHead(200, {'content-type': 'text/json' });
+						res.write( JSON.stringify({ test : 'email sent'}) );
+						res.end('\n');
+					}
 
-			    // if you don't want to use this transport object anymore, uncomment following line
-			    //smtpTransport.close(); // shut down the connection pool, no more messages
+					// if you don't want to use this transport object anymore, uncomment following line
+					//smtpTransport.close(); // shut down the connection pool, no more messages
 			});
 		})
 		.get( '/auth/twitter', function( req, res ){
@@ -215,32 +198,6 @@ var express = require( 'express' ),
 			}
 			});
 		})
-		// .get( '/auth/twitter/set-profile', function( req, res ){
-		// 	var id = req.query.id,
-		// 		image_origial = __dirname + '/public/style/8bits/png/bit_' + id + '.png',
-		// 		base64Image;
-		// 	    base64Image = new Buffer( fs.readFileSync(image_origial) ).toString('base64');
-		// 	    base64Image = 'data:image/png;base64,' + base64Image;
-		// 	    console.log(base64Image);
-
-		// 	var oauth_access_token = req.session.oauth.access_token,
-		// 		oauth_access_token_secret = req.session.oauth.access_token_secret;
-		// 	oa.post(
-		// 		'https://api.twitter.com/1.1/account/update_profile_image.json',
-		// 		oauth_access_token, oauth_access_token_secret,
-		// 	  	{ 'image': base64Image },
-		// 	  function(error, data) {
-		// 	    if(error){
-		// 	    	console.log(require('sys').inspect(error));
-		// 	    } 
-		// 	    else{
-		// 	    	res.writeHead(200, {'content-type': 'text/json' });
-		//      		res.write( JSON.stringify({ test : 'profile changed'}) );
-		//      		res.end('\n');
-		// 	    } 
-		// 	  }
-		// 	);
-		// })
 		.get( '/auth/twitter/download/:id', function( req, res ){
 			var id = req.params.id;
 			res.download( __dirname + '/public/style/8bits/png/bit_' + id + '.png', id + '.png' );
@@ -250,21 +207,21 @@ var express = require( 'express' ),
 				oauth_access_token_secret = req.session.oauth.access_token_secret,
 				twitterStatus = req.query.status;
 			oa.post(
-			  'https://api.twitter.com/1/statuses/update.json',
-			  oauth_access_token, oauth_access_token_secret,
-			  { 'status': twitterStatus },
-			  function(error, data) {
-			    if(error){
-			    	console.log(require('sys').inspect(error));
-			    } 
-			    else{
+				'https://api.twitter.com/1/statuses/update.json',
+				oauth_access_token, oauth_access_token_secret,
+				{ 'status': twitterStatus },
+				function(error, data) {
+					if(error){
+						console.log(require('sys').inspect(error));
+					}
+					else{
 					socket.sockets.emit( 'new tweet', { tweet: data } );
-			    	lastTweet = data;
-			    	res.writeHead(200, {'content-type': 'text/json' });
-		     		res.write( JSON.stringify({ test : 'tweet sent'}) );
-		     		res.end('\n');
-			    } 
-			  }
+						lastTweet = data;
+						res.writeHead(200, {'content-type': 'text/json' });
+						res.write( JSON.stringify({ test : 'tweet sent'}) );
+						res.end('\n');
+					}
+				}
 			);
 		});
 
@@ -296,7 +253,7 @@ function init() {
 
 	// Start listening for events
 	setEventHandlers();
-};
+}
 
 
 /**************************************************
@@ -322,7 +279,7 @@ function onSocketConnection(client) {
 
 	// Listen for Mongo Data request
 	client.on( 'db data request', onDBDataRequest );
-};
+}
 
 // Socket client has disconnected
 function onClientDisconnect() {
@@ -334,14 +291,14 @@ function onClientDisconnect() {
 	if (!removePlayer) {
 		util.log( 'Player not found: ' + this.id );
 		return;
-	};
+	}
 
 	// Remove player from players array
 	players.splice(players.indexOf(removePlayer), 1);
 
 	// Broadcast removed player to connected socket clients
 	this.broadcast.emit( 'remove player', { id: this.id } );
-};
+}
 
 // New player has joined
 function onNewPlayer(data) {
@@ -352,28 +309,28 @@ function onNewPlayer(data) {
 	newPlayer.img = data.img;
 
 	// Broadcast new player to connected socket clients
-	this.broadcast.emit( 'new player', { 
-		id: newPlayer.id, 
-		x: newPlayer.getX(), 
-		y: newPlayer.getY(), 
-		handle: newPlayer.handle, 
+	this.broadcast.emit( 'new player', {
+		id: newPlayer.id,
+		x: newPlayer.getX(),
+		y: newPlayer.getY(),
+		handle: newPlayer.handle,
 		img: newPlayer.img });
 
 	// Send existing players to the new player
 	var i, existingPlayer;
 	for ( i = 0; i < players.length; i++ ) {
 		existingPlayer = players[i];
-		this.emit( 'new player', { 
-			id: existingPlayer.id, 
-			x: existingPlayer.getX(), 
-			y: existingPlayer.getY(), 
-			handle: existingPlayer.handle, 
+		this.emit( 'new player', {
+			id: existingPlayer.id,
+			x: existingPlayer.getX(),
+			y: existingPlayer.getY(),
+			handle: existingPlayer.handle,
 			img: existingPlayer.img });
-	};
+	}
 		
 	// Add new player to the players array
 	players.push( newPlayer );
-};
+}
 
 // Player has moved
 function onMovePlayer(data) {
@@ -384,29 +341,29 @@ function onMovePlayer(data) {
 	if (!movePlayer) {
 		util.log( 'Player not found: ' + this.id );
 		return;
-	};
+	}
 
 	// Update player position
 	movePlayer.setX( data.x );
 	movePlayer.setY( data.y );
 
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit( 'move player', { 
-		id: movePlayer.id, 
-		x: movePlayer.getX(), 
-		y: movePlayer.getY(), 
-		handle: movePlayer.handle, 
+	this.broadcast.emit( 'move player', {
+		id: movePlayer.id,
+		x: movePlayer.getX(),
+		y: movePlayer.getY(),
+		handle: movePlayer.handle,
 		img: movePlayer.img } );
-};
+}
 
 // Mongo data requested
 function onDBDataRequest() {
 	var oauth = typeof oauthResults == 'undefined' || oauthResults === false ? false : true,
 		results = oauth ? oauthResults : false;
 
-	this.emit( 'db data returned', { 
-		users: dbUsers, 
-		oauth: oauth, 
+	this.emit( 'db data returned', {
+		users: dbUsers,
+		oauth: oauth,
 		results: results } );
 	
 	oauthResults = false;
@@ -415,16 +372,16 @@ function onDBDataRequest() {
 	var i, existingPlayer;
 	for ( i = 0; i < players.length; i++ ) {
 		existingPlayer = players[i];
-		this.emit( 'new player', { 
-			id: existingPlayer.id, 
-			x: existingPlayer.getX(), 
-			y: existingPlayer.getY(), 
-			handle: existingPlayer.handle, 
+		this.emit( 'new player', {
+			id: existingPlayer.id,
+			x: existingPlayer.getX(),
+			y: existingPlayer.getY(),
+			handle: existingPlayer.handle,
 			img: existingPlayer.img } );
-	};
+	}
 
 	this.emit( 'new tweet', { tweet: lastTweet } );
-};
+}
 
 /**************************************************
 ** GAME HELPER FUNCTIONS
@@ -435,10 +392,10 @@ function playerById(id) {
 	for ( i = 0; i < players.length; i++ ) {
 		if ( players[i].id == id )
 			return players[i];
-	};
+	}
 	
 	return false;
-};
+}
 
 
 /**************************************************
