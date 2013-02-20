@@ -123,12 +123,18 @@
 					if ( localPlayer ) {
 						keys.onKeyDown( e );
 					}
+					if( e ){
+						e.preventDefault();
+					}
 				};
 
 				// Keyboard key up
 				this.onKeyup = function( e ) {
 					if ( localPlayer ) {
 						keys.onKeyUp( e );
+					}
+					if( e ){
+						e.preventDefault();
 					}
 				};
 
