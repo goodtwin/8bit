@@ -20,7 +20,7 @@ define(
       var that;
 
       this.startOAuth = function( ev, data ) {
-        var socket = io.connect( 'http://localhost' );
+        var socket = io.connect( 'http://8bit.ringwraith.good-twin.com:8000' );
         socket.emit( 'db data request' );
       };
 
@@ -72,7 +72,7 @@ define(
         this.on( 'postTweet', this.postTweet );
         this.on( 'requestLogIn', this.requestLogIn );
 
-        var socket = io.connect( 'http://localhost' );
+        var socket = io.connect( 'http://8bit.ringwraith.good-twin.com:8000' );
         socket.on( 'db data returned', this.setData )
         socket.on( 'test', this.test )
       });

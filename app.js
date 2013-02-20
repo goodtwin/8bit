@@ -39,7 +39,7 @@ var express = require( 'express' ),
 		'8YVoUbVLwaWmoxLgPk5nqg',
 		'rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc',
 		'1.0A',
-		'http://localhost:8000/i',
+		'http://8bit.ringwraith.good-twin.com/i',
 		'HMAC-SHA1'
 	);
 	

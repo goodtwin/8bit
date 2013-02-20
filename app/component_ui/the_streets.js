@@ -53,7 +53,7 @@ define(
 				this.trigger( 'eightBitsRequested' );
 
 				// Initialize socket connection
-				socket = io.connect( 'http://localhost' );
+				socket = io.connect( 'http://8bit.ringwraith.good-twin.com:8000' );
 
 				// Initialize remote players array
 				remotePlayers = [];
@@ -237,6 +237,7 @@ define(
 							handle : data.users[i].handle,
 							imgUri : $( '.-bit_' + id).css( 'background-image' ).replace( 'url(', '' ).replace( ')', '' )            
 						} );
+						console.log(newPlayer.imgUri);
 
 					omahaPlayers.push( newPlayer );
 				};
@@ -318,7 +319,7 @@ define(
 				this.on( window, 'resize', this.onResize );
 
 
-				var socket = io.connect( 'http://localhost' );
+				var socket = io.connect( 'http://8bit.ringwraith.good-twin.com:8000' );
 				socket.on( 'connect', this.onSocketConnected );
 				socket.on( 'disconnect', this.onSocketDisconnect );
 				socket.on( 'new player', this.onNewPlayer );
