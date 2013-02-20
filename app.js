@@ -95,7 +95,7 @@ var express = require( 'express' ),
 
 		.use( express.session( { secret: 'goodtwin' } ) )
 
-		.use( express.static( __dirname ) )
+		.use( express["static"]( __dirname ) ) // static is reserved, will blow up linters
 		
 		.engine( '.html', cons.swig )
 		
