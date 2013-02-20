@@ -47,7 +47,7 @@
 
 				this.after( 'initialize', function() {
 					that = this;
-					this.on( document, 'userMenuRendered', this.getRequestForm );
+					this.on( document, 'eightBitsDataServed', this.getRequestForm );
 					this.on( document, 'sendEmail', this.sendEmail );
 				});
 			}

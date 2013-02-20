@@ -228,7 +228,7 @@
 
 				this.localPlayerByHandle = function( handle ) {
 					var thePlayer;
-					if ( localPlayer.handle.toLowerCase() == handle.toLowerCase()){
+					if ( ( localPlayer && localPlayer.handle.toLowerCase() ) == handle.toLowerCase()){
 						thePlayer = localPlayer;
 					}
 					return thePlayer;
@@ -293,7 +293,9 @@
 
 				this.onNewTweet = function( data ){
 					var newTweet = typeof JSON.parse( data.tweet ) == 'undefined' ? data.tweet : JSON.parse( data.tweet );
-					var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name ) || that.remotePlayerByHandle( newTweet.user.screen_name ) || that.localPlayerByHandle( newTweet.user.screen_name );
+					var newTweeter = that.omahaPlayerByHandle( newTweet.user.screen_name ) ||
+						that.remotePlayerByHandle( newTweet.user.screen_name ) ||
+						that.localPlayerByHandle( newTweet.user.screen_name );
 					
 					if ( typeof newTweeter !== 'undefined' ) {
 						tweet = newTweet;

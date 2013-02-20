@@ -31,24 +31,41 @@
 
 				this.setData = function( data ){
 					dataStore.users = data.users;
-					dataStore.oauth = data.oauth;
-					dataStore.results = data.results;
 					
-					that.trigger( 'userInfoServed', { markup: that.renderMenu(  data  ), oauth: dataStore.oauth, results: dataStore.results } );
-					if(dataStore.oauth){
-						if( typeof (that.getUser( { results: dataStore.results })) !== 'undefined' ){
-							that.trigger( 'localUserServed', { details: that.getUser( { results: dataStore.results } ) } );
+					
+					
+					// need to check auth status, and inform app if user is auth'd
+					$.ajax({
+						url : 'auth/status',
+						dataType: 'JSON'
+					}).done( function( userOauth ){
+						if( userOauth ){
+							var authUserInDataStore = that.getUserByScreenName( userOauth );
+							if( authUserInDataStore ){
+								that.trigger( 'localUserServed', { details: authUserInDataStore } );
+							}
+							else{
+								that.trigger( 'localUserServed', {
+									dummy: dataStore.dummyUsers,
+									handle: userOauth.screen_name
+								});
+							}
 						}
-						else{
-							var handle = dataStore.results.screen_name;
-							that.trigger( 'localUserServed', { dummy: dataStore.dummyUsers, handle: handle } );
-						}
-					}
+
+						that.trigger( 'userInfoServed', {
+							markup: that.renderMenu({
+								oauth: userOauth
+							})
+						});
+					});
+
+					that.trigger( 'eightBitsDataServed', { eightBits: data.users });
+
 				};
 
-				this.getUser = function( data ){
-					var match = dataStore.users.filter( function ( user ) {
-						return user.handle == data.results.screen_name;
+				this.getUserByScreenName = function( user ){
+					var match = dataStore.users.filter( function ( dsUser ) {
+						return dsUser.handle == user.screen_name;
 					});
 					return match[0];
 				};
@@ -76,13 +93,11 @@
 				this.after( 'initialize', function() {
 					that = this;
 					this.on( 'userInfoRequested', this.startOAuth );
-					this.on( 'localUserRequested', this.getUser );
 					this.on( 'postTweet', this.postTweet );
 					this.on( 'requestLogIn', this.requestLogIn );
 
 					var socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
 					socket.on( 'db data returned', this.setData );
-					socket.on( 'test', this.test );
 				});
 			}
 

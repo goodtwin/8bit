@@ -20,7 +20,7 @@
 
 				this.getPlayerCards = function( e, data ){
 					this.trigger( 'playerCardsServed', {
-						markup: this.renderCards( { users: dataStore.users, oauth: dataStore.oauth, results: dataStore.results } ),
+						markup: this.renderCards( { users: dataStore.users } ),
 						oauth: dataStore.oauth,
 						results: dataStore.results
 					});
@@ -43,7 +43,7 @@
 				};
 
 				this.after( 'initialize', function() {
-					this.on( document, 'userMenuRendered', this.getPlayerCards );
+					this.on( document, 'eightBitsDataServed', this.getPlayerCards );
 					this.on( document, 'requestProfilePost', this.requestProfilePost );
 					this.on( document, 'requestDownload', this.requestDownload );
 				});
