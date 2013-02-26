@@ -256,7 +256,7 @@ function init() {
 		socket.set( 'transports', [ 'websocket' ] );
 
 		// Restrict log output
-		socket.set( 'log level', 2 );
+		socket.set( 'log level', false );
 	});
 
 	// Start listening for events
@@ -287,6 +287,11 @@ function onSocketConnection(client) {
 
 	// Listen for Mongo Data request
 	client.on( 'db data request', onDBDataRequest );
+
+	setInterval( function(client){
+		remotePlayersSnapshot(client); },
+	100);
+	
 }
 
 // Socket client has disconnected
@@ -313,28 +318,18 @@ function onNewPlayer(data) {
 	// Create a new player
 	var newPlayer = new Player( data.x, data.y );
 	newPlayer.id = this.id;
+	newPlayer.x = data.x,
+	newPlayer.y = data.y,
 	newPlayer.handle = data.handle;
 	newPlayer.img = data.img;
 
 	// Broadcast new player to connected socket clients
 	this.broadcast.emit( 'new player', {
 		id: newPlayer.id,
-		x: newPlayer.getX(),
-		y: newPlayer.getY(),
+		x: newPlayer.x,
+		y: newPlayer.y,
 		handle: newPlayer.handle,
 		img: newPlayer.img });
-
-	// Send existing humanPlayers to the new player
-	// var i, existingPlayer;
-	// for ( i = 0; i < humanPlayers.length; i++ ) {
-	// 	existingPlayer = humanPlayers[i];
-	// 	this.emit( 'new player', {
-	// 		id: existingPlayer.id,
-	// 		x: existingPlayer.getX(),
-	// 		y: existingPlayer.getY(),
-	// 		handle: existingPlayer.handle,
-	// 		img: existingPlayer.img });
-	// }
 		
 	// Add new player to the humanPlayers array
 	humanPlayers.push( newPlayer );
@@ -356,17 +351,18 @@ function onMovePlayer(data) {
 	movePlayer.setY( data.y );
 
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit( 'move player', {
-		id: movePlayer.id,
-		x: movePlayer.getX(),
-		y: movePlayer.getY(),
-		handle: movePlayer.handle,
-		img: movePlayer.img } );
+	// this.broadcast.emit( 'move player', {
+	// 	id: movePlayer.id,
+	// 	x: movePlayer.getX(),
+	// 	y: movePlayer.getY(),
+	// 	handle: movePlayer.handle,
+	// 	img: movePlayer.img } );
 }
 
 // Mongo data requested
 // Called within init, called from the client side.
 function onDBDataRequest() {
+
 	this.emit( 'db data returned', {
 		users: omahaPeople });
 
@@ -384,6 +380,12 @@ function onDBDataRequest() {
 	}
 
 	this.emit( 'new tweet', { tweet: lastTweet } );
+}
+
+function remotePlayersSnapshot(client){
+
+	socket.sockets.emit( 'remote snapshot', humanPlayers );
+
 }
 
 /**************************************************

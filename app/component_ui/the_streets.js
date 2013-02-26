@@ -172,21 +172,42 @@
 					remotePlayers.push(newPlayer);
 
 					that.removeFromOmahaPlayers( { handle: newPlayer.handle } );
+					
+					//newPlayer.draw( ctx );
 				};
 
 				// Move player
 				this.onMovePlayer = function( data ) {
-					var movePlayer = that.playerById( data.id );
+					// var movePlayer = that.playerById( data.id );
 
-					// Player not found
-					if ( !movePlayer ) {
-						console.log( 'Player not found: ' + data.id );
-						return;
+					// // Player not found
+					// if ( !movePlayer ) {
+					// 	console.log( 'Player not found: ' + data.id );
+					// 	return;
+					// }
+
+					// // Update player position
+					// movePlayer.setX( data.x );
+					// movePlayer.setY( data.y );
+					// movePlayer.draw( ctx );
+				};
+
+				// Remote Snapshot
+				this.onRemoteSnapshot = function( data ) {
+					//console.log(data);
+					for ( var i = 0; i < data.length; i++ ) {
+						var movePlayer = that.remotePlayerByHandle( data[i].handle );
+
+						if ( movePlayer ) {
+							// Update player position
+							// movePlayer.stepValues.x = Math.abs(data[i].x - movePlayer.x) / 200 /* sending interval */;
+							// movePlayer.stepValues.y = Math.abs(data[i].y - movePlayer.y) / 200 /* sending interval */;
+							// movePlayer.target.x = data.x;
+							// movePlayer.target.y = data.y;
+							movePlayer.setX( data[i].x );
+							movePlayer.setY( data[i].y );
+						}
 					}
-
-					// Update player position
-					movePlayer.setX( data.x );
-					movePlayer.setY( data.y );
 				};
 
 				// Remove player
@@ -250,7 +271,6 @@
 								handle : data.users[i].handle,
 								imgUri : $( '.-bit_' + id).css( 'background-image' ).replace( 'url(', '' ).replace( ')', '' )
 							} );
-							console.log(newPlayer.imgUri);
 
 						omahaPlayers.push( newPlayer );
 					}
@@ -342,6 +362,7 @@
 					socket.on( 'disconnect', this.onSocketDisconnect );
 					socket.on( 'new player', this.onNewPlayer );
 					socket.on( 'move player', this.onMovePlayer );
+					socket.on( 'remote snapshot', this.onRemoteSnapshot );
 					socket.on( 'remove player', this.onRemovePlayer );
 					socket.on( 'new tweet', this.onNewTweet );
 				});

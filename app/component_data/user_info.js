@@ -24,7 +24,6 @@
 				var that;
 
 				this.startOAuth = function( ev, data ) {
-					console.log( appconfig );
 					var socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
 					socket.emit( 'db data request' );
 				};
