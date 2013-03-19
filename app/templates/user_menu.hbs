@@ -1,0 +1,17 @@
+<div class="bird">
+	{{#if oauth}}
+		<a href="/logout" class="bird-btn log-out">Hi, {{oauth.screen_name}}. Log out?</a>
+		<a href="#collapse" class="collapsible"></a>
+	{{else}}
+		<a id="submit-btn" href="#" class="bird-btn login-submit">Sign In</a>
+	{{/if}}
+	<div class="bird-icon"><img src="public/img/twitter.svg"></div>
+</div>
+{{#if oauth}}
+<div class="tweet-box">
+	<textarea id="tweet-box-text" placeholder="What's Up?"></textarea>
+	<div class="tweet-me">
+		<a href="#" class="tweet-submit bird-btn">Tweet</a>
+	</div>
+</div>
+{{/if}}
