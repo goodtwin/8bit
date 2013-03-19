@@ -3,6 +3,7 @@
 @import 'typo';
 @import 'base';
 
+
 * { @include box-sizing(border-box); }
 html, body {
   width:  100%;
@@ -18,7 +19,7 @@ html, body {
 
 .omaha {
     @include inline-block;
-    padding: .5em 1em;
+    padding: 20px;
     font-size: 2em;
 
 }
@@ -46,15 +47,57 @@ html, body {
     position: relative;
     height: 650px;
     width: 100%;
-    padding: 265px 0 0;
+    padding: 165px 0 0;
     margin: 0px;
-    background: url(/img/omaha-bkgd.png) no-repeat;
+    background: url(/public/img/omaha-bkgd.png) no-repeat;
+
+    .tweet-bubble {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 300px;
+        height: auto;
+        padding: 1em;
+        z-index: 9999;
+        background-color: rgb(0,188,228);
+        background-color: rgba(0,188,228,.9);
+        border-radius: 8px;
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50px;
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px 10px 0 10px;
+            border-color: rgb(0,188,228) transparent transparent transparent;
+            border-color: rgba(0,188,228,.9) transparent transparent transparent;
+        }
+
+        .tweet {
+            display: block;
+            padding: 0 0 1em;
+            color: white;
+            @include neue;
+            a {
+                color: #8CD6EE;
+            }
+        }
+
+        .tweeter {
+            @include inline-block;
+            float: right;
+            @include btn-blue;
+            font-size: 1em;
+        }
+    }
 
     #street {
         position:relative;
     	display: block;
     	z-index: 999;
-        height: 400px;
         background: none;
         margin: 0px;
         padding:0px;
@@ -75,11 +118,12 @@ html, body {
         padding: .5%;    
         float: left;
         width: 100%;
-        height: auto;
+        height: 250px;
         text-align: center;
         cursor: pointer;
+        @include perspective(100000);
         @media screen and (min-width: 420px){
-            width: 50%;
+                width: 50%;
         }
         @media screen and (min-width: 610px){
             width: 33.33%;
@@ -93,9 +137,6 @@ html, body {
         @media screen and (min-width: 1500px){
             width: 16.66%;
         }
-
-        .visual { display: block; }
-        .details { display: none; }
         &.new {
             .visual {
                 &:before {
@@ -119,119 +160,432 @@ html, body {
             }
         }
         &.flipped {
-            .visual { display: none; }
-            .details { display: block; }
+            .eight-bit-inner {
+                @include transform(rotateX(90deg));
+            }
         }
         
-        .visual {
-            position: relative;
-            overflow: hidden; 
+        .eight-bit-inner {
             height: 240px;
-            width: 100%;
-            padding: 60px 0 0;
-            background-color: #F7F7F7;
-            box-shadow: 0 1px 0 #DDD;
+            -webkit-transition: -webkit-transform .8s;
+            transition: transform .8s; /* Animate the transform properties */
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d; /* <-NB */
 
-            .bit {
-                @include inline-block;
-                height:120px;
-                width: 80px;
-                background-size: contain;
+            .visual { @include transform(translateZ(120px)); }
+            .details { @include transform(rotateX(-90deg) translateZ(-120px)); }
+            
+            .visual {
+                position: relative;
+                overflow: hidden;
+                height: 240px;
+                width: 100%;
+                padding: 60px 0 0;
+                background-color: #F7F7F7;
+                box-shadow: 0 1px 0 #DDD;
+                cursor: pointer;
+
+                .bit {
+                    @include inline-block;
+                    height:120px;
+                    width: 120px;
+                    background-size: contain;
+                    background-position:50% 50%;
+                }
+
+                .arrow_btn {
+                    position: absolute;
+                    right: 10px;
+                    bottom: 10px;
+                    width: 32px;
+                    height: 28px;
+                    @include btn-gray;
+                    padding: 0px;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        right: 8px;
+                        bottom: 5px;
+                        z-index: 300;
+                        height: 11px;
+                        width: 12px;  
+                        border-radius: 3px;
+                        border-right: 4px solid #fff;
+                        border-bottom:4px solid #fff;
+                        background-color: none;    
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        right: 8px;
+                        bottom: 6px;
+                        z-index: 300;
+                        height: 11px;
+                        width: 12px; 
+                        border-radius: 3px;
+                        border-right: 4px solid #D8D8D8;
+                        border-bottom:4px solid #D8D8D8;
+                        background-color: none;     
+                    }
+
+                    .arrow {
+                        content: "";
+                        position: absolute;
+                        right: 8px;
+                        bottom: 12px;
+                        z-index: 200;
+                        height: 4px;
+                        border-radius: 10px;
+                        background-color: #D8D8D8;  
+                        width: 17px;    
+                        @include transform(rotate(40deg));
+                    }
+                }
             }
+            .details {
+                //overflow: hidden;
+                height: 240px;
+                width: 100%;
+                background-color: #00BCE4;
+                box-shadow: 0 1px 0 #0096B6;
+                text-align: center;
+                cursor: pointer;
 
-            .arrow_btn {
-                position: absolute;
-                right: 10px;
-                bottom: 10px;
-                width: 32px;
-                height: 28px;
-                @include btn-gray;
-                padding: 0px;
-                &:before {
-                    content: "";
-                    position: absolute;
-                    right: 8px;
-                    bottom: 5px;
-                    z-index: 300;
-                    height: 11px;
-                    width: 12px;  
-                    border-radius: 3px;
-                    border-right: 4px solid #fff;
-                    border-bottom:4px solid #fff;
-                    background-color: none;    
-                }
-                &:after {
-                    content: "";
-                    position: absolute;
-                    right: 8px;
-                    bottom: 6px;
-                    z-index: 300;
-                    height: 11px;
-                    width: 12px; 
-                    border-radius: 3px;
-                    border-right: 4px solid #D8D8D8;
-                    border-bottom:4px solid #D8D8D8;
-                    background-color: none;     
+                .name {
+                    display: block;
+                    padding: 25px 0;
+                    font-size: 1.5em;
+                    line-height: 1em;
+                    font-weight: 400;    
+                    @include neue;
+                    color: #FFF;
+                    text-transform: uppercase;
                 }
 
-                .arrow {
-                    content: "";
-                    position: absolute;
-                    right: 8px;
-                    bottom: 12px;
-                    z-index: 200;
-                    height: 4px;
-                    border-radius: 10px;
-                    background-color: #D8D8D8;  
-                    width: 17px;    
-                    @include transform(rotate(40deg));
+                .handle {
+                    @include inline-block;
+                    width: auto;
+                    clear:both;
+                    margin-bottom: 25px;
+                    font-size: 1.25em;
+                    line-height: 1.75em;
+                    font-weight: 600;    
+                    @include exo;
+                    color: #FFF;
+                    line-height: 0px;
+                    @include transition(all .15s linear);
+                    &:hover {
+                        color: #8CD6EE;
+                    }
+                }
+
+                .detail_btn {
+                    display: block;
+                    margin: 10px auto;
+                    width: 90%;
+                    padding: 10px 0 10px 0;
+                    @include btn-blue;
                 }
             }
         }
-        .details {
-            overflow: hidden;
-            height: 240px;
-            width: 100%;
-            background-color: #00BCE4;
-            box-shadow: 0 1px 0 #0096B6;
-            text-align: center;
-
-            .name {
-                display: block;
-                padding: 25px 0;
-                font-size: 1.5em;
-                line-height: 1em;
-                font-weight: 400;    
-                @include neue;
-                color: #FFF;
-                text-transform: uppercase;
-            }
-
-            .handle {
-                @include inline-block;
-                width: auto;
-                clear:both;
-                margin-bottom: 25px;
-                font-size: 1.25em;
-                line-height: 1.75em;
-                font-weight: 600;    
-                @include exo;
-                color: #FFF;
-                line-height: 0px;
-                @include transition(all .15s linear);
-                &:hover {
-                    color: #8CD6EE;
-                }
-            }
-
-            .detail_btn {
-                display: block;
-                margin: 10px auto;
-                width: 90%;
-                padding: 10px 0 10px 0;
-                @include btn-blue;
+        &.user {
+            .visual {
+                background-color: #4CC7E8;
             }
         }
     }
+}
+
+.footer {
+    //overflow: hidden;
+    background-color: #00BCE4;
+    
+    .bird {
+        padding: .5em;
+        text-align: center;
+        box-shadow: 0 1px 2px #00acd0, inset 0 1px 2px #0096b6 ;
+        .bird-btn {
+            float: right;
+        }
+        .bird-icon {
+            @include inline-block;
+            overflow: hidden;
+            width: 50px;
+            img {
+                max-width: 100%;
+                height:auto;
+            }
+        }
+        .collapsible {
+            position: relative;
+            float: left;
+            display: block;
+            color: #8CD6EE;
+            &:before {
+                position: absolute;
+                right: -20px;
+                content: '-';
+                color: #8CD6EE;
+                text-shadow: 0 -1px 0 #0096B6;
+                font-size: 3em;
+            }
+            &.collapsed:before {
+                position: absolute;
+                right: -30px;
+                content: '+';
+                color: #8CD6EE;
+                text-shadow: 0 -1px 0 #0096B6;
+                font-size: 3em;
+            }
+        }
+    }
+    .bird-btn {
+        @include inline-block;
+        float: left;
+        margin: 0 auto;
+        @include btn-blue;
+        padding: 13px 8px 13px 8px;
+    }
+    .tweet-box {
+        textarea {
+            width: 100%;
+            height: 400px;
+            background-color: #00BCE4;
+            resize: none;
+            outline: none;
+            border: 0px;
+            padding: 2em;
+            font-size: 2em;
+            color: white;
+            @include neue;
+            box-shadow: inset 0 1px 2px #0096b6;
+        }
+        ::-webkit-input-placeholder {
+           color: #0096b6;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: #0096b6;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: #0096b6;  
+        }
+
+        :-ms-input-placeholder {  
+           color: #0096b6;  
+        }
+    }
+    
+    .tweet-me {
+        overflow: hidden;
+        box-shadow: 0 -1px 2px #0096b6;
+        padding: 2em;
+        input {
+            @include inline-block;
+            width: 20%;
+            padding: 10px 8px 10px 8px;
+            background-color: #4CC7E8;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 0 #0096b6, inset 0 -1px #4CC7E8;
+            color: #8CD6EE;
+            font-size: 1.125em;
+            font-weight: 400;  
+            color: #0096b6;
+            @include neue;
+            border: 0px;
+            outline: none;
+            margin-right: .5em;
+        }
+        ::-webkit-input-placeholder {
+           color: #0096b6;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: #0096b6;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: #0096b6;  
+        }
+
+        :-ms-input-placeholder {  
+           color: #0096b6;  
+        }
+
+        .tweet-submit {
+            float: right;
+        }
+
+        
+    }
+
+}
+
+.request-form {
+    display: none;
+    overflow: hidden;
+    padding: 2em 6em;
+    background-color: #00BCE4;
+    box-shadow: inset 0 -1px 2px #0096b6;
+
+    .request-intro {
+        color: white;
+        margin-bottom: 2em;
+        
+        .head {
+            @include exo;
+            font-size: 2em;
+            margin-bottom: .25em;
+        }
+
+        .body {
+            @include neue;      
+        }
+    }
+
+    .contact{
+        @include inline-block;
+        vertical-align: top;
+        width: 33%;
+        @media screen and (max-width: 1050px){
+            width: 100%
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px 8px 10px 8px;
+            margin-bottom: .5em;
+            background-color: #4CC7E8;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 0 #0096b6, inset 0 -1px #4CC7E8;
+            color: #8CD6EE;
+            font-size: 1.125em;
+            font-weight: 400;  
+            color: #0096b6;
+            @include neue;
+            border: 0px;
+            outline: none;
+            margin-right: .5em;
+        }
+        ::-webkit-input-placeholder {
+           color: #0096b6;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: #0096b6;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: #0096b6;  
+        }
+
+        :-ms-input-placeholder {  
+           color: #0096b6;  
+        }
+    }
+
+    .request-box {
+        @include inline-block;
+        vertical-align: top;
+        float: right;
+        width: 66%;
+        padding: 2px 0 8px;
+        @media screen and (max-width: 1050px){
+            width: 100%
+        }
+
+
+        textarea {
+            width: 100%;
+            height:144px;
+            background-color: #4CC7E8;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 0 #0096b6, inset 0 -1px #4CC7E8;
+            color: #8CD6EE;
+            font-size: 1.125em;
+            font-weight: 400;  
+            color: #0096b6;
+            @include neue;
+            border: 0px;
+            outline: none;
+            resize: none;
+            outline: none;
+            border: 0px;
+            padding: .5em;
+            color: white;
+            @include neue;
+        }
+        ::-webkit-input-placeholder {
+           color: #0096b6;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: #0096b6;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: #0096b6;  
+        }
+
+        :-ms-input-placeholder {  
+           color: #0096b6;  
+        }
+    }
+
+    .request-submit {
+        @include inline-block;
+        //display: block;
+        float: right;
+        margin: 0 auto;
+        @include btn-blue;
+        padding: 13px 8px 13px 8px;
+        @media screen and (max-width: 640px){
+            width: 100%
+        }
+    }
+
+    .human {
+        @include inline-block;
+        float: left;
+        padding: 0px 8px 13px 8px;
+        color: white;
+        @media screen and (max-width: 640px){
+            width: 100%
+        }
+        
+        input {
+            padding: 10px 8px 10px 8px;
+            margin-bottom: .5em;
+            background-color: #4CC7E8;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 0 #0096b6, inset 0 -1px #4CC7E8;
+            color: #8CD6EE;
+            font-size: 1.125em;
+            font-weight: 400;  
+            color: #0096b6;
+            @include neue;
+            border: 0px;
+            outline: none;
+            margin-right: .5em;
+        }
+        ::-webkit-input-placeholder {
+           color: #0096b6;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+           color: #0096b6;  
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: #0096b6;  
+        }
+
+        :-ms-input-placeholder {  
+           color: #0096b6;  
+        }
+    }
+
 }
 
