@@ -37,10 +37,22 @@ define( ['underscore'],
 			this.x = this.startX || Math.random() * ( this.$canvas.width() - 40 );
 			this.y = this.startY || Math.random() * ( this.$canvas.height() - 180 ) + 100;
 
+			this.lastX = this.x;
+			this.lastY = this.y;
+
 			// create cursor image
 			this.cursor = new Image();
 			this.cursor.src = 'public/img/pointer.svg';
 
+			this.delta = {},
+			this.latest = {
+				x: 0,
+				y: 0
+			},
+			this.loopCount = 0,
+			this.numberMoves = 0,
+			this.currMoves = 0;
+			this.LOOP_MULTIPLIER = 2; //
 		};
 
 		LocalCharacter.prototype = {
@@ -55,6 +67,18 @@ define( ['underscore'],
 			},
 			setY : function( newY ) {
 				this.y = newY;
+			},
+			getLastX : function() {
+				return this.lastX;
+			},
+			getLastY : function() {
+				return this.lastY;
+			},
+			setLastX : function( lastX ) {
+				this.lastX = lastX;
+			},
+			setLastY : function( lastY ) {
+				this.lastY = lastY;
 			},
 
 			update : function( keys ) {
@@ -81,9 +105,11 @@ define( ['underscore'],
 				return (prevX != this.x || prevY != this.y) ? true : false;
 			},
 
-			draw : function( drawingCtx ) {
-				var ex = this.x + this.img.width,
-				ey = this.y + this.img.height * 1.9,
+			draw : function( drawingCtx, dx, dy ) {
+				dx = typeof dx !== 'undefined' ? dx : this.x;
+				dy = typeof dy !== 'undefined' ? dy : this.y;
+				var ex = dx + this.img.width,
+				ey = dy + this.img.height * 1.9,
 				height = 20,
 				width = 60,
 				grd = drawingCtx.createRadialGradient(ex,ey,12,ex,ey,35);
@@ -102,19 +128,43 @@ define( ['underscore'],
 					drawingCtx.fillStyle = grd;
 					drawingCtx.fill();
 				drawingCtx.closePath();
-				drawingCtx.drawImage(this.cursor, this.x + 15, this.y - 40, this.img.width, this.img.height);
-				drawingCtx.drawImage(this.img, this.x, this.y, this.img.width*2, this.img.height*2);
+				drawingCtx.drawImage(this.cursor, dx + 15, dy - 40, this.img.width, this.img.height);
+				drawingCtx.drawImage(this.img, dx, dy, this.img.width*2, this.img.height*2);
 			},
+			//
+			queue: function( x, y ){
+				var s = this;
+				var newPos = {
+					x: Math.round(x),
+					y: Math.round(y)
+				};
 
-			stepValues : {
-				x: '',
-				y: ''
+				if( s.latest.x === newPos.x && s.latest.y === newPos.y ){
+					s.numberMoves = 0;
+				} else {
+
+					_.each( [ "x", "y" ], function( pos ){
+						s.delta[pos] = newPos[pos] - s.latest[pos];
+					});
+
+					s.numberMoves = s.currMoves = (s.LOOP_MULTIPLIER * s.loopCount);
+				}
+				s.loopCount = 0;
 			},
+			coords: function(){
+				var s = this;
 
-			target : {
-				x: '',
-				y: ''
+				s.loopCount++;
+
+				if( s.currMoves ){
+					_.each( [ "x", "y" ], function( pos ){
+						s.latest[pos] += Math.round(s.delta[pos] / s.numberMoves);
+					});
+					s.currMoves--;
+				}
+				return s.latest;
 			}
+
 		};
 
 		return LocalCharacter;

@@ -40,7 +40,7 @@ var oa = new OAuth(
 	'8YVoUbVLwaWmoxLgPk5nqg',
 	'rlj9GEYPY5Lo07odlib4MgRiIl0T2Au7B2O6d2gfFc',
 	'1.0A',
-	'http://' + appconfig.baseuri +  ':8000/i',
+	'http://' + appconfig.baseuri +  '/i',
 	'HMAC-SHA1'
 );
 
@@ -95,13 +95,10 @@ app
 	.use( express.session( { secret: 'goodtwin' } ) )
 
 	.use( express["static"]( __dirname ) ) // static is reserved, will blow up linters
-	
 	.engine( '.html', cons.swig )
-	
 	.set( 'view engine', 'html' )
-	
 	.set( 'views', __dirname + '/views' )
-	
+
 	.get( '/', function( req, res ) {
 		if (req.session.oauth) {
 			res.redirect( '/auth/twitter' );
@@ -237,8 +234,8 @@ app
 ** GAME VARIABLES
 **************************************************/
 var socket,		// Socket controller
-	humanPlayers;	// Array of connected humanPlayers
-
+	humanPlayers,	// Array of connected humanPlayers
+	SET_TIMEOUT = 250;
 
 /**************************************************
 ** GAME INITIALISATION
@@ -261,6 +258,9 @@ function init() {
 
 	// Start listening for events
 	setEventHandlers();
+	setInterval( function(client){
+		remotePlayersSnapshot(client); },
+	SET_TIMEOUT);
 }
 
 
@@ -287,10 +287,6 @@ function onSocketConnection(client) {
 
 	// Listen for Mongo Data request
 	client.on( 'db data request', onDBDataRequest );
-
-	setInterval( function(client){
-		remotePlayersSnapshot(client); },
-	100);
 	
 }
 
@@ -338,6 +334,7 @@ function onNewPlayer(data) {
 // Player has moved
 function onMovePlayer(data) {
 	// Find player in array
+	
 	var movePlayer = playerById( this.id );
 
 	// Player not found

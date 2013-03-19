@@ -8,11 +8,11 @@ var Player = function(startX, startY) {
 
 	// Getters and setters
 	var getX = function() {
-		return x;
+		return this.x;
 	};
 
 	var getY = function() {
-		return y;
+		return this.y;
 	};
 
 	var setX = function(newX) {

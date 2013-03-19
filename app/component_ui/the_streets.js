@@ -30,7 +30,8 @@
 					tweeter,
 					tweet,
 					socket,     // Socket connection
-					that;
+					that,
+					SET_TIMEOUT = 250;
 
 				this.defaultAttrs({
 					canvasSelector : '#street',
@@ -59,7 +60,7 @@
 					this.trigger( 'eightBitsRequested' );
 
 					// Initialize socket connection
-					socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
+					socket = io.connect( 'http://' + appconfig.baseuri, {transports: ['websocket']} );
 
 					// Initialize remote players array
 					remotePlayers = [];
@@ -77,12 +78,6 @@
 					// Update local player and check for change
 					if( localPlayer ){
 						if ( localPlayer.update( keys ) ) {
-							socket.emit( 'move player', {
-								x: localPlayer.getX(),
-								y: localPlayer.getY(),
-								handle: localPlayer.handle,
-								img: localPlayer.img.src
-							});
 						}
 					}
 
@@ -105,7 +100,8 @@
 
 					// Draw the remote players
 					for ( i = 0; i < remotePlayers.length; i++ ) {
-						remotePlayers[i].draw( ctx );
+						var next = remotePlayers[i].coords();
+						remotePlayers[i].draw( ctx, next.x, next.y );
 					}
 
 					// Draw the local player
@@ -204,9 +200,11 @@
 							// movePlayer.stepValues.y = Math.abs(data[i].y - movePlayer.y) / 200 /* sending interval */;
 							// movePlayer.target.x = data.x;
 							// movePlayer.target.y = data.y;
-							movePlayer.setX( data[i].x );
-							movePlayer.setY( data[i].y );
+							movePlayer.queue( data[i].x, data[i].y );
+							//movePlayer.setY( data[i].y );
 						}
+						//that.trigger( 'update' );
+						//that.trigger( 'draw' );
 					}
 				};
 
@@ -229,7 +227,7 @@
 						if ( remotePlayers[i].id == id )
 							return remotePlayers[i];
 					}
-					
+
 					return false;
 				};
 
@@ -308,6 +306,23 @@
 							handle : localPlayer.handle,
 							img : localPlayer.img.src
 						} );
+
+					setInterval( function(){
+						that.checkLocalPlayerMove(); },
+					SET_TIMEOUT);
+				};
+
+				this.checkLocalPlayerMove = function(){
+					if( (localPlayer.getX() !== localPlayer.getLastX()) || (localPlayer.getY() !== localPlayer.getLastY()) ){
+						socket.emit( 'move player', {
+								x: localPlayer.getX(),
+								y: localPlayer.getY(),
+								handle: localPlayer.handle,
+								img: localPlayer.img.src
+							});
+						localPlayer.setLastX( localPlayer.getX() );
+						localPlayer.setLastY( localPlayer.getY() );
+					}
 				};
 
 				this.removeFromOmahaPlayers = function( data ){
@@ -357,7 +372,7 @@
 					this.on( window, 'resize', this.onResize );
 
 
-					var socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
+					var socket = io.connect( 'http://' + appconfig.baseuri, {transports: ['websocket']} );
 					socket.on( 'connect', this.onSocketConnected );
 					socket.on( 'disconnect', this.onSocketDisconnect );
 					socket.on( 'new player', this.onNewPlayer );

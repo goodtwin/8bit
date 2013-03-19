@@ -8,6 +8,6 @@ window.requestAnimFrame = (function(){
           window.oRequestAnimationFrame      ||
           window.msRequestAnimationFrame     ||
           function(/* function */ callback, /* DOMElement */ element){
-            window.setTimeout(callback, 45 / 1000);
+            window.setTimeout(callback, 100);
           };
 })();

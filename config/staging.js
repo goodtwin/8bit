@@ -4,6 +4,6 @@ if (typeof define !== 'function') {
 
 define(function(require) {
     return {
-        baseuri: "8bit.ringwraith.good-twin.com"
+        baseuri: "8bit.gothmog.good-twin.com"
     };
 });

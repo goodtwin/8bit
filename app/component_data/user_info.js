@@ -24,7 +24,7 @@
 				var that;
 
 				this.startOAuth = function( ev, data ) {
-					var socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
+					var socket = io.connect( 'http://' + appconfig.baseuri, {transports: ['websocket']} );
 					socket.emit( 'db data request' );
 				};
 
@@ -93,7 +93,7 @@
 					this.on( 'postTweet', this.postTweet );
 					this.on( 'requestLogIn', this.requestLogIn );
 
-					var socket = io.connect( 'http://' + appconfig.baseuri + ':8000' );
+					var socket = io.connect( 'http://' + appconfig.baseuri, {transports: ['websocket']} );
 					socket.on( 'db data returned', this.setData );
 				});
 			}
