@@ -13,4 +13,6 @@ results
 
 npm-debug.log
 node_modules
-.sass-cache
+public/style/.sass-cache/
+appconfig.js
+**.sass-cache

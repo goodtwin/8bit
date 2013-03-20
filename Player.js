@@ -8,19 +8,21 @@ var Player = function(startX, startY) {
 
 	// Getters and setters
 	var getX = function() {
-		return x;
+		return this.x;
 	};
 
 	var getY = function() {
-		return y;
+		return this.y;
 	};
 
 	var setX = function(newX) {
 		x = newX;
+		this.x = newX;
 	};
 
 	var setY = function(newY) {
 		y = newY;
+		this.y = newY;
 	};
 
 	// Define which variables and methods can be accessed
@@ -30,7 +32,7 @@ var Player = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		id: id
-	}
+	};
 };
 
 // Export the Player class so you can use it in

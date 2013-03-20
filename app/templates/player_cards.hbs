@@ -1,0 +1,15 @@
+{{#each users}}
+<div id="{{trim}}-{{last_name}}" class="eight-bit {{handle}} new">
+	<div class="eight-bit-inner">
+        <div class="visual">
+            <div class="bit -bit_{{trim}}-{{last_name}}"></div>
+            <a href="#" class="arrow_btn"><span class="arrow"></span></a>
+        </div>
+        <div class="details">
+        	<h2 class="name">{{first_name}} {{last_name}}</h2>
+            <a href="http://twitter.com/{{handle}}" target="_blank" class="handle">@{{handle}}</a>
+            <a href="http://twitter.com/{{handle}}" class="detail_btn">Follow</a>
+        </div>
+    </div>
+</div>
+{{/each}}
