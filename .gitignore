@@ -16,3 +16,4 @@ node_modules
 public/style/.sass-cache/
 appconfig.js
 **.sass-cache
+.sass-cache
