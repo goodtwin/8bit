@@ -417,8 +417,10 @@ html, body {
           .bits-container .eight-bit .eight-bit-inner .details .handle:hover {
             color: #8CD6EE; }
         .bits-container .eight-bit .eight-bit-inner .details .detail_btn {
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
           display: block;
-          margin: 10px auto;
           width: 90%;
           padding: 10px 0 10px 0;
           font-family: 'Helvetica Neue', sans-serif;

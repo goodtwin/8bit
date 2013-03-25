@@ -280,8 +280,11 @@ html, body {
                 }
 
                 .detail_btn {
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
                     display: block;
-                    margin: 10px auto;
+                    //margin: 88px auto 10px;
                     width: 90%;
                     padding: 10px 0 10px 0;
                     @include btn-blue;
