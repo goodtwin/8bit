@@ -65,7 +65,7 @@ h1 {
   font-family: serif; }
 
 .wf-active h1 {
-  font-family: "Exo", sans-serif; }
+  font-family: 'Exo', sans-serif; }
 
 .thick {
   font-weight: 600; }
@@ -87,7 +87,7 @@ h1 {
   font-family: serif; }
 
 .wf-active h1 {
-  font-family: "Exo", sans-serif; }
+  font-family: 'Exo', sans-serif; }
 
 .thick {
   font-weight: 600; }
@@ -119,17 +119,17 @@ html, body {
 .nav {
   overflow: hidden;
   float: right;
-  padding: 0 0 0.5em; }
+  padding: 0 0 .5em; }
   .nav .nav_btn {
     float: right;
     margin: 20px 20px 0 0;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     padding: 10px 8px 10px 8px;
     background-color: #EFEFEF;
     border-radius: 5px;
     box-shadow: 0 1px 0 #dddddd, 0 -1px white;
     color: #C9C9C9;
-    text-shadow: 0 1px 0 white;
+    text-shadow: 0 1px 0 #FFF;
     font-size: 1.125em;
     font-weight: 400;
     text-align: center;
@@ -178,7 +178,7 @@ html, body {
       display: block;
       padding: 0 0 1em;
       color: white;
-      font-family: "Helvetica Neue", sans-serif; }
+      font-family: 'Helvetica Neue', sans-serif; }
       .scape .tweet-bubble .tweet a {
         color: #8CD6EE; }
     .scape .tweet-bubble .tweeter {
@@ -188,7 +188,7 @@ html, body {
       *display: inline;
       *vertical-align: auto;
       float: right;
-      font-family: "Helvetica Neue", sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
       padding: 10px 8px 10px 8px;
       background-color: #00ACD0;
       border-radius: 5px;
@@ -218,7 +218,7 @@ html, body {
   display: block;
   overflow: hidden;
   clear: both;
-  padding: 0.5% 0.5%; }
+  padding: .5% .5%; }
   .bits-container .eight-bit {
     position: relative;
     overflow: hidden;
@@ -262,7 +262,7 @@ html, body {
       top: 13px;
       right: -34px;
       font-size: .9375em;
-      font-family: "Press Start 2P", sans-serif;
+      font-family: 'Press Start 2P', sans-serif;
       color: #FFF;
       text-transform: uppercase;
       text-shadow: 0 -1px 0 #0096b6;
@@ -278,8 +278,8 @@ html, body {
       transform: rotateX(90deg); }
     .bits-container .eight-bit .eight-bit-inner {
       height: 240px;
-      -webkit-transition: -webkit-transform 0.8s;
-      transition: transform 0.8s;
+      -webkit-transition: -webkit-transform .8s;
+      transition: transform .8s;
       /* Animate the transform properties */
       -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
@@ -303,7 +303,7 @@ html, body {
         width: 100%;
         padding: 60px 0 0;
         background-color: #F7F7F7;
-        box-shadow: 0 1px 0 #dddddd;
+        box-shadow: 0 1px 0 #DDD;
         cursor: pointer; }
         .bits-container .eight-bit .eight-bit-inner .visual .bit {
           display: inline-block;
@@ -321,13 +321,13 @@ html, body {
           bottom: 10px;
           width: 32px;
           height: 28px;
-          font-family: "Helvetica Neue", sans-serif;
+          font-family: 'Helvetica Neue', sans-serif;
           padding: 10px 8px 10px 8px;
           background-color: #EFEFEF;
           border-radius: 5px;
           box-shadow: 0 1px 0 #dddddd, 0 -1px white;
           color: #C9C9C9;
-          text-shadow: 0 1px 0 white;
+          text-shadow: 0 1px 0 #FFF;
           font-size: 1.125em;
           font-weight: 400;
           text-align: center;
@@ -348,8 +348,8 @@ html, body {
             height: 11px;
             width: 12px;
             border-radius: 3px;
-            border-right: 4px solid white;
-            border-bottom: 4px solid white;
+            border-right: 4px solid #fff;
+            border-bottom: 4px solid #fff;
             background-color: none; }
           .bits-container .eight-bit .eight-bit-inner .visual .arrow_btn:after {
             content: "";
@@ -360,8 +360,8 @@ html, body {
             height: 11px;
             width: 12px;
             border-radius: 3px;
-            border-right: 4px solid #d8d8d8;
-            border-bottom: 4px solid #d8d8d8;
+            border-right: 4px solid #D8D8D8;
+            border-bottom: 4px solid #D8D8D8;
             background-color: none; }
           .bits-container .eight-bit .eight-bit-inner .visual .arrow_btn .arrow {
             content: "";
@@ -382,7 +382,7 @@ html, body {
         height: 240px;
         width: 100%;
         background-color: #00BCE4;
-        box-shadow: 0 1px 0 #0096b6;
+        box-shadow: 0 1px 0 #0096B6;
         text-align: center;
         cursor: pointer; }
         .bits-container .eight-bit .eight-bit-inner .details .name {
@@ -391,7 +391,7 @@ html, body {
           font-size: 1.5em;
           line-height: 1em;
           font-weight: 400;
-          font-family: "Helvetica Neue", sans-serif;
+          font-family: 'Helvetica Neue', sans-serif;
           color: #FFF;
           text-transform: uppercase; }
         .bits-container .eight-bit .eight-bit-inner .details .handle {
@@ -406,7 +406,7 @@ html, body {
           font-size: 1.25em;
           line-height: 1.75em;
           font-weight: 600;
-          font-family: "Exo", sans-serif;
+          font-family: 'Exo', sans-serif;
           color: #FFF;
           line-height: 0px;
           -webkit-transition: all 0.15s linear;
@@ -421,7 +421,7 @@ html, body {
           margin: 10px auto;
           width: 90%;
           padding: 10px 0 10px 0;
-          font-family: "Helvetica Neue", sans-serif;
+          font-family: 'Helvetica Neue', sans-serif;
           padding: 10px 8px 10px 8px;
           background-color: #00ACD0;
           border-radius: 5px;
@@ -449,11 +449,13 @@ html, body {
   width: 100%;
   overflow: hidden; }
   .footer .bird {
-    padding: .5em;
+    padding: .25em .5em 0;
     text-align: center;
     box-shadow: 0 1px 2px #00acd0, inset 0 1px 2px #0096b6; }
     .footer .bird .bird-btn {
-      float: right; }
+      position: absolute;
+      right: .5em;
+      top: .5em; }
     .footer .bird .bird-icon {
       display: inline-block;
       vertical-align: baseline;
@@ -461,7 +463,8 @@ html, body {
       *display: inline;
       *vertical-align: auto;
       overflow: hidden;
-      width: 50px; }
+      width: 50px;
+      margin-top: .25em; }
       .footer .bird .bird-icon img {
         max-width: 100%;
         height: auto; }
@@ -492,7 +495,7 @@ html, body {
     *vertical-align: auto;
     float: left;
     margin: 0 auto;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     padding: 10px 8px 10px 8px;
     background-color: #00ACD0;
     border-radius: 5px;
@@ -524,7 +527,7 @@ html, body {
     padding: 2em;
     font-size: 2em;
     color: white;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     box-shadow: inset 0 1px 2px #0096b6; }
   .footer .tweet-box ::-webkit-input-placeholder {
     color: #0096b6; }
@@ -555,7 +558,7 @@ html, body {
       font-size: 1.125em;
       font-weight: 400;
       color: #0096b6;
-      font-family: "Helvetica Neue", sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
       border: 0px;
       outline: none;
       margin-right: .5em; }
@@ -582,11 +585,11 @@ html, body {
     color: white;
     margin-bottom: 2em; }
     .request-form .request-intro .head {
-      font-family: "Exo", sans-serif;
+      font-family: 'Exo', sans-serif;
       font-size: 2em;
       margin-bottom: .25em; }
     .request-form .request-intro .body {
-      font-family: "Helvetica Neue", sans-serif; }
+      font-family: 'Helvetica Neue', sans-serif; }
   .request-form .contact {
     display: inline-block;
     vertical-align: baseline;
@@ -610,7 +613,7 @@ html, body {
       font-size: 1.125em;
       font-weight: 400;
       color: #0096b6;
-      font-family: "Helvetica Neue", sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
       border: 0px;
       outline: none;
       margin-right: .5em; }
@@ -647,7 +650,7 @@ html, body {
       font-size: 1.125em;
       font-weight: 400;
       color: #0096b6;
-      font-family: "Helvetica Neue", sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
       border: 0px;
       outline: none;
       resize: none;
@@ -655,7 +658,7 @@ html, body {
       border: 0px;
       padding: .5em;
       color: white;
-      font-family: "Helvetica Neue", sans-serif; }
+      font-family: 'Helvetica Neue', sans-serif; }
     .request-form .request-box ::-webkit-input-placeholder {
       color: #0096b6; }
     .request-form .request-box :-moz-placeholder {
@@ -672,9 +675,8 @@ html, body {
     zoom: 1;
     *display: inline;
     *vertical-align: auto;
-    float: right;
     margin: 0 auto;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     padding: 10px 8px 10px 8px;
     background-color: #00ACD0;
     border-radius: 5px;
@@ -717,10 +719,11 @@ html, body {
       font-size: 1.125em;
       font-weight: 400;
       color: #0096b6;
-      font-family: "Helvetica Neue", sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
       border: 0px;
       outline: none;
-      margin-right: .5em; }
+      margin-right: .5em;
+      width: 135px; }
     .request-form .human ::-webkit-input-placeholder {
       color: #0096b6; }
     .request-form .human :-moz-placeholder {

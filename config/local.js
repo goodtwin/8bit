@@ -4,6 +4,6 @@ if (typeof define !== 'function') {
 
 define(function(require) {
     return {
-        baseuri: "localhost"
+        baseuri: "8bit.dev"
     };
 });

@@ -305,16 +305,19 @@ html, body {
     overflow:hidden;
     
     .bird {
-        padding: .5em;
+        padding: .25em .5em 0;
         text-align: center;
         box-shadow: 0 1px 2px #00acd0, inset 0 1px 2px #0096b6 ;
         .bird-btn {
-            float: right;
+            position: absolute;
+            right: .5em;
+            top:.5em;
         }
         .bird-icon {
             @include inline-block;
             overflow: hidden;
             width: 50px;
+            margin-top: .25em;
             img {
                 max-width: 100%;
                 height:auto;
@@ -546,7 +549,7 @@ html, body {
     .request-submit {
         @include inline-block;
         //display: block;
-        float: right;
+        //float: right;
         margin: 0 auto;
         @include btn-blue;
         padding: 13px 8px 13px 8px;
@@ -560,6 +563,7 @@ html, body {
         float: left;
         padding: 0px 8px 13px 8px;
         color: white;
+        
         @media screen and (max-width: 640px){
             width: 100%
         }
@@ -578,6 +582,7 @@ html, body {
             border: 0px;
             outline: none;
             margin-right: .5em;
+            width: 135px;
         }
         ::-webkit-input-placeholder {
            color: #0096b6;

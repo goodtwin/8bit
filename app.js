@@ -21,7 +21,7 @@ var express = require( 'express' ),
 server.listen(8000);
 
 // Mongo
-var databaseUrl = '8bit', // "username:password@example.com/mydb"
+var databaseUrl = 'localhost:17017/8bit', // "username:password@example.com/mydb"
 	collections = ['users'],
 	db = mongojs.connect(databaseUrl, collections),
 	omahaPeople,
