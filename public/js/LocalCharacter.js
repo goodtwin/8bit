@@ -108,11 +108,11 @@ define( ['underscore'],
 			draw : function( drawingCtx, dx, dy ) {
 				dx = typeof dx !== 'undefined' ? dx : this.x;
 				dy = typeof dy !== 'undefined' ? dy : this.y;
-				var ex = dx + this.img.width,
-				ey = dy + this.img.height * 1.9,
-				height = 20,
-				width = 60,
-				grd = drawingCtx.createRadialGradient(ex,ey,12,ex,ey,35);
+				var ex = dx + this.img.width /1.5,
+					ey = dy + this.img.height * 1.4,
+					height = 15,
+					width = 50,
+					grd = drawingCtx.createRadialGradient(ex,ey,9,ex,ey,30);
 				grd.addColorStop(0, "rgba(50, 50, 50, 0.3)");
 				grd.addColorStop(1, "rgba(250, 250, 250, 0.1)");
 				drawingCtx.beginPath();
@@ -128,8 +128,8 @@ define( ['underscore'],
 					drawingCtx.fillStyle = grd;
 					drawingCtx.fill();
 				drawingCtx.closePath();
-				drawingCtx.drawImage(this.cursor, dx + 15, dy - 40, this.img.width, this.img.height);
-				drawingCtx.drawImage(this.img, dx, dy, this.img.width*2, this.img.height*2);
+				drawingCtx.drawImage(this.cursor, dx, dy - 40, this.img.width, this.img.height);
+				drawingCtx.drawImage(this.img, dx, dy, this.img.width*1.5, this.img.height*1.5);
 			},
 			//
 			queue: function( x, y ){
