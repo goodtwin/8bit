@@ -276,10 +276,11 @@
 
 				this.createlocalPlayer = function( e, data ) {
 					// Initialize the local player
+					console.log(data);
 					var id;
 					if( typeof data.details !== 'undefined') {
 						id = ( data.details.first_name + '-' + data.details.last_name ).replace( /\s/g, '' );
-						
+
 						localPlayer = new LocalCharacter( {
 											$canvas : that.select( 'canvasSelector' ),
 											id : id,
@@ -288,8 +289,19 @@
 										} );
 
 						this.removeFromOmahaPlayers( { handle: localPlayer.handle } );
+
+						socket.emit( 'new player', {
+							x : localPlayer.getX(),
+							y : localPlayer.getY(),
+							handle : localPlayer.handle,
+							img : localPlayer.img.src
+						} );
+
+						setInterval( function(){
+							that.checkLocalPlayerMove(); },
+						SET_TIMEOUT);
 					}
-					else {
+					else if ( typeof data.handle !== 'undefined') {
 						var characterNumber = Math.floor(Math.random() * (5 + 1));
 						id = ( data.dummy[characterNumber].first_name + '-' + data.dummy[characterNumber].last_name ).replace( /\s/g, '' );
 						localPlayer = new LocalCharacter( {
@@ -298,18 +310,19 @@
 											handle: data.handle,
 											imgUri : data.dummy[characterNumber].imgUri
 										} );
-					}
 
-					socket.emit( 'new player', {
+						socket.emit( 'new player', {
 							x : localPlayer.getX(),
 							y : localPlayer.getY(),
 							handle : localPlayer.handle,
 							img : localPlayer.img.src
 						} );
 
-					setInterval( function(){
-						that.checkLocalPlayerMove(); },
-					SET_TIMEOUT);
+						setInterval( function(){
+							that.checkLocalPlayerMove(); },
+						SET_TIMEOUT);
+
+					}
 				};
 
 				this.checkLocalPlayerMove = function(){

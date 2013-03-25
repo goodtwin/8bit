@@ -1,5 +1,5 @@
 <div class="bird">
-	{{#if oauth}}
+	{{#if oauth.screen_name}}
 		<a href="/logout" class="bird-btn log-out">Hi, {{oauth.screen_name}}. Log out?</a>
 		<a href="#collapse" class="collapsible"></a>
 	{{else}}
@@ -7,7 +7,7 @@
 	{{/if}}
 	<div class="bird-icon"><img src="public/img/twitter.svg"></div>
 </div>
-{{#if oauth}}
+{{#if oauth.screen_name}}
 <div class="tweet-box">
 	<textarea id="tweet-box-text" placeholder="What's Up?"></textarea>
 	<div class="tweet-me">
