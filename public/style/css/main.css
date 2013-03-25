@@ -218,7 +218,7 @@ html, body {
   display: block;
   overflow: hidden;
   clear: both;
-  padding: .5% .5%; }
+  padding: .5% .5% 70px; }
   .bits-container .eight-bit {
     position: relative;
     overflow: hidden;
