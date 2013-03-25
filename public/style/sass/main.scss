@@ -305,7 +305,7 @@ html, body {
     bottom:0;
     background-color: #00BCE4;
     width: 100%;
-    overflow:hidden;
+    //overflow:hidden;
     
     .bird {
         padding: .25em .5em 0;
@@ -391,7 +391,17 @@ html, body {
            color: #0096b6;  
         }
     }
-    
+    .character-count {
+        display: block;
+        position: absolute;
+        bottom: 70px;
+        right: 10px;
+        color: #0096b6;
+        font-size: 2em;
+        &.negative {
+            color: #e42800;
+        }
+    }
     .tweet-me {
         overflow: hidden;
         box-shadow: 0 -1px 2px #0096b6;

@@ -119,7 +119,7 @@
 					if ( localPlayer ) {
 						keys.onKeyDown( e );
 					}
-					if( e ){
+					if( e.keyCode == 37 || e.keyCode == 38  || e.keyCode == 39 || e.keyCode == 40 ){
 						e.preventDefault();
 					}
 				};
@@ -129,7 +129,7 @@
 					if ( localPlayer ) {
 						keys.onKeyUp( e );
 					}
-					if( e ){
+					if( e.keyCode == 37 || e.keyCode == 38  || e.keyCode == 39 || e.keyCode == 40 ){
 						e.preventDefault();
 					}
 				};
@@ -276,7 +276,6 @@
 
 				this.createlocalPlayer = function( e, data ) {
 					// Initialize the local player
-					console.log(data);
 					var id;
 					if( typeof data.details !== 'undefined') {
 						id = ( data.details.first_name + '-' + data.details.last_name ).replace( /\s/g, '' );

@@ -16,7 +16,7 @@
 
 			function userMenu() {
 				/*jshint validthis:true */
-				
+
 				this.defaultAttrs({
 					logInSubmitSelector : '.login-submit',
 					tweetSubmitSelector: '.tweet-submit',
@@ -25,7 +25,8 @@
 					passwordSelector: '#twitter_password',
 					requestSelector: '.request',
 					collapsibleSelector: '.collapsible',
-					tweetBoxContSelector: '.tweet-box'
+					tweetBoxContSelector: '.tweet-box',
+					characterCountSelector: '.character-count'
 				});
 
 				this.showUser = function( e, data ){
@@ -66,6 +67,18 @@
 					$( 'html, body' ).animate( { scrollTop: 0 }, 'fast' );
 				};
 
+				this.typing = function(e){
+					var tweet = this.select( 'tweetBoxSelector' ).val(),
+						remaining = 140 - tweet.length;
+					this.select( 'characterCountSelector' ).html(remaining);
+					if( remaining < 0 && $('.negative').length === 0 ){
+						this.select( 'characterCountSelector' ).addClass('negative');
+					}
+					else if ( remaining >= 0 && $('.negative').length !== 0 ) {
+						this.select( 'characterCountSelector' ).removeClass('negative');
+					}
+				};
+
 				this.after('initialize', function() {
 					this.on( document, 'userInfoServed', this.showUser );
 					this.on( document, 'userTweetPosted', this.userTweetPosted );
@@ -74,6 +87,9 @@
 						logInSubmitSelector : this.logIn,
 						collapsibleSelector: this.toggleCollapse
 					} );
+					this.on( 'keyup', {
+						tweetBoxSelector : this.typing
+					});
 
 					this.trigger('userInfoRequested');
 				});
