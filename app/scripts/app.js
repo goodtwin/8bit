@@ -24,7 +24,7 @@ define(['angular', 'jquery' ],
 
 		eightbitapp.controller( "ListCtrl", function( $scope, $routeParams, EightBits ){
 			EightBits.success( function( data ){
-				$scope.eightbits = data.users;
+				$scope.eightbits = data;
 			});
 		});
 		
@@ -36,7 +36,12 @@ define(['angular', 'jquery' ],
 				});
 		});
 
-		//eightbitapp.controller( 'gt.ListCtrl', ListCtrl);
+
+		eightbitapp.filter( "trim", function(){
+			return function( str ){
+				return str && str.replace( ' ', '' );
+			}
+		});
 	}
 
 	return {

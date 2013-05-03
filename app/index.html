@@ -13,6 +13,24 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+
+    <script type="text/javascript">
+        WebFontConfig = { google: { families: [ 'Exo:200,600:latin', 'Press+Start+2P::latin' ] } };
+        (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+        })();
+
+        /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+        window.grunticon=function(e,t){if(!e||e.length!==3)return;var n=window,r=!!n.document.createElementNS&&!!n.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,i=function(t){var i=n.document.createElement("link"),s=n.document.getElementsByTagName("script")[0];i.rel="stylesheet",i.href=e[t&&r?0:t?1:2],s.parentNode.insertBefore(i,s)},s=new n.Image;s.onerror=function(){i(!1)},s.onload=function(){i(s.width===1&&s.height===1)},s.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="};
+        grunticon( [ "/styles/8bits/icons.data.svg.css", "../styles/8bits/icons.data.png.css", "/styles/8bits/icons.fallback.css" ] );
+      </script>
+      <noscript><link href="/public/style/8bits/icons.fallback.css" rel="stylesheet"></noscript>
   </head>
   <body>
     <!--[if lt IE 7]>
