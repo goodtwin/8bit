@@ -281,11 +281,12 @@ html, body {
                 }
 
                 .detail_btn {
-                    position: absolute;
-                    bottom: 10px;
-                    left: 10px;
-                    display: block;
-                    //margin: 88px auto 10px;
+                    //position: absolute;
+                    //bottom: 10px;
+                    //left: 10px;
+                    @include inline-block;
+                    //display: block;
+                    margin: 5px 0;
                     width: 90%;
                     padding: 10px 0 10px 0;
                     @include btn-blue;
