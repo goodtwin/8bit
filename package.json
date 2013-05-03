@@ -26,6 +26,7 @@
     "grunt-google-cdn": "~0.1.1",
     "grunt-ngmin": "~0.0.2",
     "grunt-cli" : "*",
+    "grunt-contrib-requirejs" : "*",
     "bower" : "*"
   },
   "engines": {

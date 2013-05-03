@@ -40,6 +40,3 @@ require.config({
     "jquery": "components/jquery/jquery"
   }
 });
-
-
-require(["scripts/bootstrap"]);

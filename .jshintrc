@@ -24,6 +24,6 @@
     "define" : true,
     "it" : true,
     "expect" : true,
-    "describe": true,
+    "describe": true
   }
 }

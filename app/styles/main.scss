@@ -48,6 +48,8 @@ html, body {
         padding-left: 15px;
         font-size: 1.5em;
         color: rgb(100, 100, 100);
+        outline: 0;
+        
         &::-webkit-input-placeholder {
            color: rgb(100, 100, 100);
            font-weight: 100;
@@ -180,7 +182,8 @@ html, body {
                     width: 120px;
                     //background-size: 5em;
                     background-position:50% 50%;
-                    @include transform(scale(4.5));
+                    //@include transform(scale(4.5));
+                    background-size: contain;
                 }
 
                 .arrow_btn {

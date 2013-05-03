@@ -146,6 +146,24 @@ module.exports = function (grunt) {
         }
       }
     },
+    requirejs: {
+      compile: {
+        options: {
+          name: 'scripts/bootstrap',
+          baseUrl: 'app/',
+          mainConfigFile: '<%= yeoman.app %>/config.js',
+          out: '<%= yeoman.dist %>/scripts/scripts.js',
+          optimize: 'uglify2',
+          uglify2: {
+            //Example of a specialized config. If you are fine
+            //with the default options, no need to specify
+            //any of these properties.
+            beautify: false,
+            mangle: false
+          }
+        }
+      }
+    },
     concat: {
       dist: {
         files: {
@@ -184,7 +202,8 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.dist %>/styles/main.css': [
             '.tmp/styles/{,*/}*.css',
-            '<%= yeoman.app %>/styles/{,*/}*.css'
+            '<%= yeoman.app %>/styles/{,*/}*.css',
+            '!<%= yeoman.app %>/styles/8bits/{,*/}*.css'
           ]
         }
       }
@@ -241,7 +260,8 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
             '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            '<%= yeoman.dist %>/styles/fonts/*',
+            '!<%= yeoman.dist %>/styles/8bits/{,*/}*.css'
           ]
         }
       }
@@ -258,7 +278,10 @@ module.exports = function (grunt) {
             '.htaccess',
             'components/**/*',
             'images/{,*/}*.{gif,webp}',
-            'styles/fonts/*'
+            'styles/fonts/*',
+            'styles/8bits/{,*/}*.css',
+            'views/{,*/}*.html',
+            'data/{,*/}*.json',
           ]
         }]
       }
@@ -289,20 +312,18 @@ module.exports = function (grunt) {
     'clean:dist',
     'jshint',
     'test',
-    'coffee',
+    'requirejs:compile',
     'compass:dist',
     'useminPrepare',
     'imagemin',
     'cssmin',
     'htmlmin',
-    'concat',
     'copy',
     'cdnify',
     'ngmin',
-    'uglify',
     'rev',
     'usemin'
   ]);
 
-  grunt.registerTask('default', ['build', 'bower']);
+  grunt.registerTask('default', ['build']);
 };
