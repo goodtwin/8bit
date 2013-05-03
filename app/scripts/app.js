@@ -42,6 +42,18 @@ define(['angular', 'jquery' ],
 				return str && str.replace( ' ', '' );
 			}
 		});
+
+		eightbitapp.directive( 'flip', function(){
+			return {
+				restrict: 'C',
+				link: function(scope, element, attrs){
+					element.on('click', function(){
+						$(this).toggleClass('flipped');
+						$(this).siblings().removeClass('flipped');
+					});
+				},
+			};
+		});
 	}
 
 	return {

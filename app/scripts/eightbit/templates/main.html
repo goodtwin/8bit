@@ -3,7 +3,7 @@
 </section>
 
 <section class="bits-container">
-	<div ng-repeat="eb in eightbits | filter:first_name" id="{{eb.first_name | trim}}-{{eb.last_name}}" class="eight-bit {{eb.handle}}">
+	<div ng-repeat="eb in eightbits | filter:first_name" id="{{eb.first_name | trim}}-{{eb.last_name}}" class="eight-bit flip {{eb.handle}}">
 		<div class="eight-bit-inner">
 	        <div class="visual">
 	            <div class="bit -bit_{{eb.first_name | trim}}-{{eb.last_name}}"></div>
