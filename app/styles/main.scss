@@ -189,8 +189,9 @@ html, body {
                     @include inline-block;
                     height:120px;
                     width: 120px;
-                    background-size: contain;
+                    //background-size: 5em;
                     background-position:50% 50%;
+                    @include transform(scale(4.5));
                 }
 
                 .arrow_btn {
