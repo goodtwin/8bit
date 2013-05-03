@@ -1,9 +1,0 @@
-{
-  "name": "nvd3",
-  "version": "0.0.0",
-  "commit": "7e9b8c013c4d8e8ad5775062c438c842bc112585",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/novus/nvd3"
-  }
-}
