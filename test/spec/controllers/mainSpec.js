@@ -12,7 +12,7 @@ define(['jquery',
     describe('Controller: MainCtrl', function () {
 
       // load the controller's module
-      beforeEach( mock.module('helloWorld.controller') );
+      beforeEach( mock.module('helloworld.controller') );
 
       var MainCtrl,
         scope;
