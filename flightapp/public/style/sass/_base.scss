@@ -1,0 +1,33 @@
+@import 'typo';
+@mixin btn-gray {
+	@include neue;
+    padding: 10px 8px 10px 8px;
+    background-color: #EFEFEF;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 #DDD, 0 -1px #FFF;
+    color: #C9C9C9;
+    text-shadow: 0 1px 0 #FFF;
+    font-size: 1.125em;
+    font-weight: 400; 
+    text-align: center;  
+    @include transition(all .15s linear);
+    &:hover {
+    	 background-color: #EAEAEA;
+    }
+}
+@mixin btn-blue {
+	@include neue;
+    padding: 10px 8px 10px 8px;
+    background-color: #00ACD0;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 #0096B6, 0 -1px #4CC7E8;
+    color: #8CD6EE;
+    text-shadow: 0 -1px 0 #0096B6;
+    font-size: 1.125em;
+    font-weight: 400; 
+    text-align: center;  
+    @include transition(all .15s linear);
+    &:hover {
+    	 background-color: #00A8CB;
+    }
+}

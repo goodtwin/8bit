@@ -1,0 +1,20 @@
+{
+  "name": "8-bit",
+  "description": "8 Bit Omaha",
+  "version": "0.0.3",
+  "private": true,
+  "dependencies": {
+    "express": "3.0.6",
+    "consolidate" : "*",
+    "socket.io" : "0.9.13",
+    "swig" : "*",
+    "oauth" : "0.9.8",
+    "mongodb" : "1.2.10",
+    "mongojs" : "0.5.1",
+    "nodemailer": "0.3.42",
+    "amdefine": "*",
+    "grunt" : "0.4",
+    "grunt-contrib-jshint" : "*",
+    "grunt-symlink" : "*"
+  }
+}
