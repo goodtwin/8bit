@@ -1,9 +1,16 @@
-<section class="search">
-	<input type="text" ng-model="first_name">
-</section>
+<header class="header">
+	<h1 class="omaha" title="8-Bit Omaha">8-Bit <span class="thick">Omaha</span></h1>
+	<section class="search">
+		<label data-icon="&#xe000;" aria-hidden='true' for="searchEightBits"></label>
+		<input type="text" id="searchEightBits" ng-model="search" placeholder="name or twitter handle">
+	</section>
+	<nav class="nav">
+	    <a href="#" class="nav_btn">Request An 8-Bit</a>
+	</nav>
+</header>
 
 <section class="bits-container">
-	<div ng-repeat="eb in eightbits | filter:first_name" id="{{eb.first_name | trim}}-{{eb.last_name}}" class="eight-bit flip {{eb.handle}}">
+	<div ng-repeat="eb in eightbits | filter:search" id="{{eb.first_name | trim}}-{{eb.last_name}}" class="eight-bit flip {{eb.handle}}">
 		<div class="eight-bit-inner">
 	        <div class="visual">
 	            <div class="bit -bit_{{eb.first_name | trim}}-{{eb.last_name}}"></div>

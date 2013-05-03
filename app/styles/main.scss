@@ -2,7 +2,7 @@
 @import 'sass/reset';
 @import 'sass/typo';
 @import 'sass/base';
-
+@import 'font';
 
 * { @include box-sizing(border-box); }
 html, body {
@@ -15,6 +15,9 @@ html, body {
     overflow: hidden;
     width: 100%;
     margin:0 0 2em;
+    padding: 5px 10px;
+    background-color: rgb(247, 247, 247);
+    border-bottom: 4px solid rgb(227, 227, 227);
 }
 
 .omaha {
@@ -22,6 +25,53 @@ html, body {
     padding: 20px;
     font-size: 2em;
 
+}
+
+.search {
+    @include inline-block;
+    width: 60%;
+    padding: 20px;
+
+    >label[data-icon]{
+        @include inline-block;
+        font-size: 1.4em;
+        opacity: 0.25;
+        color: rgb( 100, 100, 100 );
+    }
+
+    >input {
+        @include inline-block;
+        width: 80%;
+        background-color: transparent;
+        border: 0;
+        box-shadow: 0 0 0 0;
+        padding-left: 15px;
+        font-size: 1.5em;
+        color: rgb(100, 100, 100);
+        &::-webkit-input-placeholder {
+           color: rgb(100, 100, 100);
+           font-weight: 100;
+           opacity: 0.25;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+           color: rgb(100, 100, 100);
+           font-weight: 100;
+           opacity: 0.25;  
+        }
+
+        &::-moz-placeholder {  /* Firefox 19+ */
+           color: rgb(100, 100, 100);
+           font-weight: 100;
+           opacity: 0.25;
+        }
+
+        &:-ms-input-placeholder {  
+           color: #0096b6;
+           font-weight: 100;
+           opacity: 0.25;  
+        }
+    }
 }
 
 .nav {
@@ -42,68 +92,6 @@ html, body {
         
 }
 
-.scape {
-    display: block;
-    position: relative;
-    height: 650px;
-    width: 100%;
-    padding: 165px 0 0;
-    margin: 0px;
-    background: url(/public/img/omaha-bkgd.png) no-repeat;
-
-    .tweet-bubble {
-        display: none;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 300px;
-        height: auto;
-        padding: 1em;
-        z-index: 9999;
-        background-color: rgb(0,188,228);
-        background-color: rgba(0,188,228,.9);
-        border-radius: 8px;
-        &:after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50px;
-            width: 0px;
-            height: 0px;
-            border-style: solid;
-            border-width: 15px 10px 0 10px;
-            border-color: rgb(0,188,228) transparent transparent transparent;
-            border-color: rgba(0,188,228,.9) transparent transparent transparent;
-        }
-
-        .tweet {
-            display: block;
-            padding: 0 0 1em;
-            color: white;
-            @include neue;
-            a {
-                color: #8CD6EE;
-            }
-        }
-
-        .tweeter {
-            @include inline-block;
-            float: right;
-            @include btn-blue;
-            font-size: 1em;
-        }
-    }
-
-    #street {
-        position:relative;
-    	display: block;
-    	z-index: 999;
-        background: none;
-        margin: 0px;
-        padding:0px;
-    }
-}
-
 .bits-container {
     display: block;
     overflow: hidden;
@@ -121,7 +109,8 @@ html, body {
         height: 250px;
         text-align: center;
         cursor: pointer;
-        @include perspective(100000);
+        @include perspective(100000);    
+
         @media screen and (min-width: 420px){
                 width: 50%;
         }
