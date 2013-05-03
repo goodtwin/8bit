@@ -1,8 +1,8 @@
 "use strict";
 /* global define */
 
-define(["jquery", "angular", "scripts/modules/helloworld/main"],
-  function( $, angular ){
-    return angular.bootstrap( $("body")[0], ["helloworld"]);
+define([ "./app" ],
+  function( app ){
+  	return app.start( "gt.eightbit" );
   }
 );
