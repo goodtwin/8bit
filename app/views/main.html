@@ -5,7 +5,7 @@
 		<input type="text" id="searchEightBits" ng-model="search" placeholder="name or twitter handle">
 	</section>
 	<nav class="nav">
-	    <a href="#" class="nav_btn">Request An 8-Bit</a>
+	    <!-- <a href="#" class="nav_btn">Request An 8-Bit</a> -->
 	</nav>
 </header>
 
@@ -19,7 +19,7 @@
 	        <div class="details">
 	        	<h2 class="name">{{eb.first_name}} {{eb.last_name}}</h2>
 	            <a href="http://twitter.com/{{eb.handle}}" target="_blank" class="handle">@{{eb.handle}}</a>
-	            <a href="/data/{{eb.first_name | trim}}-{{eb.last_name}}.zip" class="detail_btn">Download <span>(eps & 400x400 png)</span></a>
+	            <a href="/data/{{eb.first_name | trim}}-{{eb.last_name}}.zip" class="detail_btn">Download</a>
 	        </div>
 	    </div>
 	</div>
