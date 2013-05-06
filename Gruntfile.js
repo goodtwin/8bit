@@ -150,6 +150,7 @@ module.exports = function (grunt) {
       compile: {
         options: {
           name: 'scripts/bootstrap',
+          insertRequire: ['scripts/bootstrap'],
           baseUrl: 'app/',
           mainConfigFile: '<%= yeoman.app %>/config.js',
           out: '<%= yeoman.dist %>/scripts/scripts.js',
@@ -312,14 +313,13 @@ module.exports = function (grunt) {
     'clean:dist',
     'jshint',
     'test',
-    'requirejs:compile',
     'compass:dist',
     'useminPrepare',
+    'requirejs',
     'imagemin',
     'cssmin',
     'htmlmin',
     'copy',
-    'cdnify',
     'ngmin',
     'rev',
     'usemin'
