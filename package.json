@@ -17,7 +17,7 @@
     "grunt-contrib-imagemin": "~0.1.2",
     "grunt-contrib-livereload": "~0.1.2",
     "grunt-bower-requirejs": "~0.4.1",
-    "grunt-usemin": "~0.1.10",
+    "grunt-usemin": "https://github.com/Andrexen/grunt-usemin/tarball/master",
     "grunt-regarde": "~0.1.1",
     "grunt-rev": "~0.1.0",
     "grunt-karma": "~0.3.0",
