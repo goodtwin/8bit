@@ -85,6 +85,7 @@ html, body {
         float: right;
         margin: 20px 20px 0 0;      
         @include btn-gray;
+        cursor: pointer;
         &.log-out {
             &:hover {
                 content: 'Log Out';
@@ -448,6 +449,11 @@ html, body {
     padding: 2em 6em;
     background-color: #00BCE4;
     box-shadow: inset 0 -1px 2px #0096b6;
+    @include transition(all .5s ease-in);
+
+    &.visible {
+        display: block;
+    }
 
     .request-intro {
         color: white;
@@ -561,6 +567,7 @@ html, body {
         margin: 0 auto;
         @include btn-blue;
         padding: 13px 8px 13px 8px;
+        cursor: pointer;
         @media screen and (max-width: 640px){
             width: 100%
         }

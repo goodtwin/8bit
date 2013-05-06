@@ -52,6 +52,56 @@ define(['angular', 'jquery' ],
 				},
 			};
 		});
+
+		eightbitapp.directive( 'viewToggle', function(){
+			return {
+				restrict: 'C',
+				link: function(scope, element){
+					element.bind('click', function(){
+						$('.request-form').toggleClass('visible');
+						return false;
+					});
+				},
+			};
+		});
+
+		eightbitapp.directive( 'sendEmail', function($http){
+			return {
+				restrict: 'C',
+				link: function(scope, element){
+					element.bind('click', function(){
+						var test = $( '#human' ).val(),
+							firstName = $( '#first_name' ).val(),
+							email = $( '#email' ).val(),
+							handle = $( '#handle' ).val(),
+							text = $( '#request-box-text' ).val(),
+							data = {};
+
+						if( test === '8' ){
+							data = {
+								'name': firstName,
+								'email': email,
+								'handle': handle,
+								'text': text
+							};
+
+							$http.post('/email', data ).
+							success(function(data) {
+								console.log(data);
+								window.alert('Thanks!');
+							}).
+							error(function(data) {
+								console.log(data);
+							});
+						}
+						else {
+							console.log('error');
+						}
+						return false;
+					});
+				},
+			};
+		});
 	};
 
 	return {
