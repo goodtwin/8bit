@@ -63,7 +63,8 @@ define(['angular', 'jquery' ],
 							email = $( '#email' ).val(),
 							handle = $( '#handle' ).val(),
 							text = $( '#request-box-text' ).val(),
-							data = {};
+							data = {},
+							modelOpen = angular.element(document.getElementById('modal-open'));
 
 						if( test === '8' ){
 							data = {
@@ -78,17 +79,17 @@ define(['angular', 'jquery' ],
 									console.log(data);
 									//window.alert('Thanks!');
 									$('#myModal .modal-body').html('Sweet. Got it.');
-									$('[modal-open="myModal"]').triggerHandler('click');
+									modelOpen.triggerHandler('click');
 								})
 								.error(function(data) {
 									console.log(data);
 									$('#myModal .modal-body').html('Bummer. I can\'t really say what\'s wrong, but it\'s bad.');
-									$('[modal-open="myModal"]').triggerHandler('click');
+									modelOpen.triggerHandler('click');
 								});
 						}
 						else {
 							$('#myModal .modal-body').html('Bummer. Make sure you put stuff in all the fields.');
-							$('[modal-open="myModal"]').triggerHandler('click');
+							modelOpen.triggerHandler('click');
 						}
 						return false;
 					});
