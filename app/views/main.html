@@ -1,19 +1,21 @@
-<div class="request-form">
-	<div class="request-intro">
-		<h3 class="head">Want your own 8-bit?</h3>
+<div ng-class="{ showMe: open }" class="request-form collapsable">
+	<div class="request-form-inner">
+		<div class="request-intro">
+			<h3 class="head">Want your own 8-bit?</h3>
+		</div>
+		<div class="contact">
+			<input id="first_name" placeholder="First Name">
+			<input id="email" placeholder="Email Address">	
+			<input id="handle" placeholder="Twitter Handle">		
+		</div>
+		<div class="request-box">
+			<textarea id="request-box-text" placeholder="Please tell us why and we'll see what we can do"></textarea>
+		</div>
+		<div class="human">
+			5 + 3 = <input id="human" placeholder="??">
+		</div>
+		<a id="request-btn" class="request-submit sendEmail">Submit Request</a>
 	</div>
-	<div class="contact">
-		<input id="first_name" placeholder="First Name">
-		<input id="email" placeholder="Email Address">	
-		<input id="handle" placeholder="Twitter Handle">		
-	</div>
-	<div class="request-box">
-		<textarea id="request-box-text" placeholder="Please tell us why and we'll see what we can do"></textarea>
-	</div>
-	<div class="human">
-		5 + 3 = <input id="human" placeholder="??">
-	</div>
-	<a id="request-btn" class="request-submit sendEmail">Submit Request</a>
 </div>
 
 <header class="header">
@@ -23,9 +25,10 @@
 		<input type="text" id="searchEightBits" ng-model="search" placeholder="name or twitter handle">
 	</section>
 	<nav class="nav">
-	    <a class="nav_btn viewToggle">Request An 8-Bit</a>
+	    <a class="nav_btn" ng-click="open = !open">Request An 8-Bit</a>
 	</nav>
 </header>
+
 
 <section class="bits-container">
 	<div ng-repeat="eb in eightbits | filter:search" id="{{eb.first_name | trim}}-{{eb.last_name}}" class="eight-bit flip {{eb.handle}}">
@@ -41,3 +44,16 @@
 	    </div>
 	</div>
 </section>
+
+<div id="myModal" class="modal hide">
+    <div class="modal-header">
+        <a href="#" class="close" modal-close="myModal">×</a>
+    </div>
+    <div class="modal-body">
+        
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" modal-close="myModal">Close</a>
+        <a href="#" class="btn hide" modal-open="myModal">Open</a>
+    </div>
+</div>

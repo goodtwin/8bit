@@ -53,18 +53,6 @@ define(['angular', 'jquery' ],
 			};
 		});
 
-		eightbitapp.directive( 'viewToggle', function(){
-			return {
-				restrict: 'C',
-				link: function(scope, element){
-					element.bind('click', function(){
-						$('.request-form').toggleClass('visible');
-						return false;
-					});
-				},
-			};
-		});
-
 		eightbitapp.directive( 'sendEmail', function($http){
 			return {
 				restrict: 'C',
@@ -85,21 +73,97 @@ define(['angular', 'jquery' ],
 								'text': text
 							};
 
-							$http.post('/email', data ).
-							success(function(data) {
-								console.log(data);
-								window.alert('Thanks!');
-							}).
-							error(function(data) {
-								console.log(data);
-							});
+							$http.post('/email', data )
+								.success(function(data) {
+									console.log(data);
+									//window.alert('Thanks!');
+									$('#myModal .modal-body').html('Sweet. Got it.');
+									$('[modal-open="myModal"]').triggerHandler('click');
+								})
+								.error(function(data) {
+									console.log(data);
+									$('#myModal .modal-body').html('Bummer. I can\'t really say what\'s wrong, but it\'s bad.');
+									$('[modal-open="myModal"]').triggerHandler('click');
+								});
 						}
 						else {
-							console.log('error');
+							$('#myModal .modal-body').html('Bummer. Make sure you put stuff in all the fields.');
+							$('[modal-open="myModal"]').triggerHandler('click');
 						}
 						return false;
 					});
 				},
+			};
+		});
+
+		eightbitapp.directive('modalOpen', function() {
+			return function(scope, element, attrs) {
+
+				var modal, body, backdrop;
+
+				angular.element(element).bind('click', function() {
+					// probably should have initialized these locally... 
+					var modal = angular.element(document.getElementById(attrs.modalOpen)),
+						body = angular.element(document).find('body');
+
+					// add backdrop div even if there won't be a backdrop. probably not neccesary
+					body.append('<div id="modal-backdrop"></div>');
+					var backdropAttr = attrs.hasOwnProperty('backdrop') ? attrs.backdrop : true;
+					var escapeAttr = attrs.hasOwnProperty('escapeExit') ? attrs.escapeExit : true;
+					var backdrop = angular.element(document.getElementById('modal-backdrop'));
+
+					// typechecking boolean values but not string. not sure why.
+					if (backdropAttr === true || backdropAttr === 'static') {
+						backdrop.addClass('modal-backdrop');
+
+						if (backdropAttr !== 'static') {
+							// calling the callback within the bind breaks the backdrop (weird)
+							angular.element(backdrop).bind('click', function() {
+								closeModal();
+							});
+						}
+					}
+
+					if (escapeAttr === true) {
+						angular.element(body).bind('keypress', function(e) {
+							if (e.keyCode === 27) {
+								closeModal();
+							}
+						});
+					}
+
+					body.addClass('modal-open');
+					modal.css('display', 'block');
+				});
+
+				var closeModal = function() {
+					// backdrop could be null but shouldn't ever be undefined. 
+					if (typeof backdrop !== 'undefined' && backdrop !== null) {
+						backdrop.unbind();
+						backdrop.remove();
+					}
+
+					angular.element(body).unbind('keypress');
+					modal.css('display', 'none');
+
+					body.removeClass('modal-open');
+				};
+			};
+		});
+
+		eightbitapp.directive('modalClose', function() {
+			return function(scope, element, attrs) {
+				angular.element(element).bind('click', function() {
+					var modal = document.getElementById(attrs.modalClose),
+						backdrop = document.getElementById('modal-backdrop'),
+						body = angular.element(document).find('body');
+
+					angular.element(backdrop).unbind().remove();
+					angular.element(body).unbind('keypress');
+					angular.element(modal).css('display', 'none');
+
+					body.removeClass('modal-open');
+				});
 			};
 		});
 	};
