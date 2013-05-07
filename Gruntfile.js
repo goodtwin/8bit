@@ -282,7 +282,16 @@ module.exports = function (grunt) {
             'styles/fonts/*',
             'styles/8bits/{,*/}*.css',
             'views/{,*/}*.html',
-            'data/{,*/}*.json',
+            'data/{,*/}*.json'
+          ]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: 'email/',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            '*'
           ]
         }]
       }

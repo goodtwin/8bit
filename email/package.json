@@ -1,0 +1,11 @@
+{
+  "name": "8bit email",
+  "version": "0.0.1",
+  "dependencies": {
+    "express" : "3.x",
+    "nodemailer": "*"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
