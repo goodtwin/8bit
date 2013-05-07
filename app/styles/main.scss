@@ -30,7 +30,12 @@ html, body {
 .search {
     @include inline-block;
     width: 60%;
+    min-width: 400px;
     padding: 20px;
+
+    @media screen and (min-width: 820px){
+       width: 50%;
+    }
 
     >label[data-icon]{
         @include inline-block;
@@ -77,6 +82,7 @@ html, body {
 }
 
 .nav {
+    display: none;
     overflow: hidden;
     float: right;
     padding: 0 0 .5em;
@@ -91,6 +97,10 @@ html, body {
                 content: 'Log Out';
             }
         }
+    }
+
+    @media screen and (min-width: 820px){
+        display: block;
     }
         
 }
