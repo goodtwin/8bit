@@ -1,4 +1,4 @@
-# 8 Bit Omaha
+# [8 Bit Omaha](http://8bitomaha.com)
 
 ## Steps for install
 
