@@ -6,6 +6,8 @@
 
 2. ```bower install```
 
+3. ```gem install compass```
+
 3. ```grunt``` to build or ```grunt server``` for a quick local server.
 
 4. after building serve up ```\dist```. run node server to receive the contact for if you so choose.
