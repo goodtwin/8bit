@@ -333,11 +333,11 @@ module.exports = function (grunt) {
       grunt.config(['compress', filename] ,{});
       grunt.config(['compress', filename, 'options'] ,{});
       grunt.config(['compress', filename, 'options', 'mode'] , 'zip');
-      grunt.config(['compress', filename, 'options', 'archive'] , __dirname +'/src/zip/'+ filename+'.zip');
-      grunt.config(['compress', filename, 'expand'] , true);
+      grunt.config(['compress', filename, 'options', 'archive'] , 'src/zip/'+ filename+'.zip');
+      grunt.config(['compress', filename, 'flatten'] , true);
       grunt.config(['compress', filename, 'src'],
-        [ appdir + '/images/8bits/'+filename+'.svg',
-        appdir + '/styles/8bits/png/'+filename+'.png']);
+        [ 'app/images/8bits/'+filename+'.svg',
+        'app/styles/8bits/png/'+filename+'.png']);
     });
     grunt.task.run('compress');
 
