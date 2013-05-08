@@ -186,7 +186,7 @@
     "date_added": ""
   },
   {
-    "first_name": "feiren",
+    "first_name": "feirin",
     "last_name": "wilson",
     "handle": "feirfeir",
     "date_added": ""
@@ -273,6 +273,12 @@
     "first_name": "jonathan",
     "last_name": "tvrdik",
     "handle": "jtvrdik",
+    "date_added": ""
+  },
+  {
+    "first_name": "greg",
+    "last_name": "thompson",
+    "handle": "thompsongl",
     "date_added": ""
   },
   {
@@ -367,7 +373,7 @@
   },
   {
     "first_name": "robert",
-    "last_name": "murphey",
+    "last_name": "murphy",
     "handle": "RamHatter",
     "date_added": ""
   },
@@ -429,12 +435,6 @@
     "first_name": "wendy",
     "last_name": "townley",
     "handle": "wtownley",
-    "date_added": ""
-  },
-  {
-    "first_name": "greg",
-    "last_name": "thompson",
-    "handle": "thompsongl",
     "date_added": ""
   }
 ]

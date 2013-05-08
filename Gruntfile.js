@@ -311,7 +311,7 @@ module.exports = function (grunt) {
       eightbits: {
         options:{
           src: '<%= yeoman.app %>/images/8bits/',
-          dest: '<%= yeoman.app %>/style/8bits/',
+          dest: '<%= yeoman.app %>/styles/8bits/',
           cssprefix: '-'
         }
       }
