@@ -295,6 +295,15 @@ module.exports = function (grunt) {
           ]
         }]
       }
+    },
+    grunticon: {
+      eightbits: {
+        options:{
+          src: '<%= yeoman.app %>/images/8bits/',
+          dest: '<%= yeoman.app %>/styles/8bits/',
+          cssprefix: '-'
+        }
+      }
     }
   });
 
