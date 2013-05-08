@@ -41,6 +41,12 @@ define(['angular', 'jquery' ],
 			};
 		});
 
+		eightbitapp.filter( 'exists', function(){
+			return function( resp, conditional ){
+				return conditional ? resp : '';
+			};
+		});
+
 		eightbitapp.directive( 'flip', function(){
 			return {
 				restrict: 'C',
@@ -167,6 +173,7 @@ define(['angular', 'jquery' ],
 				});
 			};
 		});
+
 	};
 
 	return {

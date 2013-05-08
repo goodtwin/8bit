@@ -192,8 +192,8 @@
     "date_added": ""
   },
   {
-    "first_name": "he",
-    "last_name": "man",
+    "first_name": "",
+    "last_name": "heman",
     "handle": "HeManMorals",
     "date_added": ""
   },
@@ -336,6 +336,12 @@
     "date_added": ""
   },
   {
+    "first_name": "im",
+    "last_name": "agiraffe",
+    "handle": "gigigiraffe",
+    "date_added": ""
+  },
+  {
     "first_name": "mike",
     "last_name": "malone",
     "handle": "malonefoto",
@@ -361,7 +367,7 @@
   },
   {
     "first_name": "pink",
-    "last_name": "ranger",
+    "last_name": "powerranger",
     "handle": "powerrangernews",
     "date_added": ""
   },
@@ -435,6 +441,24 @@
     "first_name": "wendy",
     "last_name": "townley",
     "handle": "wtownley",
+    "date_added": ""
+  },
+  {
+    "first_name": "ree",
+    "last_name": "kaneko",
+    "handle": "KANEKO1111",
+    "date_added": ""
+  },
+  {
+    "first_name": "jun",
+    "last_name": "kaneko",
+    "handle": "KANEKO1111",
+    "date_added": ""
+  },
+  {
+    "first_name": "joe",
+    "last_name": "sparano",
+    "handle": "joesparano",
     "date_added": ""
   }
 ]

@@ -87,6 +87,7 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             '.tmp',
+            'src/zip',
             '<%= yeoman.dist %>/*',
             '!<%= yeoman.dist %>/.git*'
           ]
@@ -322,6 +323,26 @@ module.exports = function (grunt) {
 
   grunt.renameTask('regarde', 'watch');
 
+  // custom tasks specific to 8bit
+  grunt.registerTask('zip', '.svg + .png = .zip', function() {
+    var appdir = __dirname + '/app';
+
+    var files = grunt.file.expand({cwd:appdir+'/images/8bits'}, ['*.svg']);
+    grunt.util.recurse(files, function(filename){
+      filename = filename.replace(/\.[^/.]+$/, '');
+      grunt.config(['compress', filename] ,{});
+      grunt.config(['compress', filename, 'options'] ,{});
+      grunt.config(['compress', filename, 'options', 'mode'] , 'zip');
+      grunt.config(['compress', filename, 'options', 'archive'] , __dirname +'/src/zip/'+ filename+'.zip');
+      grunt.config(['compress', filename, 'expand'] , true);
+      grunt.config(['compress', filename, 'src'],
+        [ appdir + '/images/8bits/'+filename+'.svg',
+        appdir + '/styles/8bits/png/'+filename+'.png']);
+    });
+    grunt.task.run('compress');
+
+  });
+
   grunt.registerTask('server', [
     'clean:server',
     'grunticon:eightbits',
@@ -342,10 +363,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'zip',
     'jshint',
     'test',
     'grunticon:eightbits',
+    'zip',
     'compass:dist',
     'useminPrepare',
     'requirejs',
@@ -360,21 +381,4 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['build']);
 
-  grunt.registerTask('zip', '.eps + .jpg = .zip', function() {
-    var dir = __dirname + '/src';
-
-    var files = grunt.file.expand({cwd:dir+'/eps'}, ['*.eps']);
-    grunt.util.recurse(files, function(filename){
-      filename = filename.replace(/\.[^/.]+$/, '');
-      grunt.config(['compress', filename] ,{});
-      grunt.config(['compress', filename, 'options'] ,{});
-      grunt.config(['compress', filename, 'options', 'mode'] , 'zip');
-      grunt.config(['compress', filename, 'options', 'archive'] , dir +'/zip/'+ filename+'.zip');
-      grunt.config(['compress', filename, 'expand'] , true);
-      grunt.config(['compress', filename, 'cwd'] , dir);
-      grunt.config(['compress', filename, 'src'] , ['eps/'+filename+'.eps', 'jpg/'+filename+'.jpg']);
-    });
-    grunt.task.run('compress');
-
-  });
 };

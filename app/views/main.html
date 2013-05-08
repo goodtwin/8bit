@@ -34,13 +34,13 @@
 	<div ng-repeat="eb in eightbits | filter:search" id="{{eb.first_name | trim}}-{{eb.last_name}}" class="eight-bit flip {{eb.handle}}">
 		<div class="eight-bit-inner">
 	        <div class="visual">
-	            <div class="bit -bit_{{eb.first_name | trim}}-{{eb.last_name}}"></div>
+	            <div class="bit -bit_{{eb.first_name | trim}}{{'-' | exists:eb.first_name}}{{eb.last_name}}"></div>
 	            <a href="#" class="arrow_btn"><span class="arrow"></span></a>
 	        </div>
 	        <div class="details">
 	        	<h2 class="name">{{eb.first_name}} {{eb.last_name}}</h2>
 	            <a href="http://twitter.com/{{eb.handle}}" target="_blank" class="handle">@{{eb.handle}}</a>
-	            <a href="zip/{{eb.first_name | trim}}-{{eb.last_name}}.zip" class="detail_btn">Download</a>
+	            <a href="zip/bit_{{eb.first_name | trim}}{{'-' | exists:eb.first_name}}{{eb.last_name}}.zip" class="detail_btn">Download</a>
 	        </div>
 	    </div>
 	</div>
