@@ -293,6 +293,15 @@ module.exports = function (grunt) {
           src: [
             '*'
           ]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: 'src/zip',
+          dest: '<%= yeoman.dist %>/zip',
+          src: [
+            '*'
+          ]
         }]
       }
     },
@@ -300,10 +309,12 @@ module.exports = function (grunt) {
       eightbits: {
         options:{
           src: '<%= yeoman.app %>/images/8bits/',
-          dest: '<%= yeoman.app %>/styles/8bits/',
+          dest: '<%= yeoman.app %>/style/8bits/',
           cssprefix: '-'
         }
       }
+    },
+    compress: {
     }
   });
 
@@ -329,6 +340,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'zip',
     'jshint',
     'test',
     'compass:dist',
@@ -344,4 +356,22 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', ['build']);
+
+  grunt.registerTask('zip', '.eps + .jpg = .zip', function() {
+    var dir = __dirname + '/src';
+
+    var files = grunt.file.expand({cwd:dir+'/eps'}, ['*.eps']);
+    grunt.util.recurse(files, function(filename){
+      filename = filename.replace(/\.[^/.]+$/, '');
+      grunt.config(['compress', filename] ,{});
+      grunt.config(['compress', filename, 'options'] ,{});
+      grunt.config(['compress', filename, 'options', 'mode'] , 'zip');
+      grunt.config(['compress', filename, 'options', 'archive'] , dir +'/zip/'+ filename+'.zip');
+      grunt.config(['compress', filename, 'expand'] , true);
+      grunt.config(['compress', filename, 'cwd'] , dir);
+      grunt.config(['compress', filename, 'src'] , ['eps/'+filename+'.eps', 'jpg/'+filename+'.jpg']);
+    });
+    grunt.task.run('compress');
+
+  });
 };
