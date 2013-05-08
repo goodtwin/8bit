@@ -183,7 +183,8 @@ module.exports = function (grunt) {
     },
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css',
+            '!<%= yeoman.dist %>/styles/8bits/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
       }
@@ -281,6 +282,7 @@ module.exports = function (grunt) {
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
             'styles/8bits/{,*/}*.css',
+            'styles/8bits/png/{,*/}*.png',
             'views/{,*/}*.html',
             'data/{,*/}*.json'
           ]
@@ -343,6 +345,7 @@ module.exports = function (grunt) {
     'zip',
     'jshint',
     'test',
+    'grunticon:eightbits',
     'compass:dist',
     'useminPrepare',
     'requirejs',
