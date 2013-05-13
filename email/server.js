@@ -1,6 +1,7 @@
-var express = require('express');
-var app = express();
-var nodemailer = require('nodemailer');
+var express = require('express'),
+	app = express(),
+	nodemailer = require('nodemailer'),
+	mongoose = require('mongoose');
 
 app.use(express.bodyParser());
 

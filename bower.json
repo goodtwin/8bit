@@ -11,7 +11,8 @@
     "d3" : "~3.1.6",
     "nvd3" : "*",
     "jquery" : "~2.0.0",
-    "requirejs" : "~2.1.5"
+    "requirejs" : "~2.1.5",
+    "lodash" : "~1.2.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.5",
