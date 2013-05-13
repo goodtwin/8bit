@@ -21,9 +21,12 @@
   "smarttabs": true,
   "globals": {
     "angular": true,
+    "beforeEach": true,
     "define" : true,
     "it" : true,
     "expect" : true,
-    "describe": true
+    "describe": true,
+    "inject": true,
+    "module": true
   }
 }
