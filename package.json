@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "express" : "3.x",
-    "nodemailer": "*",
-    "mongoose" : "~3.6.10"
+    "nodemailer": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
