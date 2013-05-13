@@ -37,7 +37,8 @@ require.config({
     "es5-shim": "components/es5-shim",
     "json3": "components/json3",
     "nvd3": "components/nvd3",
-    "jquery": "components/jquery/jquery"
+    "jquery": "components/jquery/jquery",
+    "underscore": "components/lodash/lodash",
   }
 });
 
