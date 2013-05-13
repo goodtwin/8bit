@@ -571,6 +571,7 @@ html, body {
         @include inline-block;
         margin: 0 auto;
         @include btn-blue;
+        border: 0;
         padding: 13px 8px 13px 8px;
         cursor: pointer;
         @media screen and (max-width: 640px){

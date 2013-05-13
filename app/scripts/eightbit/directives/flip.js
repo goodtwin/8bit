@@ -9,7 +9,6 @@ define([],function(){
 				link: function(scope, element){
 					element.bind('click', function(){
 						angular.element(this).toggleClass('flipped');
-						angular.element(this).siblings().removeClass('flipped');
 					});
 				},
 			};

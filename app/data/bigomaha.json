@@ -12,6 +12,12 @@
     "date_added": ""
   },
   {
+    "first_name": "megan",
+    "last_name": "casey-pink",
+    "handle": "megancasey",
+    "date_added": ""
+  },
+  {
     "first_name": "nikhil",
     "last_name": "arora",
     "handle": "nikhilarora",
@@ -30,8 +36,14 @@
     "date_added": ""
   },
   {
-    "first_name": "mark",
+    "first_name": "marc",
     "last_name": "ecko",
+    "handle": "marcecko",
+    "date_added": ""
+  },
+  {
+    "first_name": "marc",
+    "last_name": "ecko-professor",
     "handle": "marcecko",
     "date_added": ""
   },
@@ -62,6 +74,12 @@
   {
     "first_name": "ben",
     "last_name": "milne",
+    "handle": "bpmilne",
+    "date_added": ""
+  },
+  {
+    "first_name": "ben",
+    "last_name": "milne-beardmode",
     "handle": "bpmilne",
     "date_added": ""
   },
