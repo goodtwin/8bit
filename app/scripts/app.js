@@ -8,7 +8,6 @@ define(['angular',
 	'scripts/eightbit/directives/flip',
 	'scripts/eightbit/directives/modalOpen',
 	'scripts/eightbit/directives/modalClose',
-	'scripts/eightbit/services/localfactory',
 	'scripts/eightbit/filters/exists',
 	'scripts/eightbit/filters/trim' ],
 	function(angular,
@@ -19,18 +18,17 @@ define(['angular',
 		flipDirective,
 		modalOpenDirective,
 		modalCloseDirective,
-		localfactory,
 		existsFilter,
 		trimFilter){
 
-	var start = function( appName ) {
+	var start = function( appName, serviceProviders ) {
 		var modules = [];
 		modules[0] = appName;
-		init(appName);
+		init(appName, serviceProviders);
 		angular.bootstrap( $('body')[0], modules );
 	};
 
-	var init = function( appName ) {
+	var init = function( appName, serviceProviders ) {
 
 		var eightbitapp = angular.module( appName, [] ),
 			appComponents = [
@@ -39,10 +37,13 @@ define(['angular',
 				flipDirective,
 				modalOpenDirective,
 				modalCloseDirective,
-				localfactory,
 				existsFilter,
 				trimFilter
 			];
+
+		// add injected service providers to the list of app
+		// components
+		appComponents = appComponents.concat(serviceProviders);
 
 		// init each component to be used in the app
 		_.each( appComponents, function(appComponent){
