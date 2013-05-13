@@ -42,4 +42,4 @@ require.config({
   }
 });
 
-require(["scripts/bootstrap"]);
+require(["scripts/devbootstrap"]);

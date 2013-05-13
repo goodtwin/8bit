@@ -291,7 +291,7 @@ module.exports = function (grunt) {
         {
           expand: true,
           dot: true,
-          cwd: 'email/',
+          cwd: 'server/',
           dest: '<%= yeoman.dist %>',
           src: [
             '*'
