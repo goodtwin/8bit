@@ -3,8 +3,7 @@ var express = require('express'),
 	nodemailer = require('nodemailer'),
 	mongoose = require('mongoose'),
 	baucis = require('baucis'),
-	_ = require('underscore'),
-	seed = require('../app/data/bigomaha.json');
+	_ = require('underscore');
 
 app.use(express.bodyParser());
 

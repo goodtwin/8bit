@@ -9,6 +9,13 @@ define([],function(){
 				EightBits.success( function( data ){
 					$scope.eightbits = data;
 				});
+				// $scope.form = {
+				// 	first_name : '',
+				// 	email : '',
+				// 	handle : '',
+				// 	text : '',
+				// 	human : ''
+				// };
 			});
 	};
 

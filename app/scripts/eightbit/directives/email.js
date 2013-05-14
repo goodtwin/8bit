@@ -9,8 +9,7 @@ define([],function(){
 				restrict: 'C', // className on the element
 				link: function(scope, element){
 					element.bind( 'submit', function(){
-						var $ = angular.element(this).find,
-							test = $( '#human' ).val(),
+						var test = $( '#human' ).val(),
 							firstName = $( '#first_name' ).val(),
 							email = $( '#email' ).val(),
 							handle = $( '#handle' ).val(),
