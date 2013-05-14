@@ -19,13 +19,14 @@ One of GoodTwin's designers started drawing eight bits of friends as a stress re
 
 ## Tech stack
 
+* MongoDB
 * Node
-* Express (barely used)
+* Express
 * Angular
 * RequireJS
 * Grunticon for generating SVG fallbacks
 
-So the near stack? grean stack?
+So the meanr stack? nearmg stack? gremna stack?
 
 ## What can I learn from this?
 

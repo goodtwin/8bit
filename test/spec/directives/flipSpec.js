@@ -34,13 +34,6 @@ define(['jquery',
 				expect( $elem.hasClass( 'flipped' ) ).toBeFalsy();
 			});
 
-			it('removes flipped on siblings', function () {
-				var elems = $cmp('<div><div class="flip"></div><div class="flipped"></div></div>')($rScope),
-						$elem = $(elems).find('.flip');
-				$elem.trigger('click');
-				expect( $elem.siblings().hasClass( 'flipped' ) ).toBeFalsy();
-			});
-
 		});
 
 	});
