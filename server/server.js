@@ -3,6 +3,7 @@ var express = require('express'),
 	nodemailer = require('nodemailer'),
 	mongoose = require('mongoose'),
 	baucis = require('baucis'),
+	os = require('os'),
 	_ = require('underscore');
 
 app.use(express.bodyParser());
@@ -49,7 +50,16 @@ app.post( '/email', function( req, res ){
 
 //
 
-mongoose.connect('mongodb://localhost:17017/8bitomaha');
+var host = os.hostname();
+var patt = /.local/g;
+var result = patt.test(host);
+if(result){
+	mongoose.connect('mongodb://localhost:17017/8bitomaha');
+}
+else {
+	mongoose.connect('mongodb://localhost/8bitomaha');
+}
+
 
 var EightBit = new mongoose.Schema({
 	first_name: String,
